@@ -4,7 +4,6 @@ class Scene1 extends Phaser.Scene {
     }
 
     create() {
-        console.log("Escena 1 nya");
         text1 = this.add.text(0, 0, `Cantidad de bolitas: ${bolitas.length}`, {fontSize: '75px', fill: 'white'}).setOrigin(0);
 
         lanzador = this.add.sprite(900,1800,'flecha');
@@ -18,7 +17,7 @@ class Scene1 extends Phaser.Scene {
             bolita.setScale(0.4);
         }
 
-        this.cargarNivel(0);
+        this.cargarNivelNuevo();
     }
 
     update() {
@@ -54,7 +53,7 @@ class Scene1 extends Phaser.Scene {
         bolita.depth = -1;
         bolita.angle = lanzador.rotation - 1.57;
         bolitas.push(bolita);
-        bolita.body.setCircle(200);
+        bolita.body.setCircle(bolita.width/2);
 
         nivelCargado.forEach(bolitaD => {
             this.physics.add.collider(bolitaD, bolita);
@@ -63,7 +62,7 @@ class Scene1 extends Phaser.Scene {
 
     createRandomMatrix() {
         let matrix = [];
-        let nivel = niveles[0]
+        let nivel = niveles[0];
         for (let y = 0; y < nivel.length; y++) {
             let row = [];
             for (let x = 0; x < nivel[y].length; x++) {
@@ -74,6 +73,64 @@ class Scene1 extends Phaser.Scene {
         return matrix;
     }
 
+    //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
+    crearMatrizAleatoria(n) {
+        let nivel = niveles[0];
+        for (let x = 0; x < nivel.length; x+=n) {
+            for (let y = 0; y < nivel[x].length; y+=n) {
+                //  sergio: toda esta parte la hice pensando para ser medianamente usable a largo plazo, igual es muy modificable... te conozco vale, mas o menos
+                let colores = [0, 1, 2];
+                if(x-1 >= 0){
+                    Phaser.Utils.Array.Remove(colores, nivel[x-1][y]);
+                }
+                if(y-1 >= 0){
+                    Phaser.Utils.Array.Remove(colores, nivel[x][y-1]);
+                }
+                let aleatorio = (Phaser.Math.Between(1,colores.length)) - 1;
+
+                for (let wx = 0; wx < n; wx++) {
+                    for (let zy = 0; zy < n; zy++) {
+                        if(x+wx > nivel.length - 1 || y+zy > nivel[x].length - 1){
+                        
+                        }
+                        else{
+                            nivel[x+wx][y+zy] = colores[aleatorio];
+                        }
+                    }
+                }
+
+            }
+        }
+        return nivel;
+    }
+
+    //  sergio: hice un copy-paste del cargar nivel de abajo para modificarlo y usarlo en el create
+    cargarNivelNuevo() {
+        //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
+        let nivel = this.crearMatrizAleatoria(2);
+        //  sergio: los colores no se repiten ni en vertical, ni en horizontal
+        //  sergio: lo que tengo que ver es en el caso cuando haya un 2x2, puede existir la posibilidad de que no se muestren los 3 colores, o de que haya más grupos de colores que otros
+
+        for (let y = 0; y < nivel.length; y++) {
+            for (let x = 0; x < nivel[y].length; x++) {
+                if (nivel[y][x] != -1) {
+                    let bolita;
+                    bolita = this.physics.add.sprite((x * 125) + 90, (y * 125) + 120, 'bolita');
+                    bolita.setScale(0.3);
+                    bolita.depth = -1;
+                    bolita.setTint(burbujas[nivel[y][x]].color);
+                    bolita.body.setImmovable(true);
+                    bolita.body.moves = false;
+                    bolita.body.setCircle(bolita.width/2);
+                    // if (y % 2 == 0) {
+                    // } else {
+                    // }
+                    nivelCargado.push(bolita);
+                }
+            }
+        }
+    }
+    
     cargarNivel(index) {
         console.log(this.createRandomMatrix());
         let nivel = niveles[index];
@@ -106,4 +163,5 @@ class Scene1 extends Phaser.Scene {
             }
         }
     }
+
 }

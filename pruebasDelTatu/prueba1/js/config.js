@@ -43,7 +43,7 @@ let nivelCargado = [
 let bolitaALanzar = 0;
 
 resizeGame = function () {
-    let canvas = document.querySelector('canvas');
+    let canvas = document.querySelector("canvas");
     const {innerWidth, innerHeight} = window;
 
     const ratio = innerWidth / innerHeight;
@@ -51,11 +51,11 @@ resizeGame = function () {
     const gameRatio = game.config.width / game.config.height;
 
     if (ratio < gameRatio) {
-        canvas.style.width = innerWidth + 'px';
-        canvas.style.height = innerWidth / gameRatio + 'px';
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerWidth / gameRatio + "px";
     } else {
-        canvas.style.width = innerHeight * gameRatio + 'px';
-        canvas.style.height = innerHeight + 'px';
+        canvas.style.width = innerHeight * gameRatio + "px";
+        canvas.style.height = innerHeight + "px";
     }
 }
 
@@ -67,13 +67,13 @@ window.onload = function () {
         soundOn: true,
         scale: {
             mode: Phaser.Scale.FIT,
-            parent: 'template',
+            parent: "template",
             autoCenter: Phaser.Scale.CENTER_BOTH,
             width: 1080,
             height: 1920
         },
         physics: {
-            default: 'arcade',
+            default: "arcade",
             arcade: {
                 gravity: { y: 300 },
                 debug: true
@@ -89,5 +89,5 @@ window.onload = function () {
     game = new Phaser.Game(config);
     window.focus();
     resizeGame();
-    window.addEventListener('resize', resizeGame());
+    window.addEventListener("resize", resizeGame());
 };
