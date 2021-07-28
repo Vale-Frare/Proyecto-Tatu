@@ -73,6 +73,31 @@ class Scene1 extends Phaser.Scene {
         return matrix;
     }
 
+    //  vale: generación de matriz con simplex, un poco menos aleatoria que el random(?
+    //  vale: parametros, tamaño en x, tamaño en y, scale para la escala, a mayor escala
+    //  menos aleatoriedad y mas abundancia de pelotitas rojas.
+    getSimplexMatrix(x, y, scale) {
+        let noise = this.plugins.get('rexperlinplugin').add("nyo");
+        let matriz = [];
+        for (let i = 0; i < x; i++) {
+            let fila = [];
+            for (let j = 0; j < y; j++) {
+                fila.push(
+                    Phaser.Math.Clamp(
+                        Math.floor(
+                            (noise.simplex2(
+                                (i + (Math.random() * 10)) * .9,
+                                (j + (Math.random() * 10)) * .9) 
+                                + 1) * scale)
+                        , 0, 2
+                    )
+                );
+            }
+            matriz.push(fila);
+        }
+        return matriz;
+    }
+
     //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
     crearMatrizAleatoria(n) {
         let nivel = niveles[0];
@@ -107,7 +132,7 @@ class Scene1 extends Phaser.Scene {
     //  sergio: hice un copy-paste del cargar nivel de abajo para modificarlo y usarlo en el create
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
-        let nivel = this.crearMatrizAleatoria(2);
+        let nivel = this.getSimplexMatrix(5, 8, 1.5);
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
         //  sergio: lo que tengo que ver es en el caso cuando haya un 2x2, puede existir la posibilidad de que no se muestren los 3 colores, o de que haya más grupos de colores que otros
 
