@@ -26,19 +26,24 @@ class Scene1 extends Phaser.Scene {
         lanzador.rotation = (game.input.mousePointer.x*.001)-.9;
 
         bolitas.forEach(bolita => {
-            this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
-            if (bolita.y < 0) {
-                bolitas.splice(bolitas.indexOf(bolita), 1)
-                bolita.destroy();
+            if (bolita.scene == undefined){
+                bolitas.splice(bolitas.indexOf(bolita), 1);
+            }
+            else{
+                this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
+                if (bolita.y < 0) {
+                    bolitas.splice(bolitas.indexOf(bolita), 1);
+                    bolita.destroy();
+                }
             }
         });
     }
 
     tiro() {
-        if (bolitaALanzar >= deck.length - 1) {
+        if (bolitaALanzar >= deck.length) {
             return;
         }
-        if (bolitaALanzar >= deck.length - 2) {
+        if (bolitaALanzar >= deck.length - 1) {
             deck.forEach(bolita => {
                 bolita.obj.x += 300;
             });
@@ -46,7 +51,7 @@ class Scene1 extends Phaser.Scene {
         deck.forEach(bolita => {
             bolita.obj.x += 300;
         });
-        bolitaALanzar += 1;
+        
         let bolita = this.physics.add.sprite(900,1800,'bolita');
         bolita.setTint(deck[bolitaALanzar].color);
         bolita.setScale(0.4);
@@ -55,9 +60,12 @@ class Scene1 extends Phaser.Scene {
         bolitas.push(bolita);
         bolita.body.setCircle(bolita.width/2);
 
-        nivelCargado.forEach(bolitaD => {
-            this.physics.add.collider(bolitaD, bolita);
+        nivelCargado.forEach(bolita_nivel => {
+            //this.physics.add.collider(bolita_nivel, bolita);
+            this.physics.add.collider(bolita_nivel, bolita, this.desaparecerBolitas, null, this);
         }, this);
+        
+        bolitaALanzar += 1;
     }
 
     createRandomMatrix() {
@@ -132,9 +140,10 @@ class Scene1 extends Phaser.Scene {
     //  sergio: hice un copy-paste del cargar nivel de abajo para modificarlo y usarlo en el create
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
-        let nivel = this.getSimplexMatrix(5, 8, 1.5);
+        let nivel = this.getSimplexMatrix(5, 6, 0);
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
         //  sergio: lo que tengo que ver es en el caso cuando haya un 2x2, puede existir la posibilidad de que no se muestren los 3 colores, o de que haya más grupos de colores que otros
+        //let nivel = this.crearMatrizAleatoria(4);
 
         for (let y = 0; y < nivel.length; y++) {
             for (let x = 0; x < nivel[y].length; x++) {
@@ -189,4 +198,53 @@ class Scene1 extends Phaser.Scene {
         }
     }
 
+    desaparecerBolitas(bola_level, bola_lanzada){
+        if (bola_level.tintTopLeft == bola_lanzada.tintTopLeft) {
+            this.destruirCercanos(bola_level);
+            bola_lanzada.destroy();
+        }else {
+            bola_lanzada.destroy();
+        }
+    }
+
+    destruirCercanos(bola) {
+        let bolitasbolosas = [];
+
+        function interno(bola) {
+            bolitasbolosas = [];
+            console.log(bola);
+            if (bola != undefined) {
+                let pos = {x: (bola.x-90)/125, y: (bola.y-120)/125};
+                
+                nivelCargado.splice(nivelCargado.indexOf(bola), 1);
+                nivelCargado.forEach(function(bolita){ 
+                    if (bola.tintTopLeft == bolita.tintTopLeft) {
+                        let bolitaPos = {x: (bolita.x-90)/125, y: (bolita.y-120)/125};
+
+                        if (bolitaPos.x == pos.x + 1 && bolitaPos.y == pos.y) {                        
+                            bolitasbolosas.push(bolita);
+                        }else if (bolitaPos.x == pos.x - 1 && bolitaPos.y == pos.y) {
+                            bolitasbolosas.push(bolita);
+                        }else if (bolitaPos.y == pos.y + 1 && bolitaPos.x == pos.x) {
+                            bolitasbolosas.push(bolita);
+                        }else if (bolitaPos.y == pos.y - 1 && bolitaPos.x == pos.x) {
+                            
+                            console.log(bolitaPos.x, bolitaPos.y);
+                            bolitasbolosas.push(bolita);
+                        }
+                    }
+                });
+                bola.destroy();
+            }
+        }
+        interno(bola);
+        for(let i = 0; i < nivelCargado.length*50; i++) {
+            console.log(bolitasbolosas);
+            bolitasbolosas.forEach(function(bola){
+                if (bola != null) {
+                    interno(bola);
+                }
+            });
+        }
+    }
 }
