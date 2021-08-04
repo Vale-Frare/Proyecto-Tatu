@@ -61,7 +61,6 @@ class Scene1 extends Phaser.Scene {
         bolita.body.setCircle(bolita.width/2);
 
         nivelCargado.forEach(bolita_nivel => {
-            //this.physics.add.collider(bolita_nivel, bolita);
             this.physics.add.collider(bolita_nivel, bolita, this.desaparecerBolitas, null, this);
         }, this);
         
@@ -109,9 +108,22 @@ class Scene1 extends Phaser.Scene {
     //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
     crearMatrizAleatoria(n) {
         let nivel = niveles[0];
+        let colores_usados =
+        [
+            [0,1,2],
+            [0,0,0]
+        ]
+        console.log(colores_usados);
+        let romper = false;
         for (let x = 0; x < nivel.length; x+=n) {
+            if(romper){
+                break;
+            }
             for (let y = 0; y < nivel[x].length; y+=n) {
                 //  sergio: toda esta parte la hice pensando para ser medianamente usable a largo plazo, igual es muy modificable... te conozco vale, mas o menos
+                if(romper){
+                    break;
+                }
                 let colores = [0, 1, 2];
                 if(x-1 >= 0){
                     Phaser.Utils.Array.Remove(colores, nivel[x-1][y]);
@@ -119,31 +131,60 @@ class Scene1 extends Phaser.Scene {
                 if(y-1 >= 0){
                     Phaser.Utils.Array.Remove(colores, nivel[x][y-1]);
                 }
-                let aleatorio = (Phaser.Math.Between(1,colores.length)) - 1;
 
-                for (let wx = 0; wx < n; wx++) {
-                    for (let zy = 0; zy < n; zy++) {
-                        if(x+wx > nivel.length - 1 || y+zy > nivel[x].length - 1){
-                        
+                let aleatorio = (Phaser.Math.Between(1,colores.length)) - 1;
+                let repetir = true;
+
+                while(repetir){
+                    if(colores_usados[1][colores[aleatorio]] == 2){
+
+                        Phaser.Utils.Array.Remove(colores, colores[aleatorio]);
+                        if(colores.length == 0){
+                            romper = true;
+                            repetir = false;
                         }
                         else{
-                            nivel[x+wx][y+zy] = colores[aleatorio];
+                            aleatorio = (Phaser.Math.Between(1,colores.length)) - 1;
                         }
+
+                    }
+                    else{
+
+                        colores_usados[1][colores[aleatorio]]++;
+                        repetir = false;
+                        for (let wx = 0; wx < n; wx++) {
+                            for (let zy = 0; zy < n; zy++) {
+                                if(x+wx > nivel.length - 1 || y+zy > nivel[x].length - 1){
+                                
+                                }
+                                else{
+                                    nivel[x+wx][y+zy] = colores[aleatorio];
+                                }
+                            }
+                        }
+
                     }
                 }
 
             }
         }
-        return nivel;
+        if(romper){
+            return false;
+        }else{
+            return nivel;
+        }
     }
 
     //  sergio: hice un copy-paste del cargar nivel de abajo para modificarlo y usarlo en el create
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
-        let nivel = this.getSimplexMatrix(5, 6, 0);
+        //let nivel = this.getSimplexMatrix(5, 6, 0);
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
         //  sergio: lo que tengo que ver es en el caso cuando haya un 2x2, puede existir la posibilidad de que no se muestren los 3 colores, o de que haya más grupos de colores que otros
-        //let nivel = this.crearMatrizAleatoria(4);
+        let nivel = false;
+        while(!nivel){
+            nivel = this.crearMatrizAleatoria(2);
+        }
 
         for (let y = 0; y < nivel.length; y++) {
             for (let x = 0; x < nivel[y].length; x++) {
