@@ -4,8 +4,6 @@ class Scene1 extends Phaser.Scene {
     }
 
     create() {
-        let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
-        fondo.depth = -1;
         text1 = this.add.text(0, 0, `Cantidad de bolitas: ${bolitas.length}`, {fontSize: '75px', fill: 'white'}).setOrigin(0);
 
         lanzador = this.add.sprite(900,1800,'flecha');
@@ -95,6 +93,53 @@ class Scene1 extends Phaser.Scene {
             matriz.push(fila);
         }
         return matriz;
+    }
+
+    crearMatrizConPatron(xSize, ySize, cellSize) {
+        let matriz = [];
+        
+        let count = 0;
+        let cellCount = 0;
+
+        let colors = [0, 1, 2];
+
+        colors = colors.sort(function (a, b) { 
+            return (Math.random() * 2) - 1;
+        })
+
+        for (let y = 0; y < ySize; y++) {
+            let fila = [];
+            for (let x = 0; x < xSize; x++) {
+
+                fila.push({
+                    color: colors[0],
+                    grupo: this.calcularGrupo(fila, matriz, y, x, colors[0], count)
+                });
+
+                if (cellCount == cellSize) {
+                    colors = this.arrayUnPasito(colors);
+                    cellCount = 0;
+                }
+
+                cellCount++;
+                count++;
+            }
+            
+            matriz.push(fila);
+        }
+
+        return matriz;
+    }
+
+    arrayUnPasito(array) {
+        let newArray = [array.length];
+
+        newArray[0] = array[array.length-1];
+
+        for (let i = 0; i < array.length - 1; i++) {
+            newArray[i+1] = array[i];
+        }
+        return newArray;
     }
 
     calcularGrupo(fila, matriz, y, x, color, count) {
@@ -277,32 +322,26 @@ class Scene1 extends Phaser.Scene {
             nivel = this.crearMatrizAleatoria(2);
         }*/
 
-        let nivel = this.crearMatrizYFormarGrupos(5, 7, 2);
+        //let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
-        console.log(nivel);
+        let nivel = this.crearMatrizConPatron(8, 6, 3);
+
+        //  vale: aca pones la key de la textura de cada color.
+        const bolitasTexturas = [
+            'bolita', //  AZUL
+            'flecha', //  VERDE
+            'bolita', //  ROJA
+        ];
 
         for (let y = 0; y < nivel.length; y++) {
             let fila = [];
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x] != -1) {
                     let bolita;
-                    bolita = this.physics.add.sprite((x * 125) + 165, (y * 125) + 400, 'bolita');
-                    //bolita.setTint(burbujas[nivel[y][x].color].color);
-                    switch (nivel[y][x].color) {
-                        case 0:
-                            bolita.setTexture('basura_3');
-                            break;
-                        case 1:
-                            bolita.setTexture('basura_1');
-                            break;
-                        case 2:
-                            bolita.setTexture('basura_2');
-                            break;
-                        default:
-                            break;
-                    }
+                    bolita = this.physics.add.sprite((x * 125) + 90, (y * 125) + 120, bolitasTexturas[nivel[y][x].color]);
                     bolita.setScale(0.3);
                     bolita.depth = -1;
+                    bolita.setTint(burbujas[nivel[y][x].color].color);
                     bolita.body.setImmovable(true);
                     bolita.body.moves = false;
                     bolita.body.setCircle(bolita.width/2);
@@ -333,7 +372,7 @@ class Scene1 extends Phaser.Scene {
         if (bola_lanzada.tintTopLeft == bola_level.tintTopLeft) {
             //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
             
-            let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-165)/125];
+            let grupo = nivelCargadoGrupos[(bola_level.y-120)/125][(bola_level.x-90)/125];
 
             for (let y = 0; y < nivelCargado.length; y++) {
                 for (let x = 0; x < nivelCargado[y].length; x++) {
@@ -349,5 +388,5 @@ class Scene1 extends Phaser.Scene {
 
         bola_lanzada.destroy();
     }
-
+    
 }
