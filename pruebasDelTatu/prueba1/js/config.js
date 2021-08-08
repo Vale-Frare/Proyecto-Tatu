@@ -36,9 +36,9 @@ let niveles = [
     ]
 ]
 
-let nivelCargado = [
+let nivelCargado = []
 
-]
+let nivelCargadoGrupos = []
 
 let bolitaALanzar = 0;
 
@@ -76,7 +76,7 @@ window.onload = function () {
             default: "arcade",
             arcade: {
                 gravity: { y: 300 },
-                debug: true
+                debug: false
             }
         },
         audio: {
