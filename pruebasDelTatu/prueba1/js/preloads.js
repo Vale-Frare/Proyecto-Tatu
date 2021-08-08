@@ -11,6 +11,7 @@ class Preloads extends Phaser.Scene {
         this.load.image("basura_1", "assets/img/basura_1.png");
         this.load.image("basura_2", "assets/img/basura_2.png");
         this.load.image("basura_3", "assets/img/basura_3.png");
+        this.load.image("tatu_bebe", "assets/img/tatu_bebe.png");
     }
 
     create() {

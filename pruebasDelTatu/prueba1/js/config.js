@@ -10,21 +10,27 @@ let burbujas = [
 ]
 
 let deck = [
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000}
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2}
+];
+
+const bolitasTexturas = [
+    'basura_3', //  AZUL
+    'basura_1', //  VERDE
+    'basura_2', //  ROJA
 ];
 
 let niveles = [
@@ -76,7 +82,7 @@ window.onload = function () {
             default: "arcade",
             arcade: {
                 gravity: { y: 300 },
-                debug: false
+                debug: true
             }
         },
         audio: {
