@@ -1,13 +1,21 @@
 let text1;
 
 let lanzador;
+
 let bolitas = [];
 
 let burbujas = [
-    {score: 10, color: 0x0000ff},
-    {score: 20, color: 0x00ff00},
-    {score: 30, color: 0xff0000}
+    {score: 10, color: 0x0384fc},   //  Azulinho
+    {score: 20, color: 0xffda52},   //  Amarello
+    {score: 30, color: 0xff5252}    //  Roujo
 ]
+
+
+const bolitaRomper = {
+    basura_1: burbujas[1].color,
+    basura_2: burbujas[2].color,
+    basura_3: burbujas[0].color
+}
 
 let deck = [
     {obj: null, type: 0, color: 0},
@@ -29,7 +37,7 @@ let deck = [
 
 const bolitasTexturas = [
     'basura_3', //  AZUL
-    'basura_1', //  VERDE
+    'basura_1', //  AMARILLO
     'basura_2', //  ROJA
 ];
 

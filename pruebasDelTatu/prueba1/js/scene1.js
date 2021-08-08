@@ -13,9 +13,10 @@ class Scene1 extends Phaser.Scene {
         this.input.on('pointerup', this.tiro, this);
 
         for(let i = deck.length - 1; i > -1; i--) {
-            let bolita = this.add.sprite(900 - (i * 300),1800,bolitasTexturas[deck[i].color]);
+            let bolita = this.add.sprite(900 - (i * 300),1800,'tatu_bebe');
+            bolita.setTint(burbujas[deck[i].color].color);
             deck[i].obj = bolita;
-            bolita.setScale(0.4);
+            bolita.setScale(0.3);
         }
 
         this.cargarNivelNuevo();
@@ -53,8 +54,9 @@ class Scene1 extends Phaser.Scene {
             bolita.obj.x += 300;
         });
         
-        let bolita = this.physics.add.sprite(900,1800, bolitasTexturas[deck[bolitaALanzar].color]);
-        bolita.setScale(0.4);
+        let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
+        bolita.setTint(burbujas[deck[bolitaALanzar].color].color)
+        bolita.setScale(0.3);
         bolita.depth = -1;
         bolita.angle = lanzador.rotation - 1.57;
         bolitas.push(bolita);
@@ -242,16 +244,16 @@ class Scene1 extends Phaser.Scene {
         return nuevoGrupo;
     }
 
-    pruebita(xSize, ySize) {
-        matriz = []
-        for(let y = 0; y < ySize; y++){ fila = []; for(let x = 0; x < xSize; x++){ fila.push(0) } matriz.push(fila) };
+    // pruebita(xSize, ySize) {
+    //     matriz = []
+    //     for(let y = 0; y < ySize; y++){ fila = []; for(let x = 0; x < xSize; x++){ fila.push(0) } matriz.push(fila) };
 
-        matriz.forEach(fila =>{
-            fila.forEach(item =>{
+    //     matriz.forEach(fila =>{
+    //         fila.forEach(item =>{
                 
-            });
-        });
-    }    
+    //         });
+    //     });
+    // }    
     
     //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
     crearMatrizAleatoria(x1, y1, n) {
@@ -400,7 +402,7 @@ class Scene1 extends Phaser.Scene {
     romperGrupoDeBolitas(bola_level, bola_lanzada){
         //  vale: se compara el color.
 
-        if (bola_lanzada.texture.key == bola_level.texture.key) {
+        if (bola_lanzada.tintTopLeft == bolitaRomper[bola_level.texture.key]) {
             //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
             
             let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-240)/125];
