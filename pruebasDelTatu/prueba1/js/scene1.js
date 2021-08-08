@@ -95,6 +95,53 @@ class Scene1 extends Phaser.Scene {
         return matriz;
     }
 
+    crearMatrizConPatron(xSize, ySize, cellSize) {
+        let matriz = [];
+        
+        let count = 0;
+        let cellCount = 0;
+
+        let colors = [0, 1, 2];
+
+        colors = colors.sort(function (a, b) { 
+            return (Math.random() * 2) - 1;
+        })
+
+        for (let y = 0; y < ySize; y++) {
+            let fila = [];
+            for (let x = 0; x < xSize; x++) {
+
+                fila.push({
+                    color: colors[0],
+                    grupo: this.calcularGrupo(fila, matriz, y, x, colors[0], count)
+                });
+
+                if (cellCount == cellSize) {
+                    colors = this.arrayUnPasito(colors);
+                    cellCount = 0;
+                }
+
+                cellCount++;
+                count++;
+            }
+            
+            matriz.push(fila);
+        }
+
+        return matriz;
+    }
+
+    arrayUnPasito(array) {
+        let newArray = [array.length];
+
+        newArray[0] = array[array.length-1];
+
+        for (let i = 0; i < array.length - 1; i++) {
+            newArray[i+1] = array[i];
+        }
+        return newArray;
+    }
+
     calcularGrupo(fila, matriz, y, x, color, count) {
         //  vale: se determina el caso para poder evaluar su grupo.
 
@@ -275,16 +322,23 @@ class Scene1 extends Phaser.Scene {
             nivel = this.crearMatrizAleatoria(2);
         }*/
 
-        let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
+        //let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
-        console.log(nivel);
+        let nivel = this.crearMatrizConPatron(8, 6, 3);
+
+        //  vale: aca pones la key de la textura de cada color.
+        const bolitasTexturas = [
+            'bolita', //  AZUL
+            'flecha', //  VERDE
+            'bolita', //  ROJA
+        ];
 
         for (let y = 0; y < nivel.length; y++) {
             let fila = [];
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x] != -1) {
                     let bolita;
-                    bolita = this.physics.add.sprite((x * 125) + 90, (y * 125) + 120, 'bolita');
+                    bolita = this.physics.add.sprite((x * 125) + 90, (y * 125) + 120, bolitasTexturas[nivel[y][x].color]);
                     bolita.setScale(0.3);
                     bolita.depth = -1;
                     bolita.setTint(burbujas[nivel[y][x].color].color);
