@@ -195,53 +195,16 @@ class Scene1 extends Phaser.Scene {
         return nuevoGrupo;
     }
 
-    createRandomMatrix() {
-        let matrix = [];
-        let nivel = niveles[0];
-        for (let y = 0; y < nivel.length; y++) {
-            let row = [];
-            for (let x = 0; x < nivel[y].length; x++) {
-                row.push(Math.floor(Math.random() * 3));
-            }
-            matrix.push(row);
-        }
-        return matrix;
-    }
-
-    //  vale: generación de matriz con simplex, un poco menos aleatoria que el random(?
-    //  vale: parametros, tamaño en x, tamaño en y, scale para la escala, a mayor escala
-    //  menos aleatoriedad y mas abundancia de pelotitas rojas.
-    getSimplexMatrix(x, y, scale) {
-        let noise = this.plugins.get('rexperlinplugin').add("nyo");
-        let matriz = [];
-        for (let i = 0; i < x; i++) {
-            let fila = [];
-            for (let j = 0; j < y; j++) {
-                fila.push(
-                    Phaser.Math.Clamp(
-                        Math.floor(
-                            (noise.simplex2(
-                                (i + (Math.random() * 10)) * .9,
-                                (j + (Math.random() * 10)) * .9) 
-                                + 1) * scale)
-                        , 0, 2
-                    )
-                );
-            }
-            matriz.push(fila);
-        }
-        return matriz;
-    }
-
     //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
     crearMatrizAleatoria(n) {
         let nivel = niveles[0];
+        //  sergio: pongo los colores que se van a usar y el número de veces que se repiten al usarse
         let colores_usados =
         [
             [0,1,2],
             [0,0,0]
         ]
-        console.log(colores_usados);
+        //  sergio: el romper es un break, para terminar los for en caso de que la aleatoriedad del algoritmo salga mal
         let romper = false;
         for (let x = 0; x < nivel.length; x+=n) {
             if(romper){
@@ -263,6 +226,7 @@ class Scene1 extends Phaser.Scene {
                 let aleatorio = (Phaser.Math.Between(1,colores.length)) - 1;
                 let repetir = true;
 
+                // sergio: acá se intenta hacer que los colores sean equitativos a lo largo del nivel
                 while(repetir){
                     if(colores_usados[1][colores[aleatorio]] == 2){
 
@@ -303,18 +267,15 @@ class Scene1 extends Phaser.Scene {
         }
     }
 
-    //  sergio: hice un copy-paste del cargar nivel de abajo para modificarlo y usarlo en el create
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
-        //let nivel = this.getSimplexMatrix(5, 6, 0);
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
-        //  sergio: lo que tengo que ver es en el caso cuando haya un 2x2, puede existir la posibilidad de que no se muestren los 3 colores, o de que haya más grupos de colores que otros
         /*let nivel = false;
         while(!nivel){
             nivel = this.crearMatrizAleatoria(2);
         }*/
 
-        let nivel = this.crearMatrizYFormarGrupos(5, 8, 2);
+        let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
         console.log(nivel);
 
@@ -349,48 +310,6 @@ class Scene1 extends Phaser.Scene {
         //  vale: se guardan los valores de los grupos en una matriz aparte.
         nivelCargadoGrupos = nivel;
     }
-    
-    cargarNivel(index) {
-        console.log(this.createRandomMatrix());
-        let nivel = niveles[index];
-
-        for (let y = 0; y < nivel.length; y++) {
-            for (let x = 0; x < nivel[y].length; x++) {
-                if (nivel[y][x] != -1) {
-                    let bolita;
-
-                    if (y % 2 == 0) {
-                        bolita = this.physics.add.sprite((x * 160) + 90, (y * 120) + 90, 'bolita');
-                        bolita.setScale(0.3);
-                        bolita.depth = -1;
-                        bolita.setTint(burbujas[nivel[y][x]].color);
-                        bolita.body.setImmovable(true);
-                        bolita.body.moves = false;
-                        bolita.body.setCircle(bolita.width/2);
-                    } else {
-                        bolita = this.physics.add.sprite((x * 160) + 170, (y * 120) + 90, 'bolita');
-                        bolita.setScale(0.3);
-                        bolita.depth = -1;
-                        bolita.setTint(burbujas[nivel[y][x]].color);
-                        bolita.body.setImmovable(true);
-                        bolita.body.moves = false;
-                        bolita.body.setCircle(bolita.width/2);
-                    }
-
-                    nivelCargado.push(bolita);
-                }
-            }
-        }
-    }
-
-    desaparecerBolitas(bola_level, bola_lanzada){
-        if (bola_level.tintTopLeft == bola_lanzada.tintTopLeft) {
-            this.destruirCercanos(bola_level);
-            bola_lanzada.destroy();
-        }else {
-            bola_lanzada.destroy();
-        }
-    }
 
     //  vale: con esto rompes un grupo de bolitas.
     romperGrupoDeBolitas(bola_level, bola_lanzada){
@@ -415,45 +334,5 @@ class Scene1 extends Phaser.Scene {
 
         bola_lanzada.destroy();
     }
-
-    destruirCercanos(bola) {
-        let bolitasbolosas = [];
-
-        function interno(bola) {
-            bolitasbolosas = [];
-            console.log(bola);
-            if (bola != undefined) {
-                let pos = {x: (bola.x-90)/125, y: (bola.y-120)/125};
-                
-                nivelCargado.splice(nivelCargado.indexOf(bola), 1);
-                nivelCargado.forEach(function(bolita){ 
-                    if (bola.tintTopLeft == bolita.tintTopLeft) {
-                        let bolitaPos = {x: (bolita.x-90)/125, y: (bolita.y-120)/125};
-
-                        if (bolitaPos.x == pos.x + 1 && bolitaPos.y == pos.y) {                        
-                            bolitasbolosas.push(bolita);
-                        }else if (bolitaPos.x == pos.x - 1 && bolitaPos.y == pos.y) {
-                            bolitasbolosas.push(bolita);
-                        }else if (bolitaPos.y == pos.y + 1 && bolitaPos.x == pos.x) {
-                            bolitasbolosas.push(bolita);
-                        }else if (bolitaPos.y == pos.y - 1 && bolitaPos.x == pos.x) {
-                            
-                            console.log(bolitaPos.x, bolitaPos.y);
-                            bolitasbolosas.push(bolita);
-                        }
-                    }
-                });
-                bola.destroy();
-            }
-        }
-        interno(bola);
-        for(let i = 0; i < nivelCargado.length*50; i++) {
-            console.log(bolitasbolosas);
-            bolitasbolosas.forEach(function(bola){
-                if (bola != null) {
-                    interno(bola);
-                }
-            });
-        }
-    }
+    
 }
