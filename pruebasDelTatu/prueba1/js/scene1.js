@@ -4,6 +4,8 @@ class Scene1 extends Phaser.Scene {
     }
 
     create() {
+        let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
+        fondo.depth = -1;
         text1 = this.add.text(0, 0, `Cantidad de bolitas: ${bolitas.length}`, {fontSize: '75px', fill: 'white'}).setOrigin(0);
 
         lanzador = this.add.sprite(900,1800,'flecha');
@@ -324,13 +326,13 @@ class Scene1 extends Phaser.Scene {
 
         //let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
-        let nivel = this.crearMatrizConPatron(8, 6, 3);
+        let nivel = this.crearMatrizConPatron(7, 5, 3);
 
         //  vale: aca pones la key de la textura de cada color.
         const bolitasTexturas = [
-            'bolita', //  AZUL
-            'flecha', //  VERDE
-            'bolita', //  ROJA
+            'basura_3', //  AZUL
+            'basura_1', //  VERDE
+            'basura_2', //  ROJA
         ];
 
         for (let y = 0; y < nivel.length; y++) {
@@ -338,7 +340,7 @@ class Scene1 extends Phaser.Scene {
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x] != -1) {
                     let bolita;
-                    bolita = this.physics.add.sprite((x * 125) + 90, (y * 125) + 120, bolitasTexturas[nivel[y][x].color]);
+                    bolita = this.physics.add.sprite((x * 125) + 165, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
                     bolita.setScale(0.3);
                     bolita.depth = -1;
                     bolita.setTint(burbujas[nivel[y][x].color].color);
@@ -372,7 +374,7 @@ class Scene1 extends Phaser.Scene {
         if (bola_lanzada.tintTopLeft == bola_level.tintTopLeft) {
             //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
             
-            let grupo = nivelCargadoGrupos[(bola_level.y-120)/125][(bola_level.x-90)/125];
+            let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-165)/125];
 
             for (let y = 0; y < nivelCargado.length; y++) {
                 for (let x = 0; x < nivelCargado[y].length; x++) {
