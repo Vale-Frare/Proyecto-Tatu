@@ -1,30 +1,44 @@
 let text1;
 
 let lanzador;
+
 let bolitas = [];
 
 let burbujas = [
-    {score: 10, color: 0x0000ff},
-    {score: 20, color: 0x00ff00},
-    {score: 30, color: 0xff0000}
+    {score: 10, color: 0x0384fc},   //  Azulinho
+    {score: 20, color: 0xffda52},   //  Amarello
+    {score: 30, color: 0xff5252}    //  Roujo
 ]
 
+
+const bolitaRomper = {
+    basura_1: burbujas[1].color,
+    basura_2: burbujas[2].color,
+    basura_3: burbujas[0].color
+}
+
 let deck = [
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x0000ff},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0x00ff00},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000},
-    {obj: null, type: 0, color: 0xff0000}
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 0},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 1},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2},
+    {obj: null, type: 0, color: 2}
+];
+
+const bolitasTexturas = [
+    'basura_3', //  AZUL
+    'basura_1', //  AMARILLO
+    'basura_2', //  ROJA
 ];
 
 let niveles = [
@@ -76,7 +90,7 @@ window.onload = function () {
             default: "arcade",
             arcade: {
                 gravity: { y: 300 },
-                debug: false
+                debug: true
             }
         },
         audio: {

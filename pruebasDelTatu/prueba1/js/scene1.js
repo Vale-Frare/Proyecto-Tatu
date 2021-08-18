@@ -13,10 +13,10 @@ class Scene1 extends Phaser.Scene {
         this.input.on('pointerup', this.tiro, this);
 
         for(let i = deck.length - 1; i > -1; i--) {
-            let bolita = this.add.sprite(900 - (i * 300),1800,'bolita');
+            let bolita = this.add.sprite(900 - (i * 300),1800,'tatu_bebe');
+            bolita.setTint(burbujas[deck[i].color].color);
             deck[i].obj = bolita;
-            bolita.setTint(deck[i].color);
-            bolita.setScale(0.4);
+            bolita.setScale(0.3);
         }
 
         this.cargarNivelNuevo();
@@ -54,9 +54,9 @@ class Scene1 extends Phaser.Scene {
             bolita.obj.x += 300;
         });
         
-        let bolita = this.physics.add.sprite(900,1800,'bolita');
-        bolita.setTint(deck[bolitaALanzar].color);
-        bolita.setScale(0.4);
+        let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
+        bolita.setTint(burbujas[deck[bolitaALanzar].color].color)
+        bolita.setScale(0.3);
         bolita.depth = -1;
         bolita.angle = lanzador.rotation - 1.57;
         bolitas.push(bolita);
@@ -244,15 +244,34 @@ class Scene1 extends Phaser.Scene {
         return nuevoGrupo;
     }
 
+    // pruebita(xSize, ySize) {
+    //     matriz = []
+    //     for(let y = 0; y < ySize; y++){ fila = []; for(let x = 0; x < xSize; x++){ fila.push(0) } matriz.push(fila) };
+
+    //     matriz.forEach(fila =>{
+    //         fila.forEach(item =>{
+                
+    //         });
+    //     });
+    // }    
+    
     //  sergio: hice un copy-paste de crear matriz para modificarlo y usarlo en la función de crear nivel nuevo
-    crearMatrizAleatoria(n) {
-        let nivel = niveles[0];
+    crearMatrizAleatoria(x1, y1, n) {
+        let nivel = [];
+        for (let x = 0; x < x1; x++) {
+            let fila = [];
+            for (let y = 0; y < y1; y++) {
+                fila.push(0);
+            }
+            nivel.push(fila);
+        }
         //  sergio: pongo los colores que se van a usar y el número de veces que se repiten al usarse
         let colores_usados =
         [
             [0,1,2],
             [0,0,0]
         ]
+        let grupos = Math.ceil((x1 * y1)/(n*2)/3);
         //  sergio: el romper es un break, para terminar los for en caso de que la aleatoriedad del algoritmo salga mal
         let romper = false;
         for (let x = 0; x < nivel.length; x+=n) {
@@ -277,7 +296,7 @@ class Scene1 extends Phaser.Scene {
 
                 // sergio: acá se intenta hacer que los colores sean equitativos a lo largo del nivel
                 while(repetir){
-                    if(colores_usados[1][colores[aleatorio]] == 2){
+                    if(colores_usados[1][colores[aleatorio]] == grupos){
 
                         Phaser.Utils.Array.Remove(colores, colores[aleatorio]);
                         if(colores.length == 0){
@@ -316,40 +335,52 @@ class Scene1 extends Phaser.Scene {
         }
     }
 
+    convertirAGrupos(matriz) {
+        let matrizNueva = []
+        let count = 0;
+        for (let y = 0; y < matriz.length; y++) {
+            let fila = [];
+            for (let x = 0; x < matriz[y].length; x++) {
+                fila.push({
+                    color: matriz[y][x],
+                    grupo: this.calcularGrupo(fila, matrizNueva, y, x, matriz[y][x], count)
+                });
+                count++;
+            }
+            matrizNueva.push(fila);
+        }
+        return matrizNueva;
+    }
+
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
-        /*let nivel = false;
+        let nivel = false;
         while(!nivel){
-            nivel = this.crearMatrizAleatoria(2);
-        }*/
+            nivel = this.crearMatrizAleatoria(6, 6, 2);
+        }
+
+        nivel = this.convertirAGrupos(nivel);
 
         //let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
-        let nivel = this.crearMatrizConPatron(7, 5, 3);
-
-        //  vale: aca pones la key de la textura de cada color.
-        const bolitasTexturas = [
-            'basura_3', //  AZUL
-            'basura_1', //  VERDE
-            'basura_2', //  ROJA
-        ];
+        //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
         for (let y = 0; y < nivel.length; y++) {
             let fila = [];
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x] != -1) {
                     let bolita;
-                    bolita = this.physics.add.sprite((x * 125) + 165, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
+                    bolita = this.physics.add.sprite((x * 125) + 240, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
                     bolita.setScale(0.3);
                     bolita.depth = -1;
-                    bolita.setTint(burbujas[nivel[y][x].color].color);
+                    //bolita.setTint(burbujas[nivel[y][x].color].color);
                     bolita.body.setImmovable(true);
                     bolita.body.moves = false;
                     bolita.body.setCircle(bolita.width/2);
 
                     //  vale: si usas el modo debug podes ver un texto sobre cada bolita con el numero de su grupo ;)
-                    if (config.physics.arcade.debug) this.add.text(bolita.x, bolita.y, `${nivel[y][x].grupo}`, {fontSize: '75px', fill: 'white'}).setOrigin(0.5);
+                    if (config.physics.arcade.debug) this.add.text(bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', fill: 'black'}).setOrigin(0.5);
 
                     // if (y % 2 == 0) {
                     // } else {
@@ -371,10 +402,10 @@ class Scene1 extends Phaser.Scene {
     romperGrupoDeBolitas(bola_level, bola_lanzada){
         //  vale: se compara el color.
 
-        if (bola_lanzada.tintTopLeft == bola_level.tintTopLeft) {
+        if (bola_lanzada.tintTopLeft == bolitaRomper[bola_level.texture.key]) {
             //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
             
-            let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-165)/125];
+            let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-240)/125];
 
             for (let y = 0; y < nivelCargado.length; y++) {
                 for (let x = 0; x < nivelCargado[y].length; x++) {
