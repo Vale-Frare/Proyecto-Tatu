@@ -39,20 +39,35 @@ class Scene1 extends Phaser.Scene {
                 }
             }
         });
+
+        if(activo){
+            contador++;
+            deck.forEach(bolita => {
+                bolita.obj.x +=6;
+            });
+            if(contador == 50){
+                activo = false;
+                contador = 0;
+            }
+        }
     }
 
     tiro() {
         if (bolitaALanzar >= deck.length) {
             return;
         }
-        if (bolitaALanzar >= deck.length - 1) {
-            deck.forEach(bolita => {
-                bolita.obj.x += 300;
-            });
+        if (activo){
+            return;
         }
-        deck.forEach(bolita => {
-            bolita.obj.x += 300;
-        });
+        activo = true;
+        // if (bolitaALanzar >= deck.length - 1) {
+        //     deck.forEach(bolita => {
+        //         bolita.obj.x += 300;
+        //     });
+        // }
+        // deck.forEach(bolita => {
+        //     bolita.obj.x += 300;
+        // });
         
         let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
         bolita.setTint(burbujas[deck[bolitaALanzar].color].color)

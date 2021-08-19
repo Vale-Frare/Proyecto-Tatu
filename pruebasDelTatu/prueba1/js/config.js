@@ -2,6 +2,9 @@ let text1;
 
 let lanzador;
 
+let contador = 0;
+let activo = false;
+
 let bolitas = [];
 
 let burbujas = [
