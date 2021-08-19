@@ -1,5 +1,7 @@
 let text1;
 
+let deckTween;
+
 let lanzador;
 let bolitas = [];
 

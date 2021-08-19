@@ -42,22 +42,40 @@ class Scene1 extends Phaser.Scene {
     }
 
     tiro() {
+        //  vale: Con esto se evalua si la animacion de movimiento del las bolitas ya terminó para poder disparar.
+        if (deckTween != undefined) {
+            if (deckTween.isPlaying()) {return;}
+        }
         if (bolitaALanzar >= deck.length) {
             return;
         }
-        if (bolitaALanzar >= deck.length - 1) {
-            deck.forEach(bolita => {
-                bolita.obj.x += 300;
-            });
-        }
+
+        //  vale: Se le da animacion a cada bolita y tambien se activa su animacion para que rueden.
         deck.forEach(bolita => {
-            bolita.obj.x += 300;
+            deckTween = this.tweens.add({
+                targets: bolita.obj,
+                x: bolita.obj.x + 300,
+                duration: 350,
+                yoyo: false,
+                ease: 'Power2',
+                onStart: function () {
+                    bolita.obj.anims.play('girar', true);
+                },
+                onComplete: function () {
+                    bolita.obj.anims.play('noGirar', true);
+                },
+                loop: 0
+            });
         });
         
         let bolita = this.physics.add.sprite(900,1800,'bolita');
         bolita.setTint(deck[bolitaALanzar].color);
+
+        //  vale: Esto desaparece la bolita lanzada para dar el efecto de que es la misma.
+        deck[bolitaALanzar].obj.setVisible(false);
+
         bolita.setScale(0.4);
-        bolita.depth = -1;
+        bolita.depth = 1;
         bolita.angle = lanzador.rotation - 1.57;
         bolitas.push(bolita);
         bolita.body.setCircle(bolita.width/2);
@@ -65,13 +83,17 @@ class Scene1 extends Phaser.Scene {
         //  vale: hice una pequeña modificacion porque el nivel cargado ahora es una matriz.
         nivelCargado.forEach(fila_bolitas => {
             fila_bolitas.forEach(bolita_nivel => {
-                this.physics.add.collider(bolita_nivel, bolita, this.romperGrupoDeBolitas, null, this);
+                //  vale: hice otra modificacion para que no intente leer las bolitas que son null.
+                if (bolita_nivel === null) {} else {
+                    this.physics.add.collider(bolita_nivel, bolita, this.romperGrupoDeBolitasHexagonales, null, this);
+                }
             });
         }, this);
         
         bolitaALanzar += 1;
     }
 
+    //  vale: Funcion que crea la matriz hexagonales con colores random y tambien agujeros.
     crearMatrizHexagonalRandom(xSize, ySize) {
         let matriz = [];
         let count = 0;
@@ -92,6 +114,33 @@ class Scene1 extends Phaser.Scene {
             }
             matriz.push(fila);
         }
+        return matriz;
+    }
+
+    //  vale: Funcion que crea una matriz hexagonal y asigna los colores en base a la distancia de un punto random.
+    //        Util tal vez (?
+    crearMatrizHexagonalDistancia(xSize, ySize, scale) {
+        let matriz = [];
+        let count = 0;
+        let center = {x: Phaser.Math.Between(0, xSize), y: Phaser.Math.Between(0, ySize)};
+        for (let y = 0; y < ySize; y++) {
+            let fila = [];
+            if (this.esPar(y)) {
+                for (let x = 0; x < xSize-1; x++) {
+                    let color = Math.floor(Phaser.Math.Clamp(Phaser.Math.Distance.Between(center.x, center.y, x, y) * scale, 0, 2));
+                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
+                    count++;
+                }
+            }else{
+                for (let x = 0; x < xSize; x++) {
+                    let color =  Math.floor(Phaser.Math.Clamp(Phaser.Math.Distance.Between(center.x, center.y, x, y) * scale, 0, 2));
+                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
+                    count++;
+                }
+            }
+            matriz.push(fila);
+        }
+        console.log(matriz);
         return matriz;
     }
 
@@ -120,6 +169,9 @@ class Scene1 extends Phaser.Scene {
         return num % 2 == 0;
     }
 
+
+    //  vale: Funcion que hice que calcula los grupos de bolitas hexagonales.
+    //        La hice en un delirio cosmico asi que no es muy facil de comprender pero funciona.
     calcularGruposHexagonalmente(fila, matriz, y, x, color, count) {
         if ((x - 1) < 0 && (y - 1) < 0)  {
             //  vale: en el caso de ser la ezquina se retorna el valor del count.
@@ -363,6 +415,7 @@ class Scene1 extends Phaser.Scene {
         }
     }   
 
+    //  vale: se puede usar sin necesidad de agregar los ultimos dos parametros.
     fundirGrupos(matriz, fila, grupo1, grupo2, triple=false, grupo3=null) {
         //  vale: se crea una matriz completa agregando la fila sin pushear a la matriz en progreso.
 
@@ -406,6 +459,10 @@ class Scene1 extends Phaser.Scene {
                 }
             }
         }else {
+            //  vale: este es un pequeño arreglo que hice para que pueda fusionar 3 grupos.
+            //        se evalua que grupo tiene el menor valor para determinar el valor del grupo fundido
+            //        y los otros dos quedan en un array.
+
             let gruposAFundir;
             nuevoGrupo = Math.max(...[grupo1, grupo2, grupo3]);
             gruposAFundir = [grupo1, grupo2, grupo3].sort(function(a, b) {return a - b;});
@@ -512,7 +569,8 @@ class Scene1 extends Phaser.Scene {
             nivel = this.crearMatrizAleatoria(2);
         }*/
 
-        let nivel = this.crearMatrizHexagonalRandom(7,6);
+        //let nivel = this.crearMatrizHexagonalRandom(7,6);
+        let nivel = this.crearMatrizHexagonalDistancia(7,6, .5);
 
         //let nivel = this.crearMatrizYFormarGrupos(6, 7, 2);
 
@@ -560,6 +618,8 @@ class Scene1 extends Phaser.Scene {
                         //  vale: se pushea la bolita a la fila.
                         fila.push(bolita);
                     }
+                }else {
+                    fila.push(null);
                 }
             }
             //  vale: se pushea la fila al nivel cargado.
@@ -585,6 +645,45 @@ class Scene1 extends Phaser.Scene {
 
                     if (nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
                         nivelCargado[y][x].destroy();
+                    }
+                }
+            }
+        }
+        //  vale: finalmente se rompe la bolita lanzada.
+
+        bola_lanzada.destroy();
+    }
+
+    //  vale: con esto rompes un grupo de bolitas hexagonales.
+    romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
+        //  vale: se compara el color.
+
+        if (bola_lanzada.tintTopLeft == bola_level.tintTopLeft) {
+            //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
+
+            //  vale: se comprueba si es par o no para evaluar la posición correcta.
+            if (this.esPar((bola_level.y-400)/125)) {
+                let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-230)/125];
+
+                for (let y = 0; y < nivelCargado.length; y++) {
+                    for (let x = 0; x < nivelCargado[y].length; x++) {
+                        //  vale: se recorre toda la matriz y se destruye cada bolita perteneciente al grupo.
+
+                        if (nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
+                            nivelCargado[y][x].destroy();
+                        }
+                    }
+                }
+            }else{
+                let grupo = nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-170)/125];
+
+                for (let y = 0; y < nivelCargado.length; y++) {
+                    for (let x = 0; x < nivelCargado[y].length; x++) {
+                        //  vale: se recorre toda la matriz y se destruye cada bolita perteneciente al grupo.
+
+                        if (nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
+                            nivelCargado[y][x].destroy();
+                        }
                     }
                 }
             }
