@@ -2,8 +2,7 @@ let text1;
 
 let lanzador;
 
-let contador = 0;
-let activo = false;
+let deckTween;
 
 let bolitas = [];
 

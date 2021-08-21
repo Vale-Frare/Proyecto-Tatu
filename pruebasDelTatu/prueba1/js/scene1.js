@@ -39,35 +39,30 @@ class Scene1 extends Phaser.Scene {
                 }
             }
         });
-
-        if(activo){
-            contador++;
-            deck.forEach(bolita => {
-                bolita.obj.x +=6;
-            });
-            if(contador == 50){
-                activo = false;
-                contador = 0;
-            }
-        }
     }
 
     tiro() {
+        if (deckTween != undefined) {
+            if (deckTween.isPlaying()) {return;}
+        }
         if (bolitaALanzar >= deck.length) {
             return;
         }
-        if (activo){
-            return;
-        }
-        activo = true;
         // if (bolitaALanzar >= deck.length - 1) {
         //     deck.forEach(bolita => {
         //         bolita.obj.x += 300;
         //     });
         // }
-        // deck.forEach(bolita => {
-        //     bolita.obj.x += 300;
-        // });
+        deck.forEach(bolita => {
+            deckTween = this.tweens.add({
+                targets: bolita.obj,
+                x: bolita.obj.x + 300,
+                duration: 350,
+                yoyo: false,
+                ease: 'Power2',
+                loop: 0
+            });
+        });
         
         let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
         bolita.setTint(burbujas[deck[bolitaALanzar].color].color)
@@ -76,6 +71,7 @@ class Scene1 extends Phaser.Scene {
         bolita.angle = lanzador.rotation - 1.57;
         bolitas.push(bolita);
         bolita.body.setCircle(bolita.width/2);
+        deck[bolitaALanzar].obj.setVisible(false);
 
         //  vale: hice una pequeña modificacion porque el nivel cargado ahora es una matriz.
         nivelCargado.forEach(fila_bolitas => {
