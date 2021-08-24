@@ -570,7 +570,7 @@ class Scene1 extends Phaser.Scene {
         }*/
 
         //let nivel = this.crearMatrizHexagonalRandom(7,6);
-        let nivel = this.crearMatrizHexagonalDistancia(7,6, .5);
+        let nivel = this.crearMatrizHexagonalDistancia(7, 6, 0.2);
 
         //let nivel = this.crearMatrizYFormarGrupos(6, 7, 2);
 
