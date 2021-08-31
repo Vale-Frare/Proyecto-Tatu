@@ -9,57 +9,6 @@ export default class Scene1 extends Phaser.Scene {
         super("Scene1");
     }
 
-    create() {
-        let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
-        fondo.depth = -1;
-        let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
-        data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
-
-        data.lanzador = this.add.sprite(900,1800,'flecha');
-        let posicion_inicial;
-
-        data.lanzador.setInteractive({ draggable: true })
-        .on('dragstart', function(pointer, dragX, dragY){
-            posicion_inicial = pointer.x;
-        })
-        .on('drag', function(pointer, dragX, dragY){
-            data.lanzador.rotation = Phaser.Math.Clamp(data.lanzador.rotation + ((pointer.x - posicion_inicial)*.005), -0.8, 0.3);
-        })
-        .on('dragend', function(pointer, dragX, dragY, dropped){
-            
-        })
-
-        //this.input.on('pointerup', this.tiro, this);
-
-        for(let i = data.deck.length - 1; i > -1; i--) {
-            let bolita = new Phaser.GameObjects.Sprite(this, 900 - (i * 300),1800,'tatu_bebe');
-            bolita.setTint(data.burbujas[data.deck[i].color].color);
-            data.deck[i].obj = bolita;
-            bolita.setScale(0.3);
-        }
-
-        this.cargarNivelNuevo();
-    }
-
-    update() {
-        data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
-
-        //lanzador.rotation = (game.input.mousePointer.x*.001)-.9;
-
-        data.bolitas.forEach(bolita => {
-            if (bolita.scene == undefined){
-                data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
-            }
-            else{
-                this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
-                if (bolita.y < 0) {
-                    data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
-                    bolita.destroy();
-                }
-            }
-        });
-    }
-
     tiro() {
         if (data.deckTween != undefined) {
             if (data.deckTween.isPlaying()) {return;}
@@ -100,6 +49,60 @@ export default class Scene1 extends Phaser.Scene {
         }, this);
         
         data.bolitaALanzar += 1;
+    }
+
+    create() {
+        let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
+        fondo.depth = -1;
+        let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
+        data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
+
+        data.lanzador = this.add.sprite(900,1800,'flecha');
+        let posicion_inicial;
+
+        data.lanzador.setInteractive({ draggable: true })
+        .on('dragstart', function(pointer, dragX, dragY){
+            posicion_inicial = pointer.x;
+        })
+        .on('drag', function(pointer, dragX, dragY){
+            data.lanzador.rotation = Phaser.Math.Clamp(data.lanzador.rotation + ((pointer.x - posicion_inicial)*.0005), -0.8, 0.3);
+        })
+        .on('dragend', function(pointer, dragX, dragY, dropped){
+            this.tiro();
+        }, this)
+
+        //this.input.on('pointerup', this.tiro, this);
+
+        for(let i = data.deck.length - 1; i > -1; i--) {
+            //let bolita = new Phaser.GameObjects.Sprite(this, 900 - (i * 300),1800,'tatu_bebe');
+            let bolita = this.add.sprite(900 - (i * 300),1800,'tatu_bebe');
+            bolita.setTint(data.burbujas[data.deck[i].color].color);
+            //data.deck[i].obj = bolita;
+            data.setObjInDeck(bolita, i);
+            bolita.setDepth(5);
+            bolita.setScale(0.3);
+        }
+
+        this.cargarNivelNuevo();
+    }
+
+    update() {
+        data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
+
+        //lanzador.rotation = (game.input.mousePointer.x*.001)-.9;
+
+        data.bolitas.forEach(bolita => {
+            if (bolita.scene == undefined){
+                data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
+            }
+            else{
+                this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
+                if (bolita.y < 0) {
+                    data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
+                    bolita.destroy();
+                }
+            }
+        });
     }
 
     crearMatrizConPatron(xSize, ySize, cellSize) {
