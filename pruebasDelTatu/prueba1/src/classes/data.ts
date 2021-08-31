@@ -64,4 +64,8 @@ export default class Data {
     constructor() {
         //  no hay nada
     }
+
+    setObjInDeck(obj, index) {
+        this.deck[index].obj = obj;
+    }
 }
