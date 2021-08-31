@@ -9,20 +9,20 @@ class Scene1 extends Phaser.Scene {
         text1 = this.add.text(0, 0, `Cantidad de bolitas: ${bolitas.length}`, {fontSize: '75px', fill: 'white'}).setOrigin(0);
 
         lanzador = this.add.sprite(900,1800,'flecha');
-        let posicion_inicial;
+        // let posicion_inicial;
 
-        lanzador.setInteractive({ draggable: true })
-        .on('dragstart', function(pointer, dragX, dragY){
-            posicion_inicial = pointer.x;
-        })
-        .on('drag', function(pointer, dragX, dragY){
-            lanzador.rotation = Phaser.Math.Clamp(lanzador.rotation + ((pointer.x - posicion_inicial)*.005), -0.8, 0.3);
-        })
-        .on('dragend', function(pointer, dragX, dragY, dropped){
+        // lanzador.setInteractive({ draggable: true })
+        // .on('dragstart', function(pointer, dragX, dragY){
+        //     posicion_inicial = pointer.x;
+        // })
+        // .on('drag', function(pointer, dragX, dragY){
+        //     lanzador.rotation = Phaser.Math.Clamp(lanzador.rotation + ((pointer.x - posicion_inicial)*.005), -0.8, 0.3);
+        // })
+        // .on('dragend', function(pointer, dragX, dragY, dropped){
             
-        })
+        // })
 
-        //this.input.on('pointerup', this.tiro, this);
+        this.input.on('pointerup', this.tiro, this);
 
         for(let i = deck.length - 1; i > -1; i--) {
             let bolita = this.add.sprite(900 - (i * 300),1800,'tatu_bebe');
@@ -37,7 +37,7 @@ class Scene1 extends Phaser.Scene {
     update() {
         text1.text = `Cantidad de bolitas: ${bolitas.length}`;
 
-        //lanzador.rotation = (game.input.mousePointer.x*.001)-.9;
+        lanzador.rotation = (game.input.mousePointer.x*.001)-.9;
 
         bolitas.forEach(bolita => {
             if (bolita.scene == undefined){

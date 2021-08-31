@@ -23,21 +23,21 @@ export default class Data {
     };
 
     deck = [
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 0},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 0},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 0},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 0},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 0},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 1},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 1},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 1},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 1},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 1},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 2},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 2},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 2},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 2},
-        {obj: Phaser.GameObjects.Sprite, type: 0, color: 2}
+        {obj: null, type: 0, color: 0},
+        {obj: null, type: 0, color: 0},
+        {obj: null, type: 0, color: 0},
+        {obj: null, type: 0, color: 0},
+        {obj: null, type: 0, color: 0},
+        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 2},
+        {obj: null, type: 0, color: 2},
+        {obj: null, type: 0, color: 2},
+        {obj: null, type: 0, color: 2},
+        {obj: null, type: 0, color: 2}
     ];
 
     bolitasTexturas = [
