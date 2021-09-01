@@ -33,18 +33,24 @@ export default class Scene1 extends Phaser.Scene {
         });
         
         let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
-        bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color)
+        bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
+
+        //  vale: Esto desaparece la bolita lanzada para dar el efecto de que es la misma.
+        data.deck[data.bolitaALanzar].obj.setVisible(false);
+
         bolita.setScale(0.3);
-        bolita.depth = -1;
+        bolita.depth = 1;
         bolita.angle = data.lanzador.rotation - 1.57;
         data.bolitas.push(bolita);
         bolita.body.setCircle(bolita.width/2);
-        data.deck[data.bolitaALanzar].obj.setVisible(false);
 
         //  vale: hice una pequeña modificacion porque el nivel cargado ahora es una matriz.
         data.nivelCargado.forEach(fila_bolitas => {
             fila_bolitas.forEach(bolita_nivel => {
-                this.physics.add.collider(bolita_nivel, bolita, this.romperGrupoDeBolitas, null, this);
+                //  vale: hice otra modificacion para que no intente leer las bolitas que son null.
+                if (bolita_nivel === null) {} else {
+                    this.physics.add.collider(bolita_nivel, bolita, this.romperGrupoDeBolitasHexagonales, null, this);
+                }
             });
         }, this);
         
@@ -52,6 +58,10 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     create() {
+        const map = this.make.tilemap({ key: 'tilemap' });
+
+        let objetos = map.createFromObjects('pelotas',{name:'pelota_1', key:'basura_1'});
+
         let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
         fondo.depth = -1;
         let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
@@ -103,6 +113,30 @@ export default class Scene1 extends Phaser.Scene {
                 }
             }
         });
+    }
+
+    //  vale: Funcion que crea la matriz hexagonales con colores random y tambien agujeros.
+    crearMatrizHexagonalRandom(xSize, ySize) {
+        let matriz = [];
+        let count = 0;
+        for (let y = 0; y < ySize; y++) {
+            let fila = [];
+            if (this.esPar(y)) {
+                for (let x = 0; x < xSize-1; x++) {
+                    let color = Phaser.Math.Between(-1, 2);
+                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
+                    count++;
+                }
+            }else{
+                for (let x = 0; x < xSize; x++) {
+                    let color = Phaser.Math.Between(-1, 2);
+                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
+                    count++;
+                }
+            }
+            matriz.push(fila);
+        }
+        return matriz;
     }
 
     crearMatrizConPatron(xSize, ySize, cellSize) {
@@ -205,7 +239,132 @@ export default class Scene1 extends Phaser.Scene {
         }
     }   
 
-    fundirGrupos(matriz, fila, grupo1, grupo2) {
+    //  vale: Funcion que hice que calcula los grupos de bolitas hexagonales.
+    //        La hice en un delirio cosmico asi que no es muy facil de comprender pero funciona.
+    calcularGruposHexagonalmente(fila, matriz, y, x, color, count) {
+        if ((x - 1) < 0 && (y - 1) < 0)  {
+            //  vale: en el caso de ser la ezquina se retorna el valor del count.
+
+            return count;
+        }else if ((x - 1) >= 0 && (y - 1) >= 0) {
+            //  vale: en el caso de tener una bolita arriba y una a la izquierda se evalua.
+
+            if (this.esPar(y)) {
+                let colorArribaIzquierda = matriz[y - 1][x].color;
+                let colorArribaDerecha = matriz[y - 1][x+1].color;
+                let colorIzquierda = fila[x - 1].color;
+
+                if (colorArribaDerecha == color && colorIzquierda == color && colorArribaIzquierda == color) {
+                    return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, matriz[y - 1][x+1].grupo, true, fila[x - 1].grupo);
+                }else if(colorIzquierda != color) {
+                    if (colorArribaDerecha == color && colorArribaIzquierda == color) {
+                        return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, matriz[y - 1][x+1].grupo);
+                    }else if (colorArribaDerecha != color && colorArribaIzquierda == color) {
+                        return matriz[y - 1][x].grupo;
+                    }else if (colorArribaDerecha == color && colorArribaIzquierda != color) {
+                        return matriz[y - 1][x+1].grupo;
+                    }else if (colorArribaDerecha != color && colorArribaIzquierda != color) {
+                        return count;
+                    }
+                }else if(colorIzquierda == color) {
+                    if (colorArribaDerecha != color && colorArribaIzquierda == color) {
+                        return this.fundirGrupos(matriz, fila, fila[x - 1].grupo, matriz[y - 1][x].grupo);
+                    }else if (colorArribaDerecha == color && colorArribaIzquierda != color) {
+                        return this.fundirGrupos(matriz, fila, fila[x - 1].grupo, matriz[y - 1][x+1].grupo);
+                    }else if (colorArribaDerecha != color && colorArribaIzquierda != color) {
+                        return fila[x - 1].grupo;
+                    }
+                }
+            }else {
+                if (matriz[y - 1].length != x) {
+                    let colorArribaIzquierda = matriz[y - 1][x-1].color;
+                    let colorArribaDerecha = matriz[y - 1][x].color;
+                    let colorIzquierda = fila[x - 1].color;
+
+                    if (colorArribaDerecha == color && colorIzquierda == color && colorArribaIzquierda == color) {
+                        return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, matriz[y - 1][x-1].grupo, true, fila[x - 1].grupo);
+                    }else if(colorIzquierda != color) {
+                        if (colorArribaDerecha == color && colorArribaIzquierda == color) {
+                            return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, matriz[y - 1][x-1].grupo);
+                        }else if (colorArribaDerecha != color && colorArribaIzquierda == color) {
+                            return matriz[y - 1][x-1].grupo;
+                        }else if (colorArribaDerecha == color && colorArribaIzquierda != color) {
+                            return matriz[y - 1][x].grupo;
+                        }else if (colorArribaDerecha != color && colorArribaIzquierda != color) {
+                            return count;
+                        }
+                    }else if(colorIzquierda == color) {
+                        if (colorArribaDerecha != color && colorArribaIzquierda == color) {
+                            return this.fundirGrupos(matriz, fila, fila[x - 1].grupo, matriz[y - 1][x-1].grupo);
+                        }else if (colorArribaDerecha == color && colorArribaIzquierda != color) {
+                            return this.fundirGrupos(matriz, fila, fila[x - 1].grupo, matriz[y - 1][x].grupo);
+                        }else if (colorArribaDerecha != color && colorArribaIzquierda != color) {
+                            return fila[x - 1].grupo;
+                        }
+                    }
+                }else {
+                    let colorArribaIzquierda = matriz[y - 1][x-1].color;
+                    let colorIzquierda = fila[x - 1].color;
+
+                    if (colorArribaIzquierda == color && colorIzquierda == color) {
+                        return this.fundirGrupos(matriz, fila, matriz[y - 1][x-1].grupo, fila[x - 1].grupo);
+                    }else if (colorArribaIzquierda == color && colorIzquierda != color) { 
+                        return matriz[y - 1][x-1].grupo;
+                    }else if (colorIzquierda == color && colorArribaIzquierda != color) { 
+                        return fila[x - 1].grupo;
+                    }else if (colorArribaIzquierda != color && colorIzquierda != color) { 
+                        return count;
+                    }
+                }
+            }
+        }else if ((x - 1) >= 0 && (y - 1) < 0) {
+            //  vale: en el caso de tener una bolita a la izquierda se evalua si el color coincide.
+
+            let colorIzquierda = fila[x - 1].color;
+
+            if (colorIzquierda == color) {
+                return fila[x - 1].grupo;
+            }else {
+                return count;
+            }
+        }else if ((x - 1) < 0 && (y - 1) >= 0) {
+            //  vale: en el caso de tener una bolita arriba y no una a la izquierda se evalua si el color coincide.
+
+            if (this.esPar(y)) {
+                // vale: si es par se evaluan dos colores en la parte superior.
+
+                let colorArribaIzquierda = matriz[y - 1][x].color;
+                let colorArribaDerecha = matriz[y - 1][x+1].color;
+
+                if (colorArribaDerecha == color && colorArribaIzquierda == color) {
+                    return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, matriz[y - 1][x+1].grupo);
+                }else if (colorArribaDerecha == color && colorArribaIzquierda != color) {
+                    return matriz[y - 1][x+1].grupo;
+                }else if (colorArribaIzquierda == color && colorArribaDerecha != color) {
+                    return matriz[y - 1][x].grupo;
+                }else if (colorArribaIzquierda != color && colorArribaDerecha != color){
+                    return count;
+                }
+            }else {
+                // vale: si es inpar solo se evalua un color en la parte superior.
+
+                let colorArriba = matriz[y - 1][x].color;
+
+                if (colorArriba == color) {
+                    return matriz[y - 1][x].grupo;
+                }else {
+                    return count;
+                }
+            }
+        }
+    }
+
+    esPar(num) {
+        return num % 2 == 0;
+    }
+
+    //  vale: se puede usar sin necesidad de agregar los ultimos dos parametros.
+    fundirGrupos(matriz, fila, grupo1, grupo2, triple=false, grupo3=null) {
         //  vale: se crea una matriz completa agregando la fila sin pushear a la matriz en progreso.
 
         let matrizCompleta = [];
@@ -217,38 +376,64 @@ export default class Scene1 extends Phaser.Scene {
         let nuevoGrupo;
         let grupoAFundir;
 
-        //  vale: se evalua que grupo tiene el menor valor para determinar el valor del grupo fundido.
+        if (!triple) {
+            //  vale: se evalua que grupo tiene el menor valor para determinar el valor del grupo fundido.
 
-        if (grupo1 < grupo2) { 
-            nuevoGrupo = grupo1;
-            grupoAFundir = grupo2;
+            if (grupo1 < grupo2) { 
+                nuevoGrupo = grupo1;
+                grupoAFundir = grupo2;
+            }else {
+                nuevoGrupo = grupo2;
+                grupoAFundir = grupo1;
+            }
+
+            //  vale: se reemplazan todos los de valor mayor por el valor menor fundiendo el grupo.
+
+            for (let y = 0; y < matrizCompleta.length; y++) { 
+                for (let x = 0; x < matrizCompleta[y].length; x++) { 
+                    if (matrizCompleta[y][x].grupo == grupoAFundir) {
+                        matrizCompleta[y][x].grupo = nuevoGrupo;
+                    }
+                }
+            }
+
+            //  vale: se modifica la matriz en progreso para cambiar el valor de los grupos.
+
+            for (let y = 0; y < matrizCompleta.length; y++) { 
+                if (y == (matrizCompleta.length - 1)) {
+                    fila = matrizCompleta[y];
+                }else {
+                    matriz[y] = matrizCompleta[y];
+                }
+            }
         }else {
-            nuevoGrupo = grupo2;
-            grupoAFundir = grupo1;
-        }
+            //  vale: este es un pequeño arreglo que hice para que pueda fusionar 3 grupos.
+            //        se evalua que grupo tiene el menor valor para determinar el valor del grupo fundido
+            //        y los otros dos quedan en un array.
 
-        //  vale: se reemplazan todos los de valor mayor por el valor menor fundiendo el grupo.
+            let gruposAFundir;
+            nuevoGrupo = Math.max(...[grupo1, grupo2, grupo3]);
+            gruposAFundir = [grupo1, grupo2, grupo3].sort(function(a, b) {return a - b;});
+            gruposAFundir = gruposAFundir.splice(0, 2);
 
-        for (let y = 0; y < matrizCompleta.length; y++) { 
-            for (let x = 0; x < matrizCompleta[y].length; x++) { 
-                if (matrizCompleta[y][x].grupo == grupoAFundir) {
-                    matrizCompleta[y][x].grupo = nuevoGrupo;
+            for (let y = 0; y < matrizCompleta.length; y++) { 
+                for (let x = 0; x < matrizCompleta[y].length; x++) { 
+                    if (matrizCompleta[y][x].grupo == gruposAFundir[0] || matrizCompleta[y][x].grupo == gruposAFundir[1]) {
+                        matrizCompleta[y][x].grupo = nuevoGrupo;
+                    }
+                }
+            }
+
+            for (let y = 0; y < matrizCompleta.length; y++) { 
+                if (y == (matrizCompleta.length - 1)) {
+                    fila = matrizCompleta[y];
+                }else {
+                    matriz[y] = matrizCompleta[y];
                 }
             }
         }
 
-        //  vale: se modifica la matriz en progreso para cambiar el valor de los grupos.
-
-        for (let y = 0; y < matrizCompleta.length; y++) { 
-            if (y == (matrizCompleta.length - 1)) {
-                fila = matrizCompleta[y];
-            }else {
-                matriz[y] = matrizCompleta[y];
-            }
-        }
-        
         //  vale: se retorna el valor del nuevo grupo.
-
         return nuevoGrupo;
     }
 
@@ -363,39 +548,62 @@ export default class Scene1 extends Phaser.Scene {
     cargarNivelNuevo() {
         //  sergio: ponele un numerito adentro, 1 para 1x1, 2 para 2x2, 3 para 3x3 y así
         //  sergio: los colores no se repiten ni en vertical, ni en horizontal
-        let nivel = null;
-        while(nivel == null){
-            nivel = this.crearMatrizAleatoria(6, 6, 2);
-        }
+        //let nivel = null;
+        // while(nivel == null){
+        //     nivel = this.crearMatrizAleatoria(6, 6, 2);
+        // }
 
-        nivel = this.convertirAGrupos(nivel);
+        // nivel = this.convertirAGrupos(nivel);
 
         //let nivel = this.crearMatrizYFormarGrupos(6, 8, 3);
 
         //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
+        let nivel = this.crearMatrizHexagonalRandom(6,6);
+
+        const bolitasTexturas = [
+            'basura_3', //  AZUL
+            'basura_1', //  VERDE
+            'basura_2', //  ROJA
+        ];
+
         for (let y = 0; y < nivel.length; y++) {
             let fila = [];
             for (let x = 0; x < nivel[y].length; x++) {
-                if (nivel[y][x] != -1) {
-                    let bolita;
-                    bolita = this.physics.add.sprite((x * 125) + 240, (y * 125) + 400, data.bolitasTexturas[nivel[y][x].color]);
-                    bolita.setScale(0.3);
-                    bolita.depth = -1;
-                    //bolita.setTint(burbujas[nivel[y][x].color].color);
-                    bolita.body.setImmovable(true);
-                    bolita.body.moves = false;
-                    bolita.body.setCircle(bolita.width/2);
+                if (nivel[y][x].color != -1) {
+                    if (this.esPar(y)) {
+                        let bolita;
+                        bolita = this.physics.add.sprite((x * 125) + 230, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(0.3);
+                        bolita.depth = -1;
+                        //bolita.setTint(data.burbujas[nivel[y][x].color].color);
+                        bolita.body.setImmovable(true);
+                        bolita.body.moves = false;
+                        bolita.body.setCircle(bolita.width/2);
 
-                    //  vale: si usas el modo debug podes ver un texto sobre cada bolita con el numero de su grupo ;)
-                    if (Config.config.physics.arcade.debug) new Phaser.GameObjects.Text(this, bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
+                        //  vale: si usas el modo debug podes ver un texto sobre cada bolita con el numero de su grupo ;)
+                        if (Config.config.physics.arcade.debug) new Phaser.GameObjects.Text(this, bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
 
-                    // if (y % 2 == 0) {
-                    // } else {
-                    // }
-                    
-                    //  vale: se pushea la bolita a la fila.
-                    fila.push(bolita);
+                        //  vale: se pushea la bolita a la fila.
+                        fila.push(bolita);
+                    }else {
+                        let bolita;
+                        bolita = this.physics.add.sprite((x * 125) + 170, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(0.3);
+                        bolita.depth = -1;
+                        //bolita.setTint(data.burbujas[nivel[y][x].color].color);
+                        bolita.body.setImmovable(true);
+                        bolita.body.moves = false;
+                        bolita.body.setCircle(bolita.width/2);
+
+                        //  vale: si usas el modo debug podes ver un texto sobre cada bolita con el numero de su grupo ;)
+                        if (Config.config.physics.arcade.debug) new Phaser.GameObjects.Text(this, bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
+                        
+                        //  vale: se pushea la bolita a la fila.
+                        fila.push(bolita);
+                    }
+                }else {
+                    fila.push(null);
                 }
             }
             //  vale: se pushea la fila al nivel cargado.
@@ -421,6 +629,45 @@ export default class Scene1 extends Phaser.Scene {
 
                     if (data.nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
                         data.nivelCargado[y][x].destroy();
+                    }
+                }
+            }
+        }
+        //  vale: finalmente se rompe la bolita lanzada.
+
+        bola_lanzada.destroy();
+    }
+
+    //  vale: con esto rompes un grupo de bolitas hexagonales.
+    romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
+        //  vale: se compara el color.
+
+        if (bola_lanzada.tintTopLeft == data.bolitasTextYColors[bola_level.texture.key]) {
+            //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
+
+            //  vale: se comprueba si es par o no para evaluar la posición correcta.
+            if (this.esPar((bola_level.y-400)/125)) {
+                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-230)/125];
+
+                for (let y = 0; y < data.nivelCargado.length; y++) {
+                    for (let x = 0; x < data.nivelCargado[y].length; x++) {
+                        //  vale: se recorre toda la matriz y se destruye cada bolita perteneciente al grupo.
+
+                        if (data.nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
+                            data.nivelCargado[y][x].destroy();
+                        }
+                    }
+                }
+            }else{
+                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-170)/125];
+
+                for (let y = 0; y < data.nivelCargado.length; y++) {
+                    for (let x = 0; x < data.nivelCargado[y].length; x++) {
+                        //  vale: se recorre toda la matriz y se destruye cada bolita perteneciente al grupo.
+
+                        if (data.nivelCargadoGrupos[y][x].grupo == grupo.grupo) {
+                            data.nivelCargado[y][x].destroy();
+                        }
                     }
                 }
             }

@@ -40,11 +40,11 @@ export default class Data {
         {obj: null, type: 0, color: 2}
     ];
 
-    bolitasTexturas = [
-        'basura_3', //  AZUL
-        'basura_1', //  AMARILLO
-        'basura_2', //  ROJA
-    ];
+    bolitasTextYColors = {
+        'basura_3': 0x0384fc, //  AZUL
+        'basura_1': 0xffda52, //  AMARILLO
+        'basura_2': 0xff5252 //  ROJA
+    };
 
     niveles = [
         [
