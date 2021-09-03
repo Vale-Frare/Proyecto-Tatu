@@ -58,10 +58,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     create() {
-        const map = this.make.tilemap({ key: 'tilemap' });
-
-        let objetos = map.createFromObjects('pelotas',{name:'pelota_1', key:'basura_1'});
-
         let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
         fondo.depth = -1;
         let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
@@ -94,6 +90,99 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         this.cargarNivelNuevo();
+    }
+
+    cargarNivelDesdeTiled(key: string) {
+        const map = this.make.tilemap({ key: key });
+
+        let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
+
+        let matrizNivel = this.objetosAMatriz(objetos);
+
+        return this.convertirAGrupos(matrizNivel);
+    }
+
+    objetosAMatriz(objetos) {
+        objetos.forEach(objeto => {
+            //console.log(objeto.y, objeto.x, objeto.name);
+        });
+
+        let matriz = [];
+
+        let xSize = 0;
+        let ySize = 0;
+
+        let maxYSize = 0;
+
+        objetos.forEach(objeto => { if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y; } });
+        if (this.esPar(ySize / 10)) {xSize = (xSize - 40) / 40; ySize = (ySize - 10) / 40} 
+        else {xSize = (xSize - 40) / 30; ySize = (ySize - 10) / 40}
+        //console.log(xSize, ySize);
+
+        objetos.forEach(objeto => {
+            if (objeto.y > maxYSize) {
+                maxYSize = objeto.y
+            } 
+        });
+
+        xSize = xSize - 1;
+        ySize = ((maxYSize - 20) / 30) + 1;
+        
+        for(let y = 0; y < ySize; y++) {
+            let fila = [];
+            for(let x = 0; x < xSize; x++) {
+                fila.push(-1);
+            }
+            matriz.push(fila);
+        }
+
+        console.log(xSize, ySize);
+
+        console.log(matriz);
+
+        objetos.forEach(objeto => {
+            if (this.esPar(objeto.y / 10)) {
+                console.log(objeto.y, objeto.x, objeto.name, "-------------");
+                console.log( (objeto.y - 20) / 30,  (objeto.x - 20) / 40 );
+                matriz[      (objeto.y - 20) / 30][ (objeto.x - 20) / 40 ] = parseInt(objeto.name);
+                
+            }
+            else {
+                console.log(objeto.y, objeto.x, objeto.name, "------------- inpar");
+                console.log( (objeto.y - 20) / 30 , ( objeto.x - 40) / 40 );
+                matriz[      (objeto.y - 20) / 30 ][( objeto.x - 40) / 40 ] = parseInt(objeto.name);
+                
+            }
+        });
+
+        let filaMasGrande = 0;
+
+        let count = 0;
+        matriz.forEach(fila => {   
+            if (fila.length > matriz[filaMasGrande].length) {
+                filaMasGrande = count;
+            }
+            for (let i = 0; i < fila.length; i++) {
+                if (fila[i] == undefined) {
+                    fila[i] = -1;
+                }
+            }
+            count++;
+        });
+
+        console.log(matriz[filaMasGrande]);
+
+        matriz.forEach(fila => {
+            if (fila.length < matriz[filaMasGrande].length) {
+                let diferencia = matriz[filaMasGrande].length - fila.length;
+                for(let i = 0; i < diferencia; i++) {
+                    fila.push(-1);
+                }
+            }
+        });
+
+        console.log(matriz);
+        return matriz;
     }
 
     update() {
@@ -239,6 +328,8 @@ export default class Scene1 extends Phaser.Scene {
         }
     }   
 
+    //  vale: Hay que cambiar esta funcion debido a que los hexagonos de Tiled funcionan diferente. :)
+
     //  vale: Funcion que hice que calcula los grupos de bolitas hexagonales.
     //        La hice en un delirio cosmico asi que no es muy facil de comprender pero funciona.
     calcularGruposHexagonalmente(fila, matriz, y, x, color, count) {
@@ -361,6 +452,10 @@ export default class Scene1 extends Phaser.Scene {
 
     esPar(num) {
         return num % 2 == 0;
+    }
+
+    esParPeroDevuelveFalse(num) {
+        return !(num % 2 == 0);
     }
 
     //  vale: se puede usar sin necesidad de agregar los ultimos dos parametros.
@@ -559,7 +654,9 @@ export default class Scene1 extends Phaser.Scene {
 
         //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
-        let nivel = this.crearMatrizHexagonalRandom(6,6);
+        let nivel = this.cargarNivelDesdeTiled("tilemap2");
+
+        //let nivel = this.crearMatrizHexagonalRandom(6,6);
 
         const bolitasTexturas = [
             'basura_3', //  AZUL
@@ -573,7 +670,7 @@ export default class Scene1 extends Phaser.Scene {
                 if (nivel[y][x].color != -1) {
                     if (this.esPar(y)) {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 125) + 230, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
+                        bolita = this.physics.add.sprite((x * 125) + 170, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
                         bolita.setScale(0.3);
                         bolita.depth = -1;
                         //bolita.setTint(data.burbujas[nivel[y][x].color].color);
@@ -588,7 +685,7 @@ export default class Scene1 extends Phaser.Scene {
                         fila.push(bolita);
                     }else {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 125) + 170, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
+                        bolita = this.physics.add.sprite((x * 125) + 230, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
                         bolita.setScale(0.3);
                         bolita.depth = -1;
                         //bolita.setTint(data.burbujas[nivel[y][x].color].color);
@@ -647,7 +744,7 @@ export default class Scene1 extends Phaser.Scene {
 
             //  vale: se comprueba si es par o no para evaluar la posición correcta.
             if (this.esPar((bola_level.y-400)/125)) {
-                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-230)/125];
+                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-170)/125];
 
                 for (let y = 0; y < data.nivelCargado.length; y++) {
                     for (let x = 0; x < data.nivelCargado[y].length; x++) {
@@ -659,7 +756,7 @@ export default class Scene1 extends Phaser.Scene {
                     }
                 }
             }else{
-                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-170)/125];
+                let grupo = data.nivelCargadoGrupos[(bola_level.y-400)/125][(bola_level.x-230)/125];
 
                 for (let y = 0; y < data.nivelCargado.length; y++) {
                     for (let x = 0; x < data.nivelCargado[y].length; x++) {
