@@ -148,11 +148,23 @@ export default class Scene1 extends Phaser.Scene {
 
         let maxYSize = 0;
 
-        objetos.forEach(objeto => { if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y; } });
+        objetos.forEach(objeto => {
+            if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y;}
+        });
+
+        //opción normal
+
+        // if (this.esPar(ySize / 10)) 
+        // {xSize = Math.round((xSize - 40) / 40); ySize = Math.round((ySize - 10) / 40)} 
+        // else 
+        // {xSize = Math.round((xSize - 40) / 30); ySize = Math.round((ySize - 10) / 40)}
+
+        //opción con mapa completo
+
         if (this.esPar(ySize / 10)) 
-        {xSize = Math.round((xSize - 40) / 40); ySize = Math.round((ySize - 10) / 40)} 
+        {xSize = Math.round((xSize - 115) / 115); ySize = Math.round((ySize - 30) / 120)} 
         else 
-        {xSize = Math.round((xSize - 40) / 30); ySize = Math.round((ySize - 10) / 40)}
+        {xSize = Math.round((xSize - 115) / 86.25); ySize = Math.round((ySize - 30) / 120)}
 
         objetos.forEach(objeto => {
             if (objeto.y > maxYSize) {
@@ -161,7 +173,14 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         xSize = xSize - 1;
-        ySize = Math.round(((maxYSize - 20) / 30) + 1);
+
+        //opción normal
+
+        //ySize = Math.round(((maxYSize - 20) / 30) + 1);
+
+        //opción con mapa completo
+
+        ySize = Math.round(((maxYSize - 60) / 86.25) + 1);
         
         for(let y = 0; y < ySize; y++) {
             let fila = [];
@@ -171,13 +190,28 @@ export default class Scene1 extends Phaser.Scene {
             matriz.push(fila);
         }
 
+        //opción normal
+
+        // objetos.forEach(objeto => {
+        //     if (this.esPar(objeto.y / 10)) {
+        //         matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 20) / 40) ] = parseInt(objeto.name);
+                
+        //     }
+        //     else {
+        //         matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 40) / 40) ] = parseInt(objeto.name);
+                
+        //     }
+        // });
+
+        //opción con mapa completo
+
         objetos.forEach(objeto => {
             if (this.esPar(objeto.y / 10)) {
-                matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 20) / 40) ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 60) / 86.25)][ Math.round((objeto.x - 57.5) / 115) ] = parseInt(objeto.name);
                 
             }
             else {
-                matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 40) / 40) ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 60) / 86.25)][ Math.round((objeto.x - 115) / 115) ] = parseInt(objeto.name);
                 
             }
         });
@@ -611,7 +645,7 @@ export default class Scene1 extends Phaser.Scene {
 
         //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
-        let nivel = this.cargarNivelDesdeTiled("tilemap");
+        let nivel = this.cargarNivelDesdeTiled("tilemap3");
 
         //let nivel = this.crearMatrizHexagonalRandom(6,6);
 
