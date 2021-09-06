@@ -66,7 +66,7 @@ export default class Scene1 extends Phaser.Scene {
             posicion_inicial = pointer.x;
         })
         .on('drag', function(pointer, dragX, dragY){
-            data.lanzador.rotation = Phaser.Math.Clamp(data.lanzador.rotation + ((pointer.x - posicion_inicial)*.0005), -0.8, 0.3);
+            data.lanzador.rotation = Phaser.Math.Clamp(data.lanzador.rotation + ((dragX / 10000) - 0.088), -0.8, 0.3);
         })
         .on('dragend', function(pointer, dragX, dragY, dropped){
             this.tiro();
@@ -91,6 +91,10 @@ export default class Scene1 extends Phaser.Scene {
         const map = this.make.tilemap({ key: key });
 
         let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
+
+        objetos.forEach(objeto => {
+            objeto.setVisible(false);
+        });
 
         let matrizNivel = this.objetosAMatriz(objetos);
 
@@ -145,8 +149,10 @@ export default class Scene1 extends Phaser.Scene {
         let maxYSize = 0;
 
         objetos.forEach(objeto => { if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y; } });
-        if (this.esPar(ySize / 10)) {xSize = (xSize - 40) / 40; ySize = (ySize - 10) / 40} 
-        else {xSize = (xSize - 40) / 30; ySize = (ySize - 10) / 40}
+        if (this.esPar(ySize / 10)) 
+        {xSize = Math.round((xSize - 40) / 40); ySize = Math.round((ySize - 10) / 40)} 
+        else 
+        {xSize = Math.round((xSize - 40) / 30); ySize = Math.round((ySize - 10) / 40)}
 
         objetos.forEach(objeto => {
             if (objeto.y > maxYSize) {
@@ -155,7 +161,7 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         xSize = xSize - 1;
-        ySize = ((maxYSize - 20) / 30) + 1;
+        ySize = Math.round(((maxYSize - 20) / 30) + 1);
         
         for(let y = 0; y < ySize; y++) {
             let fila = [];
@@ -167,11 +173,11 @@ export default class Scene1 extends Phaser.Scene {
 
         objetos.forEach(objeto => {
             if (this.esPar(objeto.y / 10)) {
-                matriz[      (objeto.y - 20) / 30][ (objeto.x - 20) / 40 ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 20) / 40) ] = parseInt(objeto.name);
                 
             }
             else {
-                matriz[      (objeto.y - 20) / 30 ][( objeto.x - 40) / 40 ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 40) / 40) ] = parseInt(objeto.name);
                 
             }
         });
@@ -605,7 +611,7 @@ export default class Scene1 extends Phaser.Scene {
 
         //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
-        let nivel = this.cargarNivelDesdeTiled("tilemap2");
+        let nivel = this.cargarNivelDesdeTiled("tilemap");
 
         //let nivel = this.crearMatrizHexagonalRandom(6,6);
 
