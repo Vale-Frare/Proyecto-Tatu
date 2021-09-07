@@ -72,13 +72,9 @@ export default class Scene1 extends Phaser.Scene {
             this.tiro();
         }, this)
 
-        //this.input.on('pointerup', this.tiro, this);
-
         for(let i = data.deck.length - 1; i > -1; i--) {
-            //let bolita = new Phaser.GameObjects.Sprite(this, 900 - (i * 300),1800,'tatu_bebe');
             let bolita = this.add.sprite(900 - (i * 300),1800,'tatu_bebe');
             bolita.setTint(data.burbujas[data.deck[i].color].color);
-            //data.deck[i].obj = bolita;
             data.setObjInDeck(bolita, i);
             bolita.setDepth(5);
             bolita.setScale(0.3);
@@ -93,7 +89,7 @@ export default class Scene1 extends Phaser.Scene {
         let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
 
         objetos.forEach(objeto => {
-            objeto.setVisible(false);
+            objeto.visible = false;
         });
 
         let matrizNivel = this.objetosAMatriz(objetos);
@@ -152,35 +148,20 @@ export default class Scene1 extends Phaser.Scene {
             if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y;}
         });
 
-        //opción normal
-
-        // if (this.esPar(ySize / 10)) 
-        // {xSize = Math.round((xSize - 40) / 40); ySize = Math.round((ySize - 10) / 40)} 
-        // else 
-        // {xSize = Math.round((xSize - 40) / 30); ySize = Math.round((ySize - 10) / 40)}
-
-        //opción con mapa completo
-
-        if (this.esPar(ySize / 10)) 
-        {xSize = Math.round((xSize - 115) / 115); ySize = Math.round((ySize - 30) / 120)} 
+        if (Number.isInteger((xSize - 57) / 114)) 
+        {xSize = Math.round((xSize - 57) / 114); ySize = Math.round((ySize - 60) / 90)} 
         else 
-        {xSize = Math.round((xSize - 115) / 86.25); ySize = Math.round((ySize - 30) / 120)}
+        {xSize = Math.round((xSize - 114) / 114); ySize = Math.round((ySize - 60) / 90)}
 
         objetos.forEach(objeto => {
             if (objeto.y > maxYSize) {
                 maxYSize = objeto.y
             } 
         });
-
+        
         xSize = xSize - 1;
 
-        //opción normal
-
-        //ySize = Math.round(((maxYSize - 20) / 30) + 1);
-
-        //opción con mapa completo
-
-        ySize = Math.round(((maxYSize - 60) / 86.25) + 1);
+        ySize = Math.round(((maxYSize - 60) / 90) + 1);  
         
         for(let y = 0; y < ySize; y++) {
             let fila = [];
@@ -190,29 +171,12 @@ export default class Scene1 extends Phaser.Scene {
             matriz.push(fila);
         }
 
-        //opción normal
-
-        // objetos.forEach(objeto => {
-        //     if (this.esPar(objeto.y / 10)) {
-        //         matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 20) / 40) ] = parseInt(objeto.name);
-                
-        //     }
-        //     else {
-        //         matriz[      Math.round((objeto.y - 20) / 30)][ Math.round((objeto.x - 40) / 40) ] = parseInt(objeto.name);
-                
-        //     }
-        // });
-
-        //opción con mapa completo
-
         objetos.forEach(objeto => {
-            if (this.esPar(objeto.y / 10)) {
-                matriz[      Math.round((objeto.y - 60) / 86.25)][ Math.round((objeto.x - 57.5) / 115) ] = parseInt(objeto.name);
-                
+            if (Number.isInteger((objeto.x - 57) / 114)) {
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.name);
             }
             else {
-                matriz[      Math.round((objeto.y - 60) / 86.25)][ Math.round((objeto.x - 115) / 115) ] = parseInt(objeto.name);
-                
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.name);
             }
         });
 
@@ -242,6 +206,8 @@ export default class Scene1 extends Phaser.Scene {
 
         return matriz;
     }
+
+    
 
     update() {
         data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
@@ -661,8 +627,8 @@ export default class Scene1 extends Phaser.Scene {
                 if (nivel[y][x].color != -1) {
                     if (this.esPar(y)) {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 125) + 170, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(0.3);
+                        bolita = this.physics.add.sprite((x * 114) + 60, (y * 90) + 60, bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(0.265);
                         bolita.depth = -1;
                         bolita.body.setImmovable(true);
                         bolita.body.moves = false;
@@ -677,8 +643,8 @@ export default class Scene1 extends Phaser.Scene {
                         fila.push(bolita);
                     }else {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 125) + 230, (y * 125) + 400, bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(0.3);
+                        bolita = this.physics.add.sprite((x * 114) + 120, (y * 90) + 60, bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(0.265);
                         bolita.depth = -1;
                         bolita.body.setImmovable(true);
                         bolita.body.moves = false;
