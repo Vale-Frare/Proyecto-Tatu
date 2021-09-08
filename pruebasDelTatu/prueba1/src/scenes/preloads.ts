@@ -25,10 +25,8 @@ export default class Preloads extends Phaser.Scene {
         //this.load.tilemapTiledJSON("tilemap2", "assets/nivel/lvl_2.json");
         //this.load.tilemapTiledJSON("tilemap3", "assets/nivel/lvl_3.json");
 
-        let helper = new tiledHelper();
-        
         //  vale: Asi se carga un mapa de tiled.
-        await helper.cargarMapaDesdeJson("assets/nivel/lvl_3.json");
+        await tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json");
     }
 
     create() {
