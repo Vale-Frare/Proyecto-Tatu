@@ -84,22 +84,30 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelDesdeTiled(key: string) {
-        const map = this.make.tilemap({ key: key });
+        //const map = this.make.tilemap({ key: key });
 
-        let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
+        let objetos = JSON.parse(localStorage.getItem(key)).objects;
+        
+        //let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
 
+        /*
         objetos.forEach(objeto => {
             objeto.visible = false;
         });
+        */
 
-        let matrizNivel = this.objetosAMatriz(objetos);
+        //let matrizNivel = this.objetosAMatriz(objetos);
 
-        let matrizNivelEmbolsada = this.aleatorizarConLaBolsa(matrizNivel);
+        let matrizNivel = this.objetosAMatriz2(objetos);
 
-        return this.convertirAGrupos(matrizNivelEmbolsada);
+        //let matrizNivelEmbolsada = this.aleatorizarConLaBolsa(matrizNivel, 3);
+
+        //return this.convertirAGrupos(matrizNivelEmbolsada);
+
+        return this.convertirAGrupos(matrizNivel);
     }
 
-    aleatorizarConLaBolsa(matriz) {
+    aleatorizarConLaBolsa(matriz, limite) {
         let bolsa = [];
         let cantidad = 0;
 
@@ -111,9 +119,9 @@ export default class Scene1 extends Phaser.Scene {
             });
         });
 
-        cantidad = Math.ceil(cantidad / 3);
+        cantidad = Math.ceil(cantidad / limite);
 
-        for(let i = 0; i < 3; i++) {
+        for(let i = 0; i < limite; i++) {
             for (let j = 0; j < cantidad; j++) {bolsa.push(i)}
         }
 
@@ -137,6 +145,78 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     objetosAMatriz(objetos) {
+        let matriz = [];
+
+        let xSize = 0;
+        let ySize = 0;
+
+        let maxYSize = 0;
+
+        objetos.forEach(objeto => {
+            if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y;}
+            console.log(objeto);
+        });
+
+        if (Number.isInteger((xSize - 57) / 114)) 
+        {xSize = Math.round((xSize - 57) / 114); ySize = Math.round((ySize - 60) / 90)} 
+        else 
+        {xSize = Math.round((xSize - 114) / 114); ySize = Math.round((ySize - 60) / 90)}
+
+        objetos.forEach(objeto => {
+            if (objeto.y > maxYSize) {
+                maxYSize = objeto.y
+            } 
+        });
+        
+        xSize = xSize - 1;
+
+        ySize = Math.round(((maxYSize - 60) / 90) + 1);  
+        
+        for(let y = 0; y < ySize; y++) {
+            let fila = [];
+            for(let x = 0; x < xSize; x++) {
+                fila.push(-1);
+            }
+            matriz.push(fila);
+        }
+
+        objetos.forEach(objeto => {
+            if (Number.isInteger((objeto.x - 57) / 114)) {
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.name);
+            }
+            else {
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.name);
+            }
+        });
+
+        let filaMasGrande = 0;
+
+        let count = 0;
+        matriz.forEach(fila => {   
+            if (fila.length > matriz[filaMasGrande].length) {
+                filaMasGrande = count;
+            }
+            for (let i = 0; i < fila.length; i++) {
+                if (fila[i] == undefined) {
+                    fila[i] = -1;
+                }
+            }
+            count++;
+        });
+
+        matriz.forEach(fila => {
+            if (fila.length < matriz[filaMasGrande].length) {
+                let diferencia = matriz[filaMasGrande].length - fila.length;
+                for(let i = 0; i < diferencia; i++) {
+                    fila.push(-1);
+                }
+            }
+        });
+
+        return matriz;
+    }
+
+    objetosAMatriz2(objetos) {
         let matriz = [];
 
         let xSize = 0;
@@ -173,10 +253,10 @@ export default class Scene1 extends Phaser.Scene {
 
         objetos.forEach(objeto => {
             if (Number.isInteger((objeto.x - 57) / 114)) {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.gid);
             }
             else {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.name);
+                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.gid);
             }
         });
 
@@ -611,14 +691,16 @@ export default class Scene1 extends Phaser.Scene {
 
         //let nivel = this.crearMatrizConPatron(6, 6, 8);
 
-        let nivel = this.cargarNivelDesdeTiled("tilemap3");
+        let nivel = this.cargarNivelDesdeTiled("lvl_3");
 
         //let nivel = this.crearMatrizHexagonalRandom(6,6);
 
         const bolitasTexturas = [
-            'basura_3', //  AZUL
-            'basura_1', //  VERDE
-            'basura_2', //  ROJA
+            'basurita_0', //  VERDE
+            'basurita_1', //  ROJA
+            'basurita_2', //  NARANJA
+            'basurita_3', //  AZUL
+            'basurita_4'  //  AMARILLO
         ];
 
         for (let y = 0; y < nivel.length; y++) {

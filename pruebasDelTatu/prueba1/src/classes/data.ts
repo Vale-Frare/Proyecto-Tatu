@@ -8,18 +8,22 @@ export default class Data {
     deckTween;
 
     bolitas = [];
-
+    
     burbujas = [
-        {score: 10, color: 0x0384fc},   //  Azulinho
-        {score: 20, color: 0xffda52},   //  Amarello
-        {score: 30, color: 0xff5252}    //  Roujo
+        {color: 0x0384fc},   //  Azulinho
+        {color: 0xffda52},   //  Amarello
+        {color: 0xff5252},   //  Roujo
+        {color: 0xf18412},   //  Naranja
+        {color: 0x55ae5f}    //  Verde
     ];
 
 
     bolitaRomper = {
-        basura_1: this.burbujas[1].color,
-        basura_2: this.burbujas[2].color,
-        basura_3: this.burbujas[0].color
+        basurita_0: this.burbujas[4].color,
+        basurita_1: this.burbujas[2].color,
+        basurita_2: this.burbujas[3].color,
+        basurita_3: this.burbujas[0].color,
+        basurita_4: this.burbujas[1].color
     };
 
     deck = [
@@ -41,9 +45,11 @@ export default class Data {
     ];
 
     bolitasTextYColors = {
-        'basura_3': 0x0384fc, //  AZUL
-        'basura_1': 0xffda52, //  AMARILLO
-        'basura_2': 0xff5252 //  ROJA
+        'basurita_3': 0x0384fc, //  AZUL
+        'basurita_4': 0xffda52, //  AMARILLO
+        'basurita_1': 0xff5252, //  ROJA
+        'basurita_2': 0xf18412, //  NARANJA
+        'basurita_0': 0x55ae5f //   VERDE
     };
 
     niveles = [
