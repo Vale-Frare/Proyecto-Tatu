@@ -85,8 +85,10 @@ export default class Scene1 extends Phaser.Scene {
 
     cargarNivelDesdeTiled(key: string) {
         //const map = this.make.tilemap({ key: key });
-
-        let objetos = JSON.parse(localStorage.getItem(key)).objects;
+        let mapa = JSON.parse(localStorage.getItem(key));
+        let objetos = mapa.objects;
+        let alto = mapa.tileHeight;
+        let ancho = mapa.tileWidth;
         
         //let objetos = map.createFromObjects('pelotas',{key:'basura_1'});
 
@@ -98,13 +100,13 @@ export default class Scene1 extends Phaser.Scene {
 
         //let matrizNivel = this.objetosAMatriz(objetos);
 
-        let matrizNivel = this.objetosAMatriz2(objetos);
+        let matrizNivel = this.objetosAMatriz(objetos, alto, ancho);
 
-        //let matrizNivelEmbolsada = this.aleatorizarConLaBolsa(matrizNivel, 3);
+        let matrizNivelEmbolsada = this.aleatorizarConLaBolsa(matrizNivel, 3);
 
-        //return this.convertirAGrupos(matrizNivelEmbolsada);
+        return this.convertirAGrupos(matrizNivelEmbolsada);
 
-        return this.convertirAGrupos(matrizNivel);
+        //return this.convertirAGrupos(matrizNivel);
     }
 
     aleatorizarConLaBolsa(matriz, limite) {
@@ -144,7 +146,7 @@ export default class Scene1 extends Phaser.Scene {
         return matrizMezclada;
     }
 
-    objetosAMatriz(objetos) {
+    objetosAMatriz(objetos, alto, ancho) {
         let matriz = [];
 
         let xSize = 0;
@@ -152,15 +154,19 @@ export default class Scene1 extends Phaser.Scene {
 
         let maxYSize = 0;
 
+        let alto_mitad = alto/2;
+        let alto_75 = alto*.75;
+        let ancho_max = ancho;
+        let ancho_mitad = ancho/2
+
         objetos.forEach(objeto => {
             if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y;}
-            console.log(objeto);
         });
 
-        if (Number.isInteger((xSize - 57) / 114)) 
-        {xSize = Math.round((xSize - 57) / 114); ySize = Math.round((ySize - 60) / 90)} 
+        if (this.esPar(Math.round((ySize - (alto_mitad)) / (alto_75)))) 
+        {xSize = Math.round(((xSize - ancho_mitad) / ancho_max)); ySize = Math.round((ySize - alto_mitad) / alto_75)} 
         else 
-        {xSize = Math.round((xSize - 114) / 114); ySize = Math.round((ySize - 60) / 90)}
+        {xSize = Math.round((xSize - ancho_max) / ancho_max); ySize = Math.round((ySize - alto_mitad) / alto_75)}
 
         objetos.forEach(objeto => {
             if (objeto.y > maxYSize) {
@@ -170,7 +176,7 @@ export default class Scene1 extends Phaser.Scene {
         
         xSize = xSize - 1;
 
-        ySize = Math.round(((maxYSize - 60) / 90) + 1);  
+        ySize = Math.round(((maxYSize - alto_mitad) / alto_75) + 1);  
         
         for(let y = 0; y < ySize; y++) {
             let fila = [];
@@ -181,82 +187,11 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         objetos.forEach(objeto => {
-            if (Number.isInteger((objeto.x - 57) / 114)) {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.name);
+            if (this.esPar(Math.round((objeto.y - alto_mitad) / alto_75))) {
+                matriz[      Math.round((objeto.y - alto_mitad) / alto_75)][ Math.round(((objeto.x - ancho_mitad) / ancho_max)) ] = parseInt(objeto.gid);
             }
             else {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.name);
-            }
-        });
-
-        let filaMasGrande = 0;
-
-        let count = 0;
-        matriz.forEach(fila => {   
-            if (fila.length > matriz[filaMasGrande].length) {
-                filaMasGrande = count;
-            }
-            for (let i = 0; i < fila.length; i++) {
-                if (fila[i] == undefined) {
-                    fila[i] = -1;
-                }
-            }
-            count++;
-        });
-
-        matriz.forEach(fila => {
-            if (fila.length < matriz[filaMasGrande].length) {
-                let diferencia = matriz[filaMasGrande].length - fila.length;
-                for(let i = 0; i < diferencia; i++) {
-                    fila.push(-1);
-                }
-            }
-        });
-
-        return matriz;
-    }
-
-    objetosAMatriz2(objetos) {
-        let matriz = [];
-
-        let xSize = 0;
-        let ySize = 0;
-
-        let maxYSize = 0;
-
-        objetos.forEach(objeto => {
-            if (objeto.x > xSize) { xSize = objeto.x; ySize = objeto.y;}
-        });
-
-        if (Number.isInteger((xSize - 57) / 114)) 
-        {xSize = Math.round((xSize - 57) / 114); ySize = Math.round((ySize - 60) / 90)} 
-        else 
-        {xSize = Math.round((xSize - 114) / 114); ySize = Math.round((ySize - 60) / 90)}
-
-        objetos.forEach(objeto => {
-            if (objeto.y > maxYSize) {
-                maxYSize = objeto.y
-            } 
-        });
-        
-        xSize = xSize - 1;
-
-        ySize = Math.round(((maxYSize - 60) / 90) + 1);  
-        
-        for(let y = 0; y < ySize; y++) {
-            let fila = [];
-            for(let x = 0; x < xSize; x++) {
-                fila.push(-1);
-            }
-            matriz.push(fila);
-        }
-
-        objetos.forEach(objeto => {
-            if (Number.isInteger((objeto.x - 57) / 114)) {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 57) / 114) ] = parseInt(objeto.gid);
-            }
-            else {
-                matriz[      Math.round((objeto.y - 60) / 90)][ Math.round((objeto.x - 114) / 114) ] = parseInt(objeto.gid);
+                matriz[      Math.round((objeto.y - alto_mitad) / alto_75)][ Math.round((objeto.x - ancho_max) / ancho_max) ] = parseInt(objeto.gid);
             }
         });
 
@@ -308,135 +243,7 @@ export default class Scene1 extends Phaser.Scene {
         });
     }
 
-    //  vale: Funcion que crea la matriz hexagonales con colores random y tambien agujeros.
-    crearMatrizHexagonalRandom(xSize, ySize) {
-        let matriz = [];
-        let count = 0;
-        for (let y = 0; y < ySize; y++) {
-            let fila = [];
-            if (this.esPar(y)) {
-                for (let x = 0; x < xSize-1; x++) {
-                    let color = Phaser.Math.Between(-1, 2);
-                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
-                    count++;
-                }
-            }else{
-                for (let x = 0; x < xSize; x++) {
-                    let color = Phaser.Math.Between(-1, 2);
-                    fila.push({color:color, grupo:this.calcularGruposHexagonalmente(fila, matriz, y, x, color, count)});
-                    count++;
-                }
-            }
-            matriz.push(fila);
-        }
-        return matriz;
-    }
-
-    crearMatrizConPatron(xSize, ySize, cellSize) {
-        let matriz = [];
-        
-        let count = 0;
-        let cellCount = 0;
-
-        let colors = [0, 1, 2];
-
-        colors = colors.sort(function (a, b) { 
-            return (Math.random() * 2) - 1;
-        })
-
-        for (let y = 0; y < ySize; y++) {
-            let fila = [];
-            for (let x = 0; x < xSize; x++) {
-
-                fila.push({
-                    color: colors[0],
-                    grupo: this.calcularGrupo(fila, matriz, y, x, colors[0], count)
-                });
-
-                if (cellCount == cellSize) {
-                    colors = this.arrayUnPasito(colors);
-                    cellCount = 0;
-                }
-
-                cellCount++;
-                count++;
-            }
-            
-            matriz.push(fila);
-        }
-
-        return matriz;
-    }
-
-    calcularGrupo(fila, matriz, y, x, color, count) {
-        //  vale: se determina el caso para poder evaluar su grupo.
-
-        if ((x - 1) < 0 && (y - 1) < 0)  {
-            //  vale: en el caso de ser la ezquina se retorna el valor del count.
-
-            return count;
-        }else if ((x - 1) >= 0 && (y - 1) >= 0) {
-            //  vale: en el caso de tener una bolita arriba y una a la izquierda se evalua.
-
-            let colorArriba = matriz[y - 1][x].color;
-            let colorIzquierda = fila[x - 1].color;
-
-            if (colorArriba == color && colorIzquierda == color) {
-                //  vale: en el caso de colores iguales se procede a fundir los grupos en uno.
-
-                return this.fundirGrupos(matriz, fila, matriz[y - 1][x].grupo, fila[x - 1].grupo);
-            }else if (colorArriba == color && colorIzquierda != color) {
-                //  vale: en el caso de color igual solo arriba se devuelve el grupo del de arriba.
-
-                return matriz[y - 1][x].grupo;
-            }else if (colorIzquierda == color && colorArriba != color) {
-                //  vale: en el caso de color igual solo a la izquierda se devuelve el grupo de la izquierda.
-
-                return fila[x - 1].grupo;
-            }else if (colorIzquierda != color && colorArriba != color){
-                //  vale: en el caso de colores diferentes se devuelve el valor del count.
-
-                return count;
-            }
-        }else if ((x - 1) >= 0 && (y - 1) < 0) {
-            //  vale: en el caso de tener una bolita a la izquierda se evalua si el color coincide.
-
-            let colorIzquierda = fila[x - 1].color;
-
-            if (colorIzquierda == color) {
-                return fila[x - 1].grupo;
-            }else {
-                return count;
-            }
-        }else if ((x - 1) < 0 && (y - 1) >= 0) {
-            //  vale: en el caso de tener una bolita arriba y no una a la izquierda se evalua si el color coincide.
-
-            let colorArriba = matriz[y - 1][x].color;
-
-            if (colorArriba == color) {
-                return matriz[y - 1][x].grupo;
-            }else {
-                return count;
-            }
-        }
-    }   
-
-    arrayUnPasito(array) {
-        let newArray = [array.length];
-
-        newArray[0] = array[array.length-1];
-
-        for (let i = 0; i < array.length - 1; i++) {
-            newArray[i+1] = array[i];
-        }
-        return newArray;
-    }
-
-    //  vale: Hay que cambiar esta funcion debido a que los hexagonos de Tiled funcionan diferente. :)
-
     //  vale: Funcion que hice que calcula los grupos de bolitas hexagonales.
-    //        La hice en un delirio cosmico asi que no es muy facil de comprender pero funciona.
-
     calcularGruposHexagonalmente(fila, matriz, y, x, color, count) {
         try {
             if ((x - 1) < 0 && (y - 1) < 0)  {
@@ -703,14 +510,21 @@ export default class Scene1 extends Phaser.Scene {
             'basurita_4'  //  AMARILLO
         ];
 
+        let mapa = JSON.parse(localStorage.getItem("lvl_3"));
+        let alto = mapa.tileHeight;
+        let ancho = mapa.tileWidth;
+        let anchoBasura = mapa.basuraWidth/400;
+        let altoBasura = mapa.basuraHeight/400;
+
         for (let y = 0; y < nivel.length; y++) {
             let fila = [];
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x].color != -1) {
                     if (this.esPar(y)) {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 114) + 60, (y * 90) + 60, bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(0.265);
+                        bolita = this.physics.add.sprite((x * ancho) + (ancho/2), (y * (alto/100*75)) + (alto/2), bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(anchoBasura,altoBasura);
+                        //bolita.width = ancho;
                         bolita.depth = -1;
                         bolita.body.setImmovable(true);
                         bolita.body.moves = false;
@@ -725,8 +539,9 @@ export default class Scene1 extends Phaser.Scene {
                         fila.push(bolita);
                     }else {
                         let bolita;
-                        bolita = this.physics.add.sprite((x * 114) + 120, (y * 90) + 60, bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(0.265);
+                        bolita = this.physics.add.sprite((x * ancho) + ancho, (y * (alto/100*75)) + (alto/2), bolitasTexturas[nivel[y][x].color]);
+                        bolita.setScale(anchoBasura,altoBasura);
+                        //bolita.width = ancho;
                         bolita.depth = -1;
                         bolita.body.setImmovable(true);
                         bolita.body.moves = false;
