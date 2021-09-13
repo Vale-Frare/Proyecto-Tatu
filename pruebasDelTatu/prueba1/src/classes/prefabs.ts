@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class Bolita {
+export class Bolita {
     object: Phaser.Physics.Arcade.Sprite;
     x: number = 0;
     y: number = 0;
@@ -20,5 +20,20 @@ export default class Bolita {
         this.object.body.setImmovable(true);
         this.object.body.setCircle(this.width/2);
         this.object.body.moves = false;
+    }
+}
+
+export class BolitaLanzada {
+    object: Phaser.Physics.Arcade.Sprite;
+    x: number = 0;
+    y: number = 0;
+
+    constructor(scene, x, y, scale, data) {
+        this.object = scene.physics.add.sprite(x,y,'tatu_bebe');
+
+        this.object.setScale(scale);
+        this.object.depth = 1;
+        this.object.angle = data.lanzador.rotation - 1.57;
+        this.object.body.setCircle(this.object.width/2);
     }
 }

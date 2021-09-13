@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import Data from '../classes/data';
 import Config from '../config';
-import Bolita from '../classes/prefabs'
+import {Bolita, BolitaLanzada} from '../classes/prefabs'
 
 let data: Data = new Data();
 
@@ -11,6 +11,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     tiro() {
+        console.log("TIRO");
         if (data.deckTween != undefined) {
             if (data.deckTween.isPlaying()) {return;}
         }
@@ -28,17 +29,13 @@ export default class Scene1 extends Phaser.Scene {
             });
         });
         
-        let bolita = this.physics.add.sprite(900,1800, 'tatu_bebe');
+        let bolita = new BolitaLanzada(this, 900, 1800, 0.3, data).object;
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
+
+        data.bolitas.push(bolita);
 
         //  vale: Esto desaparece la bolita lanzada para dar el efecto de que es la misma.
         data.deck[data.bolitaALanzar].obj.setVisible(false);
-
-        bolita.setScale(0.3);
-        bolita.depth = 1;
-        bolita.angle = data.lanzador.rotation - 1.57;
-        data.bolitas.push(bolita);
-        bolita.body.setCircle(bolita.width/2);
 
         //  vale: hice una pequeña modificacion porque el nivel cargado ahora es una matriz.
         data.nivelCargado.forEach(fila_bolitas => {
@@ -236,7 +233,7 @@ export default class Scene1 extends Phaser.Scene {
             }
             else{
                 this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
-                if (bolita.y < 0) {
+                if (bolita.y < 0 || bolita.x < 0 || bolita.x > Config.config.width) {
                     data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
                     bolita.destroy();
                 }
@@ -559,7 +556,7 @@ export default class Scene1 extends Phaser.Scene {
                         if (Config.config.physics.arcade.debug) this.add.text(bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
                         
                         //  vale: se pushea la bolita a la fila.
-                        fila.push(bolita);
+                        fila.push(bolita.object);
                     }
                 }else {
                     fila.push(null);
