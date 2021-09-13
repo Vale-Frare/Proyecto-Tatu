@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Data from '../classes/data';
 import Config from '../config';
+import Bolita from '../classes/prefabs'
 
 let data: Data = new Data();
 
@@ -521,33 +522,36 @@ export default class Scene1 extends Phaser.Scene {
             for (let x = 0; x < nivel[y].length; x++) {
                 if (nivel[y][x].color != -1) {
                     if (this.esPar(y)) {
-                        let bolita;
-                        bolita = this.physics.add.sprite((x * ancho) + (ancho/2), (y * (alto/100*75)) + (alto/2), bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(anchoBasura,altoBasura);
-                        //bolita.width = ancho;
-                        bolita.depth = -1;
-                        bolita.body.setImmovable(true);
-                        bolita.body.moves = false;
-                        bolita.body.setCircle(bolita.width/2);
-
-                        bolita.grupo = nivel[y][x].grupo;
+                        let bolita = new Bolita(
+                            this,
+                            x,
+                            y,
+                            ancho,
+                            alto,
+                            bolitasTexturas,
+                            nivel,
+                            anchoBasura,
+                            altoBasura
+                        );
 
                         //  vale: si usas el modo debug podes ver un texto sobre cada bolita con el numero de su grupo ;)
                         if (Config.config.physics.arcade.debug) this.add.text(bolita.x, bolita.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
 
                         //  vale: se pushea la bolita a la fila.
-                        fila.push(bolita);
+                        fila.push(bolita.object);
                     }else {
-                        let bolita;
-                        bolita = this.physics.add.sprite((x * ancho) + ancho, (y * (alto/100*75)) + (alto/2), bolitasTexturas[nivel[y][x].color]);
-                        bolita.setScale(anchoBasura,altoBasura);
-                        //bolita.width = ancho;
-                        bolita.depth = -1;
-                        bolita.body.setImmovable(true);
-                        bolita.body.moves = false;
-                        bolita.body.setCircle(bolita.width/2);
-
-                        bolita.grupo = nivel[y][x].grupo;
+                        let bolita = new Bolita(
+                            this,
+                            x,
+                            y,
+                            ancho,
+                            alto,
+                            bolitasTexturas,
+                            nivel,
+                            anchoBasura,
+                            altoBasura,
+                            true
+                        );
 
                         //console.log(bolita);
 
