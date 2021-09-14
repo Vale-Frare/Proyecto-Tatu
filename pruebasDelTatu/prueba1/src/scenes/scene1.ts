@@ -33,6 +33,11 @@ export default class Scene1 extends Phaser.Scene {
         new BolitaDeck(this, 0.3, data);
 
         this.cargarNivelNuevo();
+
+        let barrita = this.add.sprite(800,1850,'barrita').setOrigin(0);
+        let mini_bolita = this.add.sprite(800,1850,'mini_bolita').setOrigin(0);
+        barrita.depth = 5;
+        mini_bolita.depth = 5;
     }
 
     cargarNivelDesdeTiled(key: string) {
