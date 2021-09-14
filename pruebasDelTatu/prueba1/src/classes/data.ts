@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 export default class Data {
+    mapaCargado;
+
     text1;
 
     lanzador;
@@ -27,21 +29,21 @@ export default class Data {
     };
 
     deck = [
-        {obj: null, type: 0, color: 0},
-        {obj: null, type: 0, color: 0},
-        {obj: null, type: 0, color: 0},
-        {obj: null, type: 0, color: 0},
-        {obj: null, type: 0, color: 0},
-        {obj: null, type: 0, color: 1},
-        {obj: null, type: 0, color: 1},
-        {obj: null, type: 0, color: 1},
-        {obj: null, type: 0, color: 1},
-        {obj: null, type: 0, color: 1},
+        {obj: null, type: 0, color: 4},
+        {obj: null, type: 0, color: 4},
+        {obj: null, type: 0, color: 4},
+        {obj: null, type: 0, color: 4},
+        {obj: null, type: 0, color: 4},
         {obj: null, type: 0, color: 2},
         {obj: null, type: 0, color: 2},
         {obj: null, type: 0, color: 2},
         {obj: null, type: 0, color: 2},
-        {obj: null, type: 0, color: 2}
+        {obj: null, type: 0, color: 2},
+        {obj: null, type: 0, color: 3},
+        {obj: null, type: 0, color: 3},
+        {obj: null, type: 0, color: 3},
+        {obj: null, type: 0, color: 3},
+        {obj: null, type: 0, color: 3}
     ];
 
     bolitasTextYColors = {

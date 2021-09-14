@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
+import Config from '../config';
 
 export class Bolita {
     object: Phaser.Physics.Arcade.Sprite;
     x: number = 0;
     y: number = 0;
 
-    constructor(scene, x, y, ancho, alto, bolitasTexturas, nivel, anchoBasura, altoBasura, inpar = false) {
+    constructor(scene, x, y, ancho=0, alto=0, bolitasTexturas=[], nivel=[], anchoBasura=0, altoBasura=0, inpar = false) {
         if (inpar) {
             this.x = (x * ancho) + ancho;
         }else {
@@ -20,6 +21,8 @@ export class Bolita {
         this.object.body.setImmovable(true);
         this.object.body.setCircle(this.width/2);
         this.object.body.moves = false;
+
+        if (Config.config.physics.arcade.debug) scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
     }
 }
 
@@ -35,5 +38,39 @@ export class BolitaLanzada {
         this.object.depth = 1;
         this.object.angle = data.lanzador.rotation - 1.57;
         this.object.body.setCircle(this.object.width/2);
+
+        var particles = scene.add.particles('pastito');
+
+        var emitter = particles.createEmitter({
+            radial: false,
+            scale: { start: 0.3, end: 0, ease: 'Power3' },
+            lifespan: { min: 300, max: 400 },
+            frequency: 10,
+            quantity: 1
+        });
+
+        emitter.angle = 90;
+
+        //emitter.setAngle(this.object.angle);
+        emitter.setPosition(x, y);
+        emitter.startFollow(this.object);
+        emitter.setBlendMode(Phaser.BlendModes.NORMAL);
+    }
+}
+
+export class BolitaDeck {
+    object: Phaser.GameObjects.Sprite;
+    x: number = 0;
+    y: number = 0;
+
+    constructor(scene, scale, data) {
+        for(let i = data.deck.length - 1; i > -1; i--) {
+            this.object = scene.add.sprite(900 - (i * 300),1800,'tatu_bebe');
+
+            this.object.setTint(data.burbujas[data.deck[i].color].color);
+            data.setObjInDeck(this.object, i);
+            this.object.setDepth(5);
+            this.object.setScale(scale);
+        }
     }
 }
