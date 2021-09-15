@@ -3,6 +3,7 @@ import Data from '../classes/data';
 import Config from '../config';
 import {Bolita, BolitaDeck} from '../classes/prefabs'
 import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
+import {Slider} from '../classes/utilsHud';
 
 let data: Data = new Data();
 
@@ -18,26 +19,12 @@ export default class Scene1 extends Phaser.Scene {
         data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
-
-        data.lanzador.setInteractive({ draggable: true })
-        .on('dragstart', function(pointer, dragX, dragY){
-            let posicion_inicial = pointer.x;
-        })
-        .on('drag', function(pointer, dragX, dragY){
-            data.lanzador.rotation = Phaser.Math.Clamp(data.lanzador.rotation + ((dragX / 10000) - 0.088), -0.8, 0.3);
-        })
-        .on('dragend', function(pointer, dragX, dragY, dropped){
-            AccionesBolitas.tiro(this, data);
-        }, this);
         
         new BolitaDeck(this, 0.3, data);
 
         this.cargarNivelNuevo();
 
-        let barrita = this.add.sprite(800,1850,'barrita').setOrigin(0);
-        let mini_bolita = this.add.sprite(800,1850,'mini_bolita').setOrigin(0);
-        barrita.depth = 5;
-        mini_bolita.depth = 5;
+        new Slider(this, data, data.deck);
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -61,7 +48,7 @@ export default class Scene1 extends Phaser.Scene {
                 data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
             }
             else{
-                this.physics.velocityFromRotation(bolita.angle, 2600, bolita.body.velocity);
+                this.physics.velocityFromRotation(bolita.rotation, 2600, bolita.body.velocity);
                 if (bolita.y < 0 || bolita.x < 0 || bolita.x > Config.config.width) {
                     data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
                     bolita.destroy();

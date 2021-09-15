@@ -366,17 +366,38 @@ export class Aleatorizadores {
 }
 
 export class AccionesBolitas {
-    static tiro(scene: Phaser.Scene, data) {
+    static tiro(scene: Phaser.Scene, data, rotacion) {
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
             //  vale: se compara el color.
     
             if (bola_lanzada.tintTopLeft == data.bolitasTextYColors[bola_level.texture.key]) {
                 //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
+                let count = 0;
                 data.nivelCargado.forEach(fila => {
                     fila.forEach(bolita => {
                         if (bolita){
                             if (bolita.grupo == bola_level.grupo) {
-                                bolita.destroy();
+                                bolita.collider.destroy();
+                                data.nivelCargado.forEach(fila_bolitas => {
+                                    fila_bolitas.forEach((bolita_nivel, index) => {
+                                        if (bolita_nivel == bolita) {
+                                            fila_bolitas[index] = null;
+                                        }
+                                    });
+                                }, scene);
+                                scene.tweens.add({
+                                    targets: bolita,
+                                    rotation: Math.PI * 6,
+                                    alpha: 0,
+                                    duration: 1350 + (count * 150),
+                                    yoyo: false,
+                                    ease: 'Linear',
+                                    loop: 0,
+                                    onComplete: function () {
+                                        bolita.destroy();
+                                    }
+                                });
+                                count++;
                             }
                         }
                     });
@@ -404,7 +425,7 @@ export class AccionesBolitas {
             });
         });
         
-        let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data).object;
+        let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
 
         data.bolitas.push(bolita);
@@ -417,7 +438,7 @@ export class AccionesBolitas {
             fila_bolitas.forEach(bolita_nivel => {
                 //  vale: hice otra modificacion para que no intente leer las bolitas que son null.
                 if (bolita_nivel === null) {} else {
-                    scene.physics.add.collider(bolita_nivel, bolita, romperGrupoDeBolitasHexagonales, null, scene);
+                    bolita_nivel.collider = scene.physics.add.collider(bolita_nivel, bolita, romperGrupoDeBolitasHexagonales, null, scene);
                 }
             });
         }, scene);

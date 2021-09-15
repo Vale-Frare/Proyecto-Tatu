@@ -31,12 +31,12 @@ export class BolitaLanzada {
     x: number = 0;
     y: number = 0;
 
-    constructor(scene, x, y, scale, data) {
+    constructor(scene, x, y, scale, data, rotacion) {
         this.object = scene.physics.add.sprite(x,y,'tatu_bebe');
 
         this.object.setScale(scale);
         this.object.depth = 1;
-        this.object.angle = data.lanzador.rotation - 1.57;
+        this.object.rotation = rotacion;
         this.object.body.setCircle(this.object.width/2);
 
         var particles = scene.add.particles('pastito');
@@ -49,12 +49,12 @@ export class BolitaLanzada {
             quantity: 1
         });
 
-        emitter.angle = 90;
-
         //emitter.setAngle(this.object.angle);
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
         emitter.setBlendMode(Phaser.BlendModes.NORMAL);
+
+        this.object.emitter = emitter;
     }
 }
 
