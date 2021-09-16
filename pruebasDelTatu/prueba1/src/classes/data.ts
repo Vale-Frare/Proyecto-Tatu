@@ -10,6 +10,8 @@ export default class Data {
     deckTween;
 
     bolitas = [];
+
+    bordes = [];
     
     burbujas = [
         {color: 0x0384fc},   //  Azulinho

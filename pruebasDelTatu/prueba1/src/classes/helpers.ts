@@ -442,6 +442,40 @@ export class AccionesBolitas {
                 }
             });
         }, scene);
+
+        let overlaps = [];
+        let paDespues;
+        let bounces = 0;
+
+        function onBounce(a) {
+            bounces++;
+            if (bounces >= 5) {
+                a.destroy();
+            }
+        }
+
+        function colisionesOn(param1, param2) {
+            overlaps.forEach(overlap => {
+                overlap.destroy();
+            });
+            data.bordes.forEach(borde => {
+                if(param1 != borde){
+                    scene.physics.add.collider(bolita, borde, onBounce, null, scene);
+                }else {
+                    paDespues = borde;
+                }
+            });
+            new Promise(function (resolve, reject) {
+                setTimeout(() => {
+                    scene.physics.add.collider(bolita, paDespues, onBounce, null, scene);
+                    resolve("nya");
+                }, 200);
+            });
+        }
+
+        data.bordes.forEach(borde => {
+            overlaps.push(scene.physics.add.overlap(borde, bolita, colisionesOn, null, scene));
+        });
         
         data.bolitaALanzar += 1;
     }

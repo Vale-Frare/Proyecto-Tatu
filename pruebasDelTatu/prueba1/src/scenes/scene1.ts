@@ -13,12 +13,18 @@ export default class Scene1 extends Phaser.Scene {
     }
     
     create() {
-        let fondo = this.add.image(0, 0, 'fondo').setOrigin(0);
-        fondo.depth = -1;
         let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
         data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
+
+        data.deck.forEach((bolitas) => {
+            bolitas.color = Phaser.Math.Between(2, 4);
+        });
+
+        for(let i = 0; i < 200; i++) {
+            data.deck.push({obj: null, type: 0, color: Phaser.Math.Between(2, 4)});
+        }
         
         new BolitaDeck(this, 0.3, data);
 
@@ -32,6 +38,24 @@ export default class Scene1 extends Phaser.Scene {
         let objetos = data.mapaCargado.objects;
         let alto = data.mapaCargado.tileHeight;
         let ancho = data.mapaCargado.tileWidth;
+        let fondos = data.mapaCargado.fondos;
+        let bordes = data.mapaCargado.bordes;
+
+        var contador = 0;
+        fondos.forEach((fondo,index) => {
+            let f = this.add.image(fondo.x, fondo.y, fondo.key).setOrigin(0);
+            f.depth = -1 + (index * 10);
+            if (contador == 0) {
+                bordes.forEach((borde) => {
+                    let b = this.physics.add.sprite(borde.x, borde.y, borde.key).setOrigin(0,1);
+                    b.body.setImmovable(true);
+                    b.body.moves = false;
+                    b.depth = -1;
+                    data.bordes.push(b);
+                });
+                contador++;
+            }
+        });
 
         let matrizNivel = Matriz.objetosAMatriz(objetos, alto, ancho);
 
@@ -48,7 +72,6 @@ export default class Scene1 extends Phaser.Scene {
                 data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
             }
             else{
-                this.physics.velocityFromRotation(bolita.rotation, 2600, bolita.body.velocity);
                 if (bolita.y < 0 || bolita.x < 0 || bolita.x > Config.config.width) {
                     data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
                     bolita.destroy();

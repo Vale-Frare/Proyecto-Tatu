@@ -9,7 +9,6 @@ export default class Preloads extends Phaser.Scene {
     async preload() {
         this.load.image("flecha", "assets/flecha.png");
         this.load.image("bolita", "assets/bolita.png");
-        this.load.image("fondo", "assets/img/fondo.png");
         this.load.image("basura_1", "assets/img/basura_1.png");
         this.load.image("basura_2", "assets/img/basura_2.png");
         this.load.image("basura_3", "assets/img/basura_3.png");
@@ -24,7 +23,12 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("pastito", "assets/img/pastito.png");
 
         this.load.image("barrita", "assets/barrita.png");
-        this.load.image("mini_bolita", "assets/mini_bolita.png"); 
+        this.load.image("mini_bolita", "assets/mini_bolita.png");
+        
+        this.load.image("borde_horizontal", "assets/img/tiled/borde_horizontal.png");
+        this.load.image("borde_vertical", "assets/img/tiled/borde_vertical.png");
+        this.load.image("fondo", "assets/img/tiled/fondo.png");
+        this.load.image("fondo_2", "assets/img/tiled/fondo_2.png");
 
         //  vale: Asi se carga un mapa de tiled.
         await tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json");

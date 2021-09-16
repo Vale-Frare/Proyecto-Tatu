@@ -37,6 +37,8 @@ export class BolitaLanzada {
         this.object.setScale(scale);
         this.object.depth = 1;
         this.object.rotation = rotacion;
+        scene.physics.velocityFromRotation(this.object.rotation, 2600, this.object.body.velocity);
+        this.object.setBounce(1);
         this.object.body.setCircle(this.object.width/2);
 
         var particles = scene.add.particles('pastito');
