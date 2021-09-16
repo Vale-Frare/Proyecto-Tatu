@@ -12,7 +12,9 @@ export default class tiledHelper {
                     basuraHeight: 0,
                     fondos: [],
                     bordes: [],
+                    lugar_de_inicio: ""
                 };
+                newData.lugar_de_inicio = data.properties.find(_ => _.name == "lugar_de_comienzo").value;
                 data.layers.forEach((layer: any, index: number) => {
                     if (layer.name == "pelotas") {
                         newData.objects = data.layers[index].objects;

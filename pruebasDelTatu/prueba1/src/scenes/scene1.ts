@@ -18,16 +18,6 @@ export default class Scene1 extends Phaser.Scene {
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
 
-        data.deck.forEach((bolitas) => {
-            bolitas.color = Phaser.Math.Between(2, 4);
-        });
-
-        for(let i = 0; i < 200; i++) {
-            data.deck.push({obj: null, type: 0, color: Phaser.Math.Between(2, 4)});
-        }
-        
-        new BolitaDeck(this, 0.3, data);
-
         this.cargarNivelNuevo();
 
         new Slider(this, data, data.deck);
@@ -81,7 +71,14 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
+        console.log(data.deck);
+
         let nivel = this.cargarNivelDesdeTiled("lvl_3");
+
+        data.deck = Matriz.deckFromMatriz(nivel, data);
+
+        new BolitaDeck(this, 0.3, data);
+        console.log(data.deck);
 
         const bolitasTexturas = [
             'basurita_0', //  VERDE

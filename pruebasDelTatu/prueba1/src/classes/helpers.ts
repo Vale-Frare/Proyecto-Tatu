@@ -2,6 +2,28 @@ import Phaser from 'phaser';
 import {BolitaLanzada} from '../classes/prefabs';
 
 export class Matriz {
+    static deckFromMatriz(matriz, data) {
+        let deck = [];
+        let matrizInvertida = matriz.slice().reverse();
+        let gruposDestruidos = [];
+        matrizInvertida.forEach(fila => {
+            fila.forEach(bolita => {
+                if (bolita != null) {
+                    if (gruposDestruidos.find(grupo => grupo == bolita.grupo) == undefined) {
+                        console.log(gruposDestruidos.find(grupo => grupo == bolita.grupo));
+                        if (bolita.color != -1) {
+                            deck.push(
+                                {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
+                            );
+                            gruposDestruidos.push(bolita.grupo);
+                        }
+                    }
+                }
+            });
+        });
+        return deck;
+    }
+
     static objetosAMatriz(objetos, alto, ancho) {
         let matriz = [];
 
@@ -368,6 +390,13 @@ export class Aleatorizadores {
 export class AccionesBolitas {
     static tiro(scene: Phaser.Scene, data, rotacion) {
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
+            bola_lanzada.emitter.followOffset.x += 2000;
+            let emitter = bola_lanzada.emitter;
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    emitter.killAll();
+                }, 500);
+            });
             //  vale: se compara el color.
     
             if (bola_lanzada.tintTopLeft == data.bolitasTextYColors[bola_level.texture.key]) {
@@ -448,9 +477,42 @@ export class AccionesBolitas {
         let bounces = 0;
 
         function onBounce(a) {
+            console.log(a.emitter);
+            a.emitter.followOffset.x += 2000;
+            let emitter = a.emitter;
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    emitter.killAll();
+                }, 500);
+            });
+            var particles = scene.add.particles('pastito');
+
+            let geom = new Phaser.Geom.Ellipse(0, 0, 20, 1);
+            console.log(a.angle);
+            var _ = particles.createEmitter({
+                radial: false,
+                scale: { start: 0.3, end: 0, ease: 'Expo' },
+                lifespan: { min: 1000, max: 2000 },
+                frequency: 0,  
+                quantity: 1,
+                maxParticles: 0,
+                emitZone:  { source: geom },
+                rotate: { start: -a.angle + 90, end: -a.angle + 90}, // Esto ta re mal, hay que arreglarlo.
+            });
+            _.startFollow(a);
+            _.setBlendMode(Phaser.BlendModes.NORMAL);
+            a.emitter = _;
             bounces++;
             if (bounces >= 5) {
                 a.destroy();
+
+                a.emitter.followOffset.x += 2000;
+                let emitter = a.emitter;
+                new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        emitter.killAll();
+                    }, 500);
+                });
             }
         }
 

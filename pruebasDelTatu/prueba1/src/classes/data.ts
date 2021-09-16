@@ -56,6 +56,14 @@ export default class Data {
         'basurita_0': 0x55ae5f //   VERDE
     };
 
+    diccionarioDeColores = [
+        4,
+        2,
+        3,
+        0,
+        1
+    ]
+
     niveles = [
         [
             [0,0,0,0,0,0],

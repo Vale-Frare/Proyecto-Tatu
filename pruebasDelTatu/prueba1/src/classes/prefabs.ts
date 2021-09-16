@@ -37,25 +37,29 @@ export class BolitaLanzada {
         this.object.setScale(scale);
         this.object.depth = 1;
         this.object.rotation = rotacion;
-        scene.physics.velocityFromRotation(this.object.rotation, 2600, this.object.body.velocity);
+        scene.physics.velocityFromRotation(this.object.rotation, 1600, this.object.body.velocity);
         this.object.setBounce(1);
         this.object.body.setCircle(this.object.width/2);
 
         var particles = scene.add.particles('pastito');
 
+        let geom = new Phaser.Geom.Ellipse(0, 0, 20, 1);
         var emitter = particles.createEmitter({
             radial: false,
-            scale: { start: 0.3, end: 0, ease: 'Power3' },
-            lifespan: { min: 300, max: 400 },
-            frequency: 10,
-            quantity: 1
+            scale: { start: 0.3, end: 0, ease: 'Expo' },
+            lifespan: { min: 1000, max: 2000 },
+            frequency: 0,  
+            quantity: 1,
+            maxParticles: 0,
+            emitZone:  { source: geom },
+            rotate: { start: this.object.angle + 90, end: this.object.angle + 90 },
         });
 
         //emitter.setAngle(this.object.angle);
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
         emitter.setBlendMode(Phaser.BlendModes.NORMAL);
-
+        
         this.object.emitter = emitter;
     }
 }
