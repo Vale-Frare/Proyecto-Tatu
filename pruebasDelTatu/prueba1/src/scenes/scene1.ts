@@ -18,6 +18,8 @@ export default class Scene1 extends Phaser.Scene {
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
 
+        data.debugRayita = this.add.sprite(0,0,'rayita').setOrigin(0.5, 1).setScale(5);
+
         this.cargarNivelNuevo();
 
         new Slider(this, data, data.deck);
@@ -55,6 +57,16 @@ export default class Scene1 extends Phaser.Scene {
     }    
 
     update() {
+        if (Config.config.physics.arcade.debug) { 
+            data.debugRayita.x = data.lanzador.x;
+            data.debugRayita.y = data.lanzador.y;
+            data.debugRayita.rotation = data.lanzador.rotation;
+        }else {
+            data.debugRayita.x = -500;
+            data.debugRayita.y = -500;
+            data.debugRayita.rotation = 0;
+        }
+
         data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
 
         data.bolitas.forEach(bolita => {

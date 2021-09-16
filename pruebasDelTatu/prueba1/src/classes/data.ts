@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 export default class Data {
+    debugRayita;
+
     mapaCargado;
 
     text1;

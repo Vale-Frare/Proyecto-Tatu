@@ -19,10 +19,12 @@ export class Bolita {
         this.object.depth = -1;
         this.object.grupo = nivel[y][x].grupo;
         this.object.body.setImmovable(true);
-        this.object.body.setCircle(this.width/2);
+        this.object.body.setCircle((this.object.width*.5) - 50);
+        this.object.body.offset.y = 50;
+        this.object.body.offset.x = 50;
         this.object.body.moves = false;
 
-        if (Config.config.physics.arcade.debug) scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'bold 85px Arial', color: 'black'}).setOrigin(0.5);
+        if (Config.config.physics.arcade.debug) scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'lighter 65px Arial', color: 'white', stroke: '#000', strokeThickness: 8}).setOrigin(0.5);
     }
 }
 
