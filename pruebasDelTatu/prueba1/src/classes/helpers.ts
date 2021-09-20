@@ -21,6 +21,17 @@ export class Matriz {
                 }
             });
         });
+
+        //sergio: alargar "fácilmente" el deck
+        let deck2 = deck;
+        for (let x = 0; x < 1; x++) {
+            deck2.forEach(bolita => {
+                deck.push(
+                    {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
+                );
+            });            
+        }
+
         return deck;
     }
 

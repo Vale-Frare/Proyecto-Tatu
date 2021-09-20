@@ -39,6 +39,7 @@ export class BolitaLanzada {
         this.object.setScale(scale);
         this.object.depth = 1;
         this.object.rotation = rotacion;
+        this.object.body.allowGravity = false;
         scene.physics.velocityFromRotation(this.object.rotation, 1600, this.object.body.velocity);
         this.object.setBounce(1);
         this.object.body.setCircle(this.object.width/2);
@@ -61,6 +62,7 @@ export class BolitaLanzada {
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
         emitter.setBlendMode(Phaser.BlendModes.NORMAL);
+        emitter.depth = 1;
         
         this.object.emitter = emitter;
     }
