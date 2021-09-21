@@ -40,7 +40,7 @@ export class BolitaLanzada {
         this.object.depth = 1;
         this.object.rotation = rotacion;
         this.object.body.allowGravity = false;
-        scene.physics.velocityFromRotation(this.object.rotation, 1600, this.object.body.velocity);
+        scene.physics.velocityFromRotation(this.object.rotation, 300, this.object.body.velocity);
         this.object.setBounce(1);
         this.object.body.setCircle(this.object.width/2);
 
@@ -55,7 +55,7 @@ export class BolitaLanzada {
             quantity: 1,
             maxParticles: 0,
             emitZone:  { source: geom },
-            rotate: { start: this.object.angle + 90, end: this.object.angle + 90 },
+            rotate: { start: this.object.angle - 90, end: this.object.angle - 90 },
         });
 
         //emitter.setAngle(this.object.angle);

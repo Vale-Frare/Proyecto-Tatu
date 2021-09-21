@@ -21,16 +21,17 @@ export class Matriz {
                 }
             });
         });
-
         //sergio: alargar "fácilmente" el deck
         let deck2 = deck;
+        console.log(deck2);
         for (let x = 0; x < 1; x++) {
             deck2.forEach(bolita => {
                 deck.push(
-                    {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
+                    {obj: null, type: 0, color: bolita.color}
                 );
             });            
         }
+        console.log(deck);
 
         return deck;
     }
@@ -489,7 +490,28 @@ export class AccionesBolitas {
 
         function onBounce(a) {
             console.log(a.emitter);
+            console.log(a.body);
+            let ang_rebote = Math.atan((a.body.velocity.y/300) / (a.body.velocity.x/300));
+            console.log(ang_rebote);
+            console.log(a.rotation);
+            if(a.body.velocity.y/300 < 0){
+                if(a.body.velocity.x/300 < 0){
+                    a.rotation = (ang_rebote + (a.rotation + (Math.PI/2))) * -1;
+                }
+                else{
+                    a.rotation = ang_rebote + (a.rotation - (Math.PI/2));
+                }
+            }
+            else{
+                if(a.body.velocity.x/300 < 0){
+                    a.rotation = ang_rebote * -1;
+                }
+                else{
+                    a.rotation = ang_rebote;
+                }
+            }
             a.emitter.followOffset.x += 2000;
+            //a.angle = a.angle + 180;
             let emitter = a.emitter;
             new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -499,7 +521,6 @@ export class AccionesBolitas {
             var particles = scene.add.particles('pastito');
 
             let geom = new Phaser.Geom.Ellipse(0, 0, 20, 1);
-            console.log(a.angle);
             var _ = particles.createEmitter({
                 radial: false,
                 scale: { start: 0.3, end: 0, ease: 'Expo' },
@@ -508,7 +529,7 @@ export class AccionesBolitas {
                 quantity: 1,
                 maxParticles: 0,
                 emitZone:  { source: geom },
-                rotate: { start: -a.angle + 90, end: -a.angle + 90}, // Esto ta re mal, hay que arreglarlo.
+                rotate: { start: -a.angle - 90, end: -a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
             });
             _.startFollow(a);
             _.setBlendMode(Phaser.BlendModes.NORMAL);
