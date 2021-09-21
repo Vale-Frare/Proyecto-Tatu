@@ -7,14 +7,20 @@ export class Matriz {
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         matrizInvertida.forEach(fila => {
-            fila.forEach(bolita => {
+            fila.forEach((bolita, index) => {
                 if (bolita != null) {
                     if (gruposDestruidos.find(grupo => grupo == bolita.grupo) == undefined) {
-                        console.log(gruposDestruidos.find(grupo => grupo == bolita.grupo));
                         if (bolita.color != -1) {
                             deck.push(
                                 {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
                             );
+                            if (fila.length - 1 != index) {
+                                if (fila[index].color != fila[index+1].color) {
+                                    deck.push(
+                                        {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
+                                    );
+                                }
+                            }
                             gruposDestruidos.push(bolita.grupo);
                         }
                     }
@@ -22,6 +28,7 @@ export class Matriz {
             });
         });
         //sergio: alargar "fácilmente" el deck
+        /*
         let deck2 = deck;
         console.log(deck2);
         for (let x = 0; x < 1; x++) {
@@ -32,6 +39,7 @@ export class Matriz {
             });            
         }
         console.log(deck);
+        */
 
         return deck;
     }
@@ -462,8 +470,16 @@ export class AccionesBolitas {
                 duration: 350,
                 yoyo: false,
                 ease: 'Power2',
-                loop: 0
+                loop: 0,
+                onComplete: function () {
+                    
+                }
             });
+        });
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                data.deckController.agregrarBolita(Phaser.Math.Between(0, 4),data);
+            }, 350);
         });
         
         let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
@@ -489,10 +505,7 @@ export class AccionesBolitas {
         let bounces = 0;
 
         function onBounce(a) {
-            console.log(a.emitter);
-            console.log(a.body);
-            let ang_rebote = Math.atan2(a.body.velocity.y/300, a.body.velocity.x/300);
-            console.log(ang_rebote);
+            let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
             a.rotation = ang_rebote;
             a.emitter.followOffset.x += 2000;
             //a.angle = a.angle + 180;

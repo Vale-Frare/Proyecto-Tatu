@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 export default class Data {
+    deckController;
+
     debugRayita;
 
     mapaCargado;

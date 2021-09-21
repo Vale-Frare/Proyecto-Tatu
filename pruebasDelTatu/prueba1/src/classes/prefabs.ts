@@ -40,7 +40,11 @@ export class BolitaLanzada {
         this.object.depth = 1;
         this.object.rotation = rotacion;
         this.object.body.allowGravity = false;
-        scene.physics.velocityFromRotation(this.object.rotation, 300, this.object.body.velocity);
+
+        let speed = 1000;
+
+        scene.physics.velocityFromRotation(this.object.rotation, speed, this.object.body.velocity);
+        this.object.velocidad = speed;
         this.object.setBounce(1);
         this.object.body.setCircle(this.object.width/2);
 
@@ -57,6 +61,7 @@ export class BolitaLanzada {
             emitZone:  { source: geom },
             rotate: { start: this.object.angle - 90, end: this.object.angle - 90 },
         });
+        particles.depth = -1;
 
         //emitter.setAngle(this.object.angle);
         emitter.setPosition(x, y);
@@ -70,17 +75,33 @@ export class BolitaLanzada {
 
 export class BolitaDeck {
     object: Phaser.GameObjects.Sprite;
+    lastX: number;
     x: number = 0;
     y: number = 0;
+    nextBolita: number = 0;
+    data: any;
+    scene: any;
+    scale: any;
 
     constructor(scene, scale, data) {
         for(let i = data.deck.length - 1; i > -1; i--) {
             this.object = scene.add.sprite(900 - (i * 300),1800,'tatu_bebe');
-
             this.object.setTint(data.burbujas[data.deck[i].color].color);
             data.setObjInDeck(this.object, i);
             this.object.setDepth(5);
             this.object.setScale(scale);
+            this.nextBolita = i;
+            this.data = data;
+            this.scene = scene;
+            this.scale = scale;
         }
+    }
+
+    agregrarBolita(color, data) {
+        let object = this.scene.add.sprite(data.deck[data.deck.length - 1].obj.x - 300,1800,'tatu_bebe');
+        object.setScale(this.scale);
+        object.setTint(data.burbujas[color].color);
+
+        data.deck.push({obj: object, type: 0, color: color});
     }
 }

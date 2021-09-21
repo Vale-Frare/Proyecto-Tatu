@@ -83,14 +83,15 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
-        console.log(data.deck);
-
         let nivel = this.cargarNivelDesdeTiled("lvl_3");
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 
-        new BolitaDeck(this, 0.3, data);
-        console.log(data.deck);
+        data.deckController = new BolitaDeck(this, 0.3, data);
+
+        this.input.keyboard.on('keydown-' + 'T', function (event) { 
+            data.deckController.agregrarBolita(1, data);
+        });
 
         const bolitasTexturas = [
             'basurita_0', //  VERDE
