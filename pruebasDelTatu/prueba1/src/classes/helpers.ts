@@ -491,25 +491,9 @@ export class AccionesBolitas {
         function onBounce(a) {
             console.log(a.emitter);
             console.log(a.body);
-            let ang_rebote = Math.atan((a.body.velocity.y/300) / (a.body.velocity.x/300));
+            let ang_rebote = Math.atan2(a.body.velocity.y/300, a.body.velocity.x/300);
             console.log(ang_rebote);
-            console.log(a.rotation);
-            if(a.body.velocity.y/300 < 0){
-                if(a.body.velocity.x/300 < 0){
-                    a.rotation = (ang_rebote + (a.rotation + (Math.PI/2))) * -1;
-                }
-                else{
-                    a.rotation = ang_rebote + (a.rotation - (Math.PI/2));
-                }
-            }
-            else{
-                if(a.body.velocity.x/300 < 0){
-                    a.rotation = ang_rebote * -1;
-                }
-                else{
-                    a.rotation = ang_rebote;
-                }
-            }
+            a.rotation = ang_rebote;
             a.emitter.followOffset.x += 2000;
             //a.angle = a.angle + 180;
             let emitter = a.emitter;
@@ -529,7 +513,7 @@ export class AccionesBolitas {
                 quantity: 1,
                 maxParticles: 0,
                 emitZone:  { source: geom },
-                rotate: { start: -a.angle - 90, end: -a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
+                rotate: { start: a.angle - 90, end: a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
             });
             _.startFollow(a);
             _.setBlendMode(Phaser.BlendModes.NORMAL);
