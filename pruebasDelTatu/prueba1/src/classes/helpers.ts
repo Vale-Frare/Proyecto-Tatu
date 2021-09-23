@@ -492,6 +492,7 @@ export class AccionesBolitas {
         //data.deckController.agregarBolitaAlDeck(data.diccionarioDeColores[Phaser.Math.Between(0, 2)]);
         
         let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
+        bolita.anims.play('tatu_bebe');
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
 
         data.bolitas.push(bolita);

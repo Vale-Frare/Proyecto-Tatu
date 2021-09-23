@@ -18,11 +18,11 @@ export default class Data {
     bordes = [];
     
     burbujas = [
-        {color: 0x0384fc},   //  Azulinho
-        {color: 0xffda52},   //  Amarello
-        {color: 0xff5252},   //  Roujo
-        {color: 0xf18412},   //  Naranja
-        {color: 0x55ae5f}    //  Verde
+        {color: 0x19B2FF},   //  Azulinho
+        {color: 0xFAFF19},   //  Amarello
+        {color: 0xFF1919},   //  Roujo
+        {color: 0xFF8404},   //  Naranja
+        {color: 0x04FF20}    //  Verde
     ];
 
 
@@ -53,19 +53,19 @@ export default class Data {
     ];
 
     bolitaColorATextura = {
-        0x0384fc: 'basurita_3', //  AZUL
-        0xffda52: 'basurita_4', //  AMARILLO
-        0xff5252: 'basurita_1', //  ROJA
-        0xf18412: 'basurita_2', //  NARANJA
-        0x55ae5f: 'basurita_0' //   VERDE
+        0x19B2FF: 'basurita_3', //  AZUL
+        0xFAFF19: 'basurita_4', //  AMARILLO
+        0xFF1919: 'basurita_1', //  ROJA
+        0xFF8404: 'basurita_2', //  NARANJA
+        0x04FF20: 'basurita_0' //   VERDE
     };
 
     bolitasTextYColors = {
-        'basurita_3': 0x0384fc, //  AZUL
-        'basurita_4': 0xffda52, //  AMARILLO
-        'basurita_1': 0xff5252, //  ROJA
-        'basurita_2': 0xf18412, //  NARANJA
-        'basurita_0': 0x55ae5f //   VERDE
+        'basurita_3': 0x19B2FF, //  AZUL
+        'basurita_4': 0xFAFF19, //  AMARILLO
+        'basurita_1': 0xFF1919, //  ROJA
+        'basurita_2': 0xFF8404, //  NARANJA
+        'basurita_0': 0x04FF20 //   VERDE
     };
 
     bolitasTextYColorsInt = {
@@ -77,11 +77,11 @@ export default class Data {
     };
 
     tatusTextYColors = {
-        'tatu_3': 0x0384fc, //  AZUL
-        'tatu_4': 0xffda52, //  AMARILLO
-        'tatu_1': 0xff5252, //  ROJA
-        'tatu_2': 0xf18412, //  NARANJA
-        'tatu_0': 0x55ae5f //   VERDE
+        'tatu_3': 0x19B2FF, //  AZUL
+        'tatu_4': 0xFAFF19, //  AMARILLO
+        'tatu_1': 0xFF1919, //  ROJA
+        'tatu_2': 0xFF8404, //  NARANJA
+        'tatu_0': 0x04FF20 //   VERDE
     };
 
     diccionarioDeColores = [

@@ -137,14 +137,22 @@ export class BolitaDeck2 {
 
     update() {
         this.bolitas.forEach((bolita, index) => {
-            this.scene.tweens.add({
-                targets: this.bolitas[index],
-                x: this.x - (index * 300),
-                duration: 250,
-                yoyo: false,
-                ease: 'Power4',
-                loop: 0
-            });
+            if (Math.round(bolita.x) != (this.x - (index * 300))) {
+                this.scene.tweens.add({
+                    targets: this.bolitas[index],
+                    x: this.x - (index * 300),
+                    duration: 250,
+                    yoyo: false,
+                    ease: 'Power1',
+                    loop: 0,
+                    onStart: function () {
+                        if (!bolita.anims.isPlaying) bolita.anims.play('tatu_bebe_camina', true);
+                    }
+                });
+                
+            }else {
+                bolita.anims.pause();
+            }
         });
     }
 
@@ -155,7 +163,7 @@ export class BolitaDeck2 {
     agregarBolita(scene, data, scale, color, key = 'tatu_bebe') {
         let bolita = scene.add.sprite(-1800, this.y, key);
         bolita.setTint(color);
-        bolita.setDepth(5);
+        bolita.setDepth(4);
         bolita.setScale(scale);
 
         //data.deck.push({obj: bolita, type: 0, color: color});
@@ -185,29 +193,30 @@ export class BolitaDeck2 {
                     let colorI = this.data.bolitasTextYColors[_];
                     //bolita.obj.setTint(this.data.bolitasTextYColors[_]);
                     this.scene.tweens.addCounter({
-                        from: bolita.obj.tintTopLeft,
-                        to: 0,
+                        from: -bolita.obj.scale,
+                        to: bolita.obj.scale,
                         ease: 'Cubic',
                         duration: 500,
                         onUpdate: function (tween)
                         {
                             const value = tween.getValue();
-                            bolita.obj.setTint(value);
-                        },
-                        onComplete: function (tween) {
-                            scene.tweens.addCounter({
-                                from: 0,
-                                to: colorI,
-                                ease: 'Cubic',
-                                duration: 500,
-                                onUpdate: function (tween)
-                                {
-                                    const value = tween.getValue();
-                                    bolita.obj.setTint(value);
-                                }
-                            });
+                            if (value > 0) {
+                                bolita.obj.setTint(colorI);
+                            }
+                            bolita.obj.scale = Math.abs(value);
                         }
                     });
+                    // this.scene.tweens.addCounter({
+                    //     from: bolita.obj.tintTopLeft,
+                    //     to: colorI,
+                    //     ease: 'Cubic',
+                    //     duration: 500,
+                    //     onUpdate: function (tween)
+                    //     {
+                    //         const value = tween.getValue();
+                    //         bolita.obj.setTint(value);
+                    //     }
+                    // });
                     bolita.color = this.data.bolitasTextYColorsInt[_];
                 }
             });

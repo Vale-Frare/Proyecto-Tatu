@@ -17,6 +17,7 @@ export default class Scene1 extends Phaser.Scene {
         data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
+        data.lanzador.setDepth(5);
 
         data.debugRayita = this.add.sprite(0,0,'rayita').setOrigin(0.5, 1).setScale(5);
 
