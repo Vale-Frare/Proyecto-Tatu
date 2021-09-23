@@ -260,7 +260,7 @@ export class Matriz {
             }
         }
         catch (e) {
-            console.log(e, "Error xd.");
+            console.log(e, "ERROR");
         }
     }
 
@@ -454,6 +454,30 @@ export class AccionesBolitas {
             }
             //  vale: finalmente se rompe la bolita lanzada.
     
+            let colores = [];
+
+            data.nivelCargado.forEach(fila => {
+                fila.forEach(bolita => {
+                    if(bolita){
+                        if(colores.length == 0){
+                            colores.push(bolita.texture.key);
+                        }
+                        else{
+                            let cont = 0;
+                            colores.forEach(color =>{
+                                if (color == bolita.texture.key){
+                                    cont++;
+                                }
+                            })
+                            if(cont == 0){
+                                colores.push(bolita.texture.key);
+                            }
+                        }
+                    }
+                })
+            })
+            data.deckController.reemplazarColor(colores);
+
             bola_lanzada.destroy();
         }
         
@@ -463,24 +487,9 @@ export class AccionesBolitas {
         if (data.bolitaALanzar >= data.deck.length) {
             return;
         }
-        data.deck.forEach(bolita => {
-            data.deckTween = scene.tweens.add({
-                targets: bolita.obj,
-                x: bolita.obj.x + 300,
-                duration: 350,
-                yoyo: false,
-                ease: 'Power2',
-                loop: 0,
-                onComplete: function () {
-                    
-                }
-            });
-        });
-        new Promise((resolve, reject) => {
-            setTimeout(() => {
-                data.deckController.agregrarBolita(Phaser.Math.Between(0, 4),data);
-            }, 350);
-        });
+        data.deckController.tirar();
+        //  vale: jiji jaja
+        //data.deckController.agregarBolitaAlDeck(data.diccionarioDeColores[Phaser.Math.Between(0, 2)]);
         
         let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);

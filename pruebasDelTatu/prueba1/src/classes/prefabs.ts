@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
 import Config from '../config';
+import { Matriz } from '../classes/helpers';
 
 export class Bolita {
-    object: Phaser.Physics.Arcade.Sprite;
+    //object: Phaser.Physics.Arcade.Sprite;
+    object: any;
     x: number = 0;
     y: number = 0;
 
@@ -29,7 +31,8 @@ export class Bolita {
 }
 
 export class BolitaLanzada {
-    object: Phaser.Physics.Arcade.Sprite;
+    //object: Phaser.Physics.Arcade.Sprite;
+    object: any;
     x: number = 0;
     y: number = 0;
 
@@ -103,5 +106,127 @@ export class BolitaDeck {
         object.setTint(data.burbujas[color].color);
 
         data.deck.push({obj: object, type: 0, color: color});
+    }
+}
+
+export class BolitaDeck2 {
+    bolitas: any;
+    lastX: number;
+    x: number = 0;
+    y: number = 0;
+    data: any;
+    scene: any;
+    scale: any;
+
+    constructor(scene, scale, data, matriz, x, y) {
+        this.x = x;
+        this.y = y;
+        this.bolitas = [];
+        this.lastX = 0;
+        this.data = data;
+        this.scene = scene;
+        this.scale = scale;
+
+        let deck = Matriz.deckFromMatriz(matriz, data);
+        data.deck = deck;
+
+        deck.forEach((element, index) => {
+            element.obj = this.agregarBolita(scene, data, scale, data.burbujas[element.color].color);
+        });
+    }
+
+    update() {
+        this.bolitas.forEach((bolita, index) => {
+            this.scene.tweens.add({
+                targets: this.bolitas[index],
+                x: this.x - (index * 300),
+                duration: 250,
+                yoyo: false,
+                ease: 'Power4',
+                loop: 0
+            });
+        });
+    }
+
+    tirar(){
+        this.x += 300;
+    }
+
+    agregarBolita(scene, data, scale, color, key = 'tatu_bebe') {
+        let bolita = scene.add.sprite(-1800, this.y, key);
+        bolita.setTint(color);
+        bolita.setDepth(5);
+        bolita.setScale(scale);
+
+        //data.deck.push({obj: bolita, type: 0, color: color});
+        this.bolitas.push(bolita);
+
+        return bolita;
+    }
+
+    agregarBolitaAlDeck(color) {
+        this.data.deck.push(
+            {obj: this.agregarBolita(this.scene, this.data, this.scale, this.data.burbujas[color].color), type: 0, color: color}
+        );
+    }
+
+    reemplazarColor(coloresNuevos) {
+        if(coloresNuevos.length != 0){
+            this.data.deck.forEach((bolita, index) => {
+                let cont = 0;
+                coloresNuevos.forEach(color =>{
+                    if(this.data.bolitaColorATextura[bolita.obj.tintTopLeft] == color){
+                        cont++;
+                    }
+                })
+                if(cont == 0){
+                    let _ = coloresNuevos[Phaser.Math.Between(0,coloresNuevos.length-1)];
+                    let scene = this.scene;
+                    let colorI = this.data.bolitasTextYColors[_];
+                    //bolita.obj.setTint(this.data.bolitasTextYColors[_]);
+                    this.scene.tweens.addCounter({
+                        from: bolita.obj.tintTopLeft,
+                        to: 0,
+                        ease: 'Cubic',
+                        duration: 500,
+                        onUpdate: function (tween)
+                        {
+                            const value = tween.getValue();
+                            bolita.obj.setTint(value);
+                        },
+                        onComplete: function (tween) {
+                            scene.tweens.addCounter({
+                                from: 0,
+                                to: colorI,
+                                ease: 'Cubic',
+                                duration: 500,
+                                onUpdate: function (tween)
+                                {
+                                    const value = tween.getValue();
+                                    bolita.obj.setTint(value);
+                                }
+                            });
+                        }
+                    });
+                    bolita.color = this.data.bolitasTextYColorsInt[_];
+                }
+            });
+        }
+    }
+
+    removerBolita(index) {
+        if (this.data.bolitaALanzar != this.data.deck.length - 1) {
+            this.bolitas.splice(index, 1);
+            this.data.deck[index].obj.destroy();
+            this.data.deck.splice(index, 1);
+            this.scene.tweens.add({
+                targets: this.data.deck[this.data.bolitaALanzar].obj,
+                rotation: this.data.lanzador.rotation - (Math.PI/2),
+                duration: 400,
+                yoyo: false,
+                ease: 'Linear',
+                loop: 0,
+            });
+        }
     }
 }

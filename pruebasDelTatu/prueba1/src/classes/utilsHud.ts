@@ -28,7 +28,7 @@ export class Slider {
         this.maximo = mini_bolita.x + (barrita.width/2);
         this.diferencia = Math.floor(this.maximo - this.minimo);
         data.lanzador.rotation = -0.25;
-        deck[data.bolitaALanzar].obj.rotation = -0.25 - (Math.PI/2);
+        deck[data.bolitaALanzar].obj.rotation = data.lanzador.rotation - (Math.PI/2);
         this.diferencia = 1.1 / this.diferencia;
 
         mini_bolita.setInteractive({ draggable: true, dropZone: true })

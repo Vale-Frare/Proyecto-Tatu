@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import Data from '../classes/data';
 import Config from '../config';
-import {Bolita, BolitaDeck} from '../classes/prefabs'
+import {Bolita, BolitaDeck, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
 import {Slider} from '../classes/utilsHud';
 
@@ -80,6 +80,8 @@ export default class Scene1 extends Phaser.Scene {
                 }
             }
         });
+
+        data.deckController.update();
     }
 
     cargarNivelNuevo() {
@@ -87,10 +89,14 @@ export default class Scene1 extends Phaser.Scene {
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 
-        data.deckController = new BolitaDeck(this, 0.3, data);
+        data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1800);
 
         this.input.keyboard.on('keydown-' + 'T', function (event) { 
-            data.deckController.agregrarBolita(1, data);
+            data.deckController.removerBolita(data.bolitaALanzar + 1);
+        });
+
+        this.input.keyboard.on('keydown-' + 'R', function (event) { 
+            data.deckController.agregarBolitaAlDeck(Phaser.Math.Between(2, 4));
         });
 
         const bolitasTexturas = [
