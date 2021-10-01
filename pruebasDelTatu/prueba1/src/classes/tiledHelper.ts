@@ -14,7 +14,8 @@ export default class tiledHelper {
                     bordes: [],
                     lugar_de_inicio: ""
                 };
-                newData.lugar_de_inicio = data.properties.find(_ => _.name == "lugar_de_comienzo").value;
+                try {newData.lugar_de_inicio = data.properties.find(_ => _.name == "lugar_de_comienzo").value}
+                catch (e) {alert(`No se encontro lugar_de_comienzo en los atributos personalizados del mapa de Tiled. \n${newData.name}.json`)};
                 data.layers.forEach((layer: any, index: number) => {
                     if (layer.name == "pelotas") {
                         newData.objects = data.layers[index].objects;
