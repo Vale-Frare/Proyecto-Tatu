@@ -3,7 +3,6 @@ import Config from '../config';
 import { Matriz } from '../classes/helpers';
 
 export class Bolita {
-    //object: Phaser.Physics.Arcade.Sprite;
     object: any;
     x: number = 0;
     y: number = 0;
@@ -31,7 +30,6 @@ export class Bolita {
 }
 
 export class BolitaLanzada {
-    //object: Phaser.Physics.Arcade.Sprite;
     object: any;
     x: number = 0;
     y: number = 0;
@@ -66,7 +64,6 @@ export class BolitaLanzada {
         });
         particles.depth = -1;
 
-        //emitter.setAngle(this.object.angle);
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
         emitter.setBlendMode(Phaser.BlendModes.NORMAL);
@@ -165,8 +162,6 @@ export class BolitaDeck2 {
         bolita.setTint(color);
         bolita.setDepth(4);
         bolita.setScale(scale);
-
-        //data.deck.push({obj: bolita, type: 0, color: color});
         this.bolitas.push(bolita);
 
         return bolita;
@@ -191,7 +186,6 @@ export class BolitaDeck2 {
                     let _ = coloresNuevos[Phaser.Math.Between(0,coloresNuevos.length-1)];
                     let scene = this.scene;
                     let colorI = this.data.bolitasTextYColors[_];
-                    //bolita.obj.setTint(this.data.bolitasTextYColors[_]);
                     this.scene.tweens.addCounter({
                         from: -bolita.obj.scale,
                         to: bolita.obj.scale,

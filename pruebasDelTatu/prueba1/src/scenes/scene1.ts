@@ -3,7 +3,7 @@ import Data from '../classes/data';
 import Config from '../config';
 import {Bolita, BolitaDeck, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
-import {Slider} from '../classes/utilsHud';
+import {Slider} from '../classes/playerController';
 
 let data: Data = new Data();
 

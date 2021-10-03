@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import {BolitaLanzada} from '../classes/prefabs';
+import {shotController} from '../classes/shotController';
 
 export class Matriz {
     static deckFromMatriz(matriz, data) {
@@ -27,19 +28,6 @@ export class Matriz {
                 }
             });
         });
-        //sergio: alargar "fácilmente" el deck
-        /*
-        let deck2 = deck;
-        console.log(deck2);
-        for (let x = 0; x < 1; x++) {
-            deck2.forEach(bolita => {
-                deck.push(
-                    {obj: null, type: 0, color: bolita.color}
-                );
-            });            
-        }
-        console.log(deck);
-        */
 
         return deck;
     }
@@ -510,73 +498,74 @@ export class AccionesBolitas {
             });
         }, scene);
 
-        let overlaps = [];
-        let paDespues;
-        let bounces = 0;
+        // let overlaps = [];
+        // let paDespues;
+        // let bounces = 0;
 
-        function onBounce(a) {
-            let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
-            a.rotation = ang_rebote;
-            a.emitter.followOffset.x += 2000;
-            //a.angle = a.angle + 180;
-            let emitter = a.emitter;
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    emitter.killAll();
-                }, 500);
-            });
-            var particles = scene.add.particles('pastito');
+        // function onBounce(a) {
+        //     let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
+        //     a.rotation = ang_rebote;
+        //     a.emitter.followOffset.x += 2000;
+        //     let emitter = a.emitter;
+        //     new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             emitter.killAll();
+        //         }, 500);
+        //     });
+        //     var particles = scene.add.particles('pastito');
 
-            let geom = new Phaser.Geom.Ellipse(0, 0, 20, 1);
-            var _ = particles.createEmitter({
-                radial: false,
-                scale: { start: 0.3, end: 0, ease: 'Expo' },
-                lifespan: { min: 1000, max: 2000 },
-                frequency: 0,  
-                quantity: 1,
-                maxParticles: 0,
-                emitZone:  { source: geom },
-                rotate: { start: a.angle - 90, end: a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
-            });
-            _.startFollow(a);
-            _.setBlendMode(Phaser.BlendModes.NORMAL);
-            a.emitter = _;
-            bounces++;
-            if (bounces >= 5) {
-                a.destroy();
+        //     let geom = new Phaser.Geom.Ellipse(0, 0, 20, 1);
+        //     var _ = particles.createEmitter({
+        //         radial: false,
+        //         scale: { start: 0.3, end: 0, ease: 'Expo' },
+        //         lifespan: { min: 1000, max: 2000 },
+        //         frequency: 0,  
+        //         quantity: 1,
+        //         maxParticles: 0,
+        //         emitZone:  { source: geom },
+        //         rotate: { start: a.angle - 90, end: a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
+        //     });
+        //     _.startFollow(a);
+        //     _.setBlendMode(Phaser.BlendModes.NORMAL);
+        //     a.emitter = _;
+        //     bounces++;
+        //     if (bounces >= 5) {
+        //         a.destroy();
 
-                a.emitter.followOffset.x += 2000;
-                let emitter = a.emitter;
-                new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        emitter.killAll();
-                    }, 500);
-                });
-            }
-        }
+        //         a.emitter.followOffset.x += 2000;
+        //         let emitter = a.emitter;
+        //         new Promise((resolve, reject) => {
+        //             setTimeout(() => {
+        //                 emitter.killAll();
+        //             }, 500);
+        //         });
+        //     }
+        // }
 
-        function colisionesOn(param1, param2) {
-            overlaps.forEach(overlap => {
-                overlap.destroy();
-            });
-            data.bordes.forEach(borde => {
-                if(param1 != borde){
-                    scene.physics.add.collider(bolita, borde, onBounce, null, scene);
-                }else {
-                    paDespues = borde;
-                }
-            });
-            new Promise(function (resolve, reject) {
-                setTimeout(() => {
-                    scene.physics.add.collider(bolita, paDespues, onBounce, null, scene);
-                    resolve("nya");
-                }, 200);
-            });
-        }
+        // function colisionesOn(param1, param2) {
+        //     overlaps.forEach(overlap => {
+        //         overlap.destroy();
+        //     });
+        //     data.bordes.forEach(borde => {
+        //         if(param1 != borde){
+        //             scene.physics.add.collider(bolita, borde, onBounce, null, scene);
+        //         }else {
+        //             paDespues = borde;
+        //         }
+        //     });
+        //     new Promise(function (resolve, reject) {
+        //         setTimeout(() => {
+        //             scene.physics.add.collider(bolita, paDespues, onBounce, null, scene);
+        //             resolve("nya");
+        //         }, 200);
+        //     });
+        // }
 
-        data.bordes.forEach(borde => {
-            overlaps.push(scene.physics.add.overlap(borde, bolita, colisionesOn, null, scene));
-        });
+        // data.bordes.forEach(borde => {
+        //     overlaps.push(scene.physics.add.overlap(borde, bolita, colisionesOn, null, scene));
+        // });
+
+        new shotController(data, scene, bolita);
         
         data.bolitaALanzar += 1;
     }
