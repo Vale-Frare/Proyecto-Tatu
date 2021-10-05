@@ -88,6 +88,8 @@ export default class Scene1 extends Phaser.Scene {
     cargarNivelNuevo() {
         let nivel = this.cargarNivelDesdeTiled("lvl_3");
 
+        console.log(nivel);
+
         data.deck = Matriz.deckFromMatriz(nivel, data);
 
         data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1800);

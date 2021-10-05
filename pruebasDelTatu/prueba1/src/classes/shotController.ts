@@ -10,36 +10,42 @@ export class shotController {
     private bolita;
     private scene;
 
-    constructor(data, scene, bolita) {
-        this.overlaps = [];
+    constructor(data, scene, bolita, overlaps = []) {
+        this.overlaps = overlaps;
         this.paDespues = this.paDespues;
         this.bounces = 0;
         this.data = data;
         this.scene = scene;
         this.bolita = bolita;
+
+        this.colisionesBordes();
     }
     
-    colisionesBordes (data, scene, bolita){
+    colisionesBordes(){
 
-        data.bordes.forEach(borde => {
-            this.overlaps.push(scene.physics.add.overlap(borde, bolita, this.colisionesOn, null, scene));
+        this.data.bordes.forEach(borde => {
+            this.overlaps.push(this.scene.physics.add.overlap(borde, this.bolita, this.colisionesOn, null, this));
         });
     }
 
     colisionesOn(param1, param2){
         this.overlaps.forEach(overlap => {
+            this.overlaps.splice(this.overlaps.indexOf(overlap), 1);
             overlap.destroy();
         });
         this.data.bordes.forEach(borde => {
             if(param1 != borde){
-                this.scene.physics.add.collider(this.bolita, borde, this.onBounce, null, this.scene);
+                this.scene.physics.add.collider(this.bolita, borde, this.onBounce, null, this);
             }else {
                 this.paDespues = borde;
             }
         });
+
+        let contexto = this;
+         
         new Promise(function (resolve, reject) {
             setTimeout(() => {
-                this.scene.physics.add.collider(this.bolita, this.paDespues, this.onBounce, null, this.scene);
+                contexto.scene.physics.add.collider(contexto.bolita, contexto.paDespues, contexto.onBounce, null, contexto);
                 resolve("nya");
             }, 200);
         });
@@ -49,7 +55,6 @@ export class shotController {
         let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
         a.rotation = ang_rebote;
         a.emitter.followOffset.x += 2000;
-        //a.angle = a.angle + 180;
         let emitter = a.emitter;
         new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -67,7 +72,7 @@ export class shotController {
             quantity: 1,
             maxParticles: 0,
             emitZone:  { source: geom },
-            rotate: { start: a.angle - 90, end: a.angle - 90}, // Esto ta re mal, hay que arreglarlo.
+            rotate: { start: a.angle - 90, end: a.angle - 90},
         });
         _.startFollow(a);
         _.setBlendMode(Phaser.BlendModes.NORMAL);
