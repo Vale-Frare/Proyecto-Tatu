@@ -20,13 +20,45 @@ export class Bolita {
         this.object.depth = -1;
         this.object.grupo = nivel[y][x].grupo;
         this.object.body.setImmovable(true);
-        this.object.body.setCircle((this.object.width*.5) - 50);
-        this.object.body.offset.y = 50;
-        this.object.body.offset.x = 50;
+        this.object.body.setCircle((this.object.width*.5) - 30);
+        this.object.body.offset.y = 30;
+        this.object.body.offset.x = 30;
         this.object.body.moves = false;
 
         if (Config.config.physics.arcade.debug) scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'lighter 65px Arial', color: 'white', stroke: '#000', strokeThickness: 8}).setOrigin(0.5);
     }
+}
+
+export class BolitaFantasma{
+    object: any;
+    x: number = 0;
+    y: number = 0;
+    speed: number = 0;
+    rotacion: number = 0;
+
+    constructor(scene, x, y, scale, speed = 0, rotacion = 0) {
+        this.speed = speed;
+        this.object = scene.physics.add.sprite(x,y,'tatu_bebe');
+
+        this.object.setScale(scale);
+        this.object.depth = 5;
+        this.object.rotation = rotacion;
+        this.object.body.allowGravity = false;
+        this.object.setVisible(true);
+
+        scene.physics.velocityFromRotation(this.object.rotation, this.speed, this.object.body.velocity);
+        this.object.velocidad = this.speed;
+        this.object.setBounce(1);
+        this.object.body.setCircle(this.object.width/2);
+    }
+
+    updatePos(x, y, rotation, scene, velocidad) {
+        this.object.x = x;
+        this.object.y = y;
+        this.object.rotation = rotation;
+        scene.physics.velocityFromRotation(this.object.rotation, velocidad, this.object.body.velocity);
+    }
+
 }
 
 export class BolitaLanzada {
@@ -38,7 +70,7 @@ export class BolitaLanzada {
         this.object = scene.physics.add.sprite(x,y,'tatu_bebe');
 
         this.object.setScale(scale);
-        this.object.depth = 1;
+        this.object.depth = 0;
         this.object.rotation = rotacion;
         this.object.body.allowGravity = false;
 
@@ -62,12 +94,11 @@ export class BolitaLanzada {
             emitZone:  { source: geom },
             rotate: { start: this.object.angle - 90, end: this.object.angle - 90 },
         });
-        particles.depth = -1;
+        particles.depth = -2;
 
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
         emitter.setBlendMode(Phaser.BlendModes.NORMAL);
-        emitter.depth = 1;
         
         this.object.emitter = emitter;
     }

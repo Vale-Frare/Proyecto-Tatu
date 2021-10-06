@@ -5,6 +5,7 @@ export default class tiledHelper {
                 let newData = {
                     name: file.split('/')[2].split('.json')[0],
                     objects: null,
+                    bordesDepth: 0,
                     gids: 0,
                     tileWidth: 0,
                     tileHeight: 0,
@@ -30,12 +31,12 @@ export default class tiledHelper {
                             newData.objects[index].gid -= 1;
                         });
                     }
-                    var fondoCount = 0
-                    if (layer.name == "fondo" || layer.name == "fondo_2") {
-                        newData.fondos.push(layer);
-                        fondoCount++;
+                    if (layer.type == "tilelayer") {
+                        layer.depth = index - 2;
+                        newData.fondos.push(layer);  
                     }
                     if (layer.name == "bordes") {
+                        newData.bordesDepth = index - 1;
                         newData.bordes = layer.objects;
                     }
                 });

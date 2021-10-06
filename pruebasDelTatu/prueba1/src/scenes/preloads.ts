@@ -32,6 +32,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("borde_vertical", "assets/img/tiled/borde_vertical.png");
         this.load.image("fondo", "assets/img/tiled/fondo.png");
         this.load.image("fondo_2", "assets/img/tiled/fondo_2.png");
+        this.load.image("fondo_mas_fondo", "assets/img/tiled/fondo_mas_fondo.png");
 
         //  vale: Asi se carga un mapa de tiled.
         await tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json");

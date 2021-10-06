@@ -4,6 +4,7 @@ import Config from '../config';
 import {Bolita, BolitaDeck, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
+import {lineController} from '../classes/lineController';
 
 let data: Data = new Data();
 
@@ -18,8 +19,6 @@ export default class Scene1 extends Phaser.Scene {
 
         data.lanzador = this.add.sprite(900,1800,'flecha');
         data.lanzador.setDepth(5);
-
-        data.debugRayita = this.add.sprite(0,0,'rayita').setOrigin(0.5, 1).setScale(5);
 
         this.cargarNivelNuevo();
 
@@ -37,13 +36,13 @@ export default class Scene1 extends Phaser.Scene {
         var contador = 0;
         fondos.forEach((fondo,index) => {
             let f = this.add.image(fondo.x, fondo.y, fondo.key).setOrigin(0);
-            f.depth = -1 + (index * 10);
+            f.depth = fondo.depth;
             if (contador == 0) {
                 bordes.forEach((borde) => {
                     let b = this.physics.add.sprite(borde.x, borde.y, borde.key).setOrigin(0,1);
                     b.body.setImmovable(true);
                     b.body.moves = false;
-                    b.depth = -1;
+                    b.depth = data.mapaCargado.bordesDepth;
                     data.bordes.push(b);
                 });
                 contador++;
@@ -58,15 +57,15 @@ export default class Scene1 extends Phaser.Scene {
     }    
 
     update() {
-        if (Config.config.physics.arcade.debug) { 
-            data.debugRayita.x = data.lanzador.x;
-            data.debugRayita.y = data.lanzador.y;
-            data.debugRayita.rotation = data.lanzador.rotation;
-        }else {
-            data.debugRayita.x = -500;
-            data.debugRayita.y = -500;
-            data.debugRayita.rotation = 0;
-        }
+        // if (!Config.config.physics.arcade.debug) { 
+        //     // data.debugRayita.x = data.lanzador.x - 540;
+        //     // data.debugRayita.y = data.lanzador.y - 240;
+        //     // data.debugRayita.rotation = data.lanzador.rotation;
+        // }else {
+        //     // data.debugRayita.x = -500;
+        //     // data.debugRayita.y = -500;
+        //     // data.debugRayita.rotation = 0;
+        // }
 
         data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
 
@@ -87,8 +86,6 @@ export default class Scene1 extends Phaser.Scene {
 
     cargarNivelNuevo() {
         let nivel = this.cargarNivelDesdeTiled("lvl_3");
-
-        console.log(nivel);
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 

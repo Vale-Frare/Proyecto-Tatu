@@ -21,14 +21,14 @@ export class shotController {
         this.colisionesBordes();
     }
     
-    colisionesBordes(){
+    private colisionesBordes(){
 
         this.data.bordes.forEach(borde => {
             this.overlaps.push(this.scene.physics.add.overlap(borde, this.bolita, this.colisionesOn, null, this));
         });
     }
 
-    colisionesOn(param1, param2){
+    private colisionesOn(param1, param2){
         this.overlaps.forEach(overlap => {
             this.overlaps.splice(this.overlaps.indexOf(overlap), 1);
             overlap.destroy();
@@ -51,10 +51,11 @@ export class shotController {
         });
     }
 
-    onBounce(a) {
+    private onBounce(a) {
         let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
         a.rotation = ang_rebote;
         a.emitter.followOffset.x += 2000;
+        a.depth = 0;
         let emitter = a.emitter;
         new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -74,6 +75,7 @@ export class shotController {
             emitZone:  { source: geom },
             rotate: { start: a.angle - 90, end: a.angle - 90},
         });
+        particles.depth = -2;
         _.startFollow(a);
         _.setBlendMode(Phaser.BlendModes.NORMAL);
         a.emitter = _;
