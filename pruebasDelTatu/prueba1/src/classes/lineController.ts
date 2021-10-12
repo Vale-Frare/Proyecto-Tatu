@@ -7,7 +7,7 @@ export class lineController {
     private y2: number;
     private spacing: number;
     private cantidad_bolitas: number;
-    private bolitas = [];
+    public bolitas = [];
 
     constructor(x1: number, y1: number, x2: number, y2: number, cantidad_bolitas: number, scale: number, scene: Phaser.Scene) {
         this.x1 = x1;
@@ -20,6 +20,7 @@ export class lineController {
         for (let i = 0; i < cantidad_bolitas + 1; i++) {
             if (i != 0) {
                 var _ = scene.add.circle(Phaser.Math.Linear(x1, x2, i/cantidad_bolitas), Phaser.Math.Linear(y1, y2, i/cantidad_bolitas), scale, 0x000000);
+                scene.physics.add.existing(_).body.setImmovable(true).moves = false;
                 _.setDepth(20);
                 this.bolitas.push(_);
             }else {
@@ -32,7 +33,13 @@ export class lineController {
 
     setColor(color:number) {
         this.bolitas.forEach(b => {
-            b.setTint(color);
+            b.fillColor = color;
+        });
+    }
+
+    setAlpha(color:number) {
+        this.bolitas.forEach(b => {
+            b.fillAlpha = color;
         });
     }
 
@@ -40,6 +47,18 @@ export class lineController {
         for (let i = 0; i < this.bolitas.length; i++) {
             this.bolitas[i].x = Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas);
             this.bolitas[i].y = Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas);
+        }
+    }
+
+    updatePosTweens(x:number, y:number, scene) {
+        for (let i = 0; i < this.bolitas.length; i++) {
+            scene.add.tween({
+                targets: this.bolitas[i],
+                x: Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas),
+                y: Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas),
+                duration: 20,
+                ease: 'Linear'
+            });
         }
     }
 
