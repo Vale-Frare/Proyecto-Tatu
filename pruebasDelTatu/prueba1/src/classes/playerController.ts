@@ -32,14 +32,14 @@ export class Slider {
         deck[data.bolitaALanzar].obj.rotation = data.lanzador.rotation - (Math.PI/2);
         this.diferencia = 1.1 / this.diferencia;
 
-        let bolita_a_usar = 0;
-        let bolitas_invisibles = [];
-        for (let index = 0; index < 200; index++) {
-            bolitas_invisibles.push(new BolitaFantasma(scene, 900, 1800, 0.1));
-        }
-        console.log(bolitas_invisibles);
+        // let bolita_a_usar = 0;
+        // let bolitas_invisibles = [];
+        // for (let index = 0; index < 200; index++) {
+        //     bolitas_invisibles.push(new BolitaFantasma(scene, 900, 1800, 0.1));
+        // }
+        // console.log(bolitas_invisibles);
 
-        var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 20, 20, scene);
+        var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 55, 20, scene);
 
         mini_bolita.setInteractive({ draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){
@@ -47,9 +47,9 @@ export class Slider {
             mini_bolita.setScale(1.5);
         }, this)
         .on('drag', function(pointer, dragX, dragY){
-            bolita_a_usar++;
-            if (bolita_a_usar > bolitas_invisibles.length - 1) { bolita_a_usar = 0; }
-            bolitas_invisibles[bolita_a_usar].updatePos(data.lanzador.x, data.lanzador.y, data.lanzador.rotation - (Math.PI/2), scene, 4200);
+            // bolita_a_usar++;
+            // if (bolita_a_usar > bolitas_invisibles.length - 1) { bolita_a_usar = 0; }
+            // bolitas_invisibles[bolita_a_usar].updatePos(data.lanzador.x, data.lanzador.y, data.lanzador.rotation - (Math.PI/2), scene, 4200);
             if(pointer.x < (this.minimo-(mini_bolita.width/1.25)) || pointer.x > (this.maximo+(mini_bolita.width/1.25)) || pointer.y < (mini_bolita.y-(mini_bolita.height/1.25)) || pointer.y > (mini_bolita.y+(mini_bolita.height/1.25))){
                 mini_bolita.setTint(0xffffff);
                 mini_bolita.setScale(1);
@@ -80,7 +80,7 @@ export class Slider {
                 mini_bolita.setTint(0x000000);
                 mini_bolita.setScale(1.5);
             }
-            lc.updatePos(dragX, dragY);
+            //lc.updatePos(dragX, dragY);
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
             if(mini_bolita.tintTopLeft == 0x000000){

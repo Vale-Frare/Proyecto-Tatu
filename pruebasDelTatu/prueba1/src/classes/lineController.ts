@@ -15,8 +15,7 @@ export class lineController {
         this.x2 = x2;
         this.y2 = y2;
         this.cantidad_bolitas = cantidad_bolitas;
-
-        this.spacing = Math.abs(Math.sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) / cantidad_bolitas;
+        //this.spacing = Math.abs(Math.sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) / cantidad_bolitas;
 
         for (let i = 0; i < cantidad_bolitas + 1; i++) {
             if (i != 0) {
@@ -38,6 +37,14 @@ export class lineController {
     }
 
     updatePos(x:number, y:number) {
+        for (let i = 0; i < this.bolitas.length; i++) {
+            this.bolitas[i].x = Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas);
+            this.bolitas[i].y = Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas);
+        }
+    }
+
+    updatePosLauncher(x, y, rotacion){
+        // sergio: después hago esto si es que me sale.
         for (let i = 0; i < this.bolitas.length; i++) {
             this.bolitas[i].x = Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas);
             this.bolitas[i].y = Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas);
