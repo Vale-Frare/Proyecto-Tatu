@@ -43,6 +43,38 @@ export class lineController {
         });
     }
 
+    fadeIn(scene) {
+        this.bolitas.forEach(bolita => {
+            if(bolita) {
+                scene.tweens.addCounter({
+                    from: 0,
+                    to: 0.9,
+                    ease: 'Power2',
+                    duration: 400,
+                    onUpdate: function (tween) {
+                        bolita.fillAlpha = tween.getValue();
+                    }
+                });
+            }
+        })
+    }
+
+    fadeOut(scene) {
+        this.bolitas.forEach(bolita => {
+            if(bolita) {
+                scene.tweens.addCounter({
+                    from: 0.9,
+                    to: 0,
+                    ease: 'Power2',
+                    duration: 400,
+                    onUpdate: function (tween) {
+                        bolita.fillAlpha = tween.getValue();
+                    }
+                });
+            }
+        })
+    }
+
     updatePos(x:number, y:number) {
         for (let i = 0; i < this.bolitas.length; i++) {
             this.bolitas[i].x = Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas);
@@ -62,11 +94,5 @@ export class lineController {
         }
     }
 
-    updatePosLauncher(x, y, rotacion){
-        // sergio: después hago esto si es que me sale.
-        for (let i = 0; i < this.bolitas.length; i++) {
-            this.bolitas[i].x = Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas);
-            this.bolitas[i].y = Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas);
-        }
-    }
+
 }
