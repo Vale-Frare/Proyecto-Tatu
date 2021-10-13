@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Preloads from './scenes/preloads';
 import Scene1 from './scenes/scene1';
+import utilHud from './classes/utilHud';
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -24,7 +25,7 @@ const config: Phaser.Types.Core.GameConfig = {
         disableWebAudio: false
     },
     pixelArt: false,
-    scene: [Preloads, Scene1]
+    scene: [Preloads, utilHud, Scene1]
 }
 
 export default new Phaser.Game(config);
