@@ -1,4 +1,4 @@
-export default class tiledHelper {
+export class tiledHelper {
     static cargarMapaDesdeJson(file: string) {
         return new Promise((resolve, reject) => {
             fetch(file).then(response => response.json()).then(data => {

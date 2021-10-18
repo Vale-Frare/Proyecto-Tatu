@@ -77,7 +77,7 @@ export class Slider {
             }
         }
                                                                         //  el 75 seria la precision.
-        var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 75,60, scene);
+        var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 85,60, scene);
         lc.setAlpha(0);
         console.log(data.bordes);
         lc.bolitas.forEach(bolita => {
