@@ -1,8 +1,7 @@
 export class hudHelper {
-    static cargarHudDesdeJson(file: string) {
+    static async cargarHudDesdeJson(file: string) {
         return new Promise((resolve, reject) => {
-            fetch(file).then((response) => response.json()).then((data) => {
-                console.log("Recopilando data del hud");
+            fetch(file).then(response => response.json()).then(data => {
                 let newData = {
                     layers: { 
                         hud_botones: {content:[], depth: 5},
@@ -12,9 +11,18 @@ export class hudHelper {
                 }
 
                 data.layers.forEach((layer) => {
-                    newData.layers[layer.name] = {
-                        content: layer.objects,
-                        depth: newData.layers[layer.name].depth ? newData.layers[layer.name].depth : 5
+                    if (layer.name != "fondo") {
+                        if (newData.layers[layer.name].depth) {
+                            newData.layers[layer.name] = {
+                                content: layer.objects,
+                                depth: newData.layers[layer.name].depth
+                            }
+                        } else {
+                            newData.layers[layer.name] = {
+                                content: layer.objects,
+                                depth: 5
+                            }
+                        }
                     }
                 });
 

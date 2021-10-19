@@ -476,8 +476,6 @@ export class AccionesBolitas {
             return;
         }
         data.deckController.tirar();
-        //  vale: jiji jaja
-        //data.deckController.agregarBolitaAlDeck(data.diccionarioDeColores[Phaser.Math.Between(0, 2)]);
         
         let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
         bolita.anims.play('tatu_bebe');

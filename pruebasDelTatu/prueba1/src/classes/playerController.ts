@@ -61,7 +61,6 @@ export class Slider {
         }
 
         function evaluar_bola_mas_cercana_bolitas(borde, bola) {
-            //console.log("BOLITAAAAAAAAAAAAAAAA");
             if (context.bola_cercana) {
                 if (
                     Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, bola.x, bola.y) 
@@ -79,7 +78,6 @@ export class Slider {
                                                                         //  el 75 seria la precision.
         var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 85,60, scene);
         lc.setAlpha(0);
-        console.log(data.bordes);
         lc.bolitas.forEach(bolita => {
             data.bordes.forEach((borde, index) => {
                 if (index != 1) {
@@ -111,7 +109,17 @@ export class Slider {
                 }
             });
 
-            Slider.refreshLine(context, linea_punteada_real, scene, lc, bolita_fantasma, data);
+            scene.tweens.add({
+                targets: data.lanzador,
+                rotation: -0.8+((mini_bolita.x - this.minimo) * this.diferencia),
+                duration: 150,
+                yoyo: false,
+                ease: 'Linear',
+                loop: 0,
+                onUpdate: function(){
+                    Slider.refreshLine(context, linea_punteada_real, scene, lc, bolita_fantasma, data);
+                }
+            });
 
         }, this)
         .on('drag', function(pointer, dragX, dragY){

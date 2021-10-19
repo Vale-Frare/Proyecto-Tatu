@@ -26,7 +26,7 @@ const config: Phaser.Types.Core.GameConfig = {
         disableWebAudio: false
     },
     pixelArt: false,
-    scene: [Preloads, utilHud, Scene1, Hud]
+    scene: [Preloads, Scene1, Hud]
 }
 
 export default new Phaser.Game(config);
