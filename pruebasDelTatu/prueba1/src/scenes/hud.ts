@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 export default class Hud extends Phaser.Scene {
     constructor() {
         super({ key: "hud" , active: true});
@@ -28,6 +30,9 @@ export default class Hud extends Phaser.Scene {
                     obj.setDepth(layer.depth);
 
                     if (key == "hud_botones") {
+                        if (element.properties) {
+                            
+                        }
                         obj.setInteractive();
                         let tweenDelObj;
                         obj

@@ -1,26 +1,32 @@
 export class hudHelper {
-    static async cargarHudDesdeJson(file: string) {
+    static cargarHudDesdeJson(file: string) {
         return new Promise((resolve, reject) => {
-            fetch(file).then(response => response.json()).then(data => {
+            fetch(file).then((response) => response.json()).then((data) => {
+                console.log("Recopilando data del hud");
                 let newData = {
                     layers: { 
                         hud_botones: {content:[], depth: 5},
                         hud_paneles: {content:[], depth: 4},
                         hud_fondo: {content:[], depth: 3}
-                    }
+                    },
+                    animations: {}
                 }
 
                 data.layers.forEach((layer) => {
-                    if (layer.name != "fondo") {
-                        if (newData.layers[layer.name].depth) {
+                    if (layer.name.substring(0, 5) == "nodos") {
+                        newData.animations[layer.name] = layer.objects;
+                    }else if (layer.name != "fondo" && layer.name.substring(0, 5) != "nodos") {
+                        if (layer.properties) {
                             newData.layers[layer.name] = {
                                 content: layer.objects,
-                                depth: newData.layers[layer.name].depth
+                                depth: newData.layers[layer.name].depth ? newData.layers[layer.name].depth : 5,
+                                properties: layer.properties
                             }
-                        } else {
+                        }else {
                             newData.layers[layer.name] = {
                                 content: layer.objects,
-                                depth: 5
+                                depth: newData.layers[layer.name].depth ? newData.layers[layer.name].depth : 5,
+                                properties: null
                             }
                         }
                     }
