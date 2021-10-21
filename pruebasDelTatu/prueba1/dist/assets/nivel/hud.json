@@ -66,6 +66,24 @@
                  "width":329,
                  "x":375.5,
                  "y":180
+                }, 
+                {
+                 "gid":7,
+                 "height":995,
+                 "id":258,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":650,
+                 "x":-996,
+                 "y":1440
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -83,6 +101,22 @@
                  "height":122,
                  "id":244,
                  "name":"pausa",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"pausa"
+                        }, 
+                        {
+                         "name":"animation_id",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"animation_type",
+                         "type":"string",
+                         "value":"pingpong"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -137,6 +171,155 @@
                  "width":132,
                  "x":920,
                  "y":155
+                }, 
+                {
+                 "gid":8,
+                 "height":152,
+                 "id":255,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":-969,
+                 "y":990
+                }, 
+                {
+                 "gid":9,
+                 "height":152,
+                 "id":256,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":-969,
+                 "y":1170
+                }, 
+                {
+                 "gid":10,
+                 "height":152,
+                 "id":257,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":-969,
+                 "y":1350
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"nodos_0",
+         "objects":[
+                {
+                 "height":0,
+                 "id":259,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-120,
+                 "y":908
+                }, 
+                {
+                 "height":0,
+                 "id":260,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2,
+                 "y":744
+                }, 
+                {
+                 "height":0,
+                 "id":261,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":108,
+                 "y":548
+                }, 
+                {
+                 "height":0,
+                 "id":262,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":332,
+                 "y":522
+                }, 
+                {
+                 "height":0,
+                 "id":263,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":494,
+                 "y":644
+                }, 
+                {
+                 "height":0,
+                 "id":264,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":582,
+                 "y":756
+                }, 
+                {
+                 "height":0,
+                 "id":265,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":540,
+                 "y":908
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -144,8 +327,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":254,
+ "nextlayerid":11,
+ "nextobjectid":266,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -188,7 +371,7 @@
         {
          "columns":2,
          "firstgid":3,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/hud\/sonido_1.png",
+         "image":"..\/hud\/sonido_1.png",
          "imageheight":129,
          "imagewidth":264,
          "margin":0,
@@ -201,7 +384,7 @@
         {
          "columns":2,
          "firstgid":5,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/hud\/sonido_2.png",
+         "image":"..\/hud\/sonido_2.png",
          "imageheight":129,
          "imagewidth":264,
          "margin":0,
@@ -210,6 +393,58 @@
          "tilecount":2,
          "tileheight":129,
          "tilewidth":132
+        }, 
+        {
+         "columns":1,
+         "firstgid":7,
+         "image":"..\/hud\/panel_pausa.png",
+         "imageheight":995,
+         "imagewidth":650,
+         "margin":0,
+         "name":"panel_pausa",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":995,
+         "tilewidth":650
+        }, 
+        {
+         "columns":1,
+         "firstgid":8,
+         "image":"..\/hud\/boton_reanudar.png",
+         "imageheight":152,
+         "imagewidth":579,
+         "margin":0,
+         "name":"boton_reanudar",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":152,
+         "tilewidth":579
+        }, 
+        {
+         "columns":1,
+         "firstgid":9,
+         "image":"..\/hud\/boton_reiniciar.png",
+         "imageheight":152,
+         "imagewidth":579,
+         "margin":0,
+         "name":"boton_reiniciar",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":152,
+         "tilewidth":579
+        }, 
+        {
+         "columns":1,
+         "firstgid":10,
+         "image":"..\/hud\/boton_volver_a_niveles.png",
+         "imageheight":152,
+         "imagewidth":579,
+         "margin":0,
+         "name":"boton_volver_a_niveles",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":152,
+         "tilewidth":579
         }],
  "tilewidth":114,
  "type":"map",

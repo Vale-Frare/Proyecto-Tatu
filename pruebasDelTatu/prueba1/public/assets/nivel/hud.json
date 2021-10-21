@@ -270,8 +270,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":146,
-                 "y":600
+                 "x":108,
+                 "y":548
                 }, 
                 {
                  "height":0,
@@ -282,8 +282,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":338,
-                 "y":554
+                 "x":332,
+                 "y":522
                 }, 
                 {
                  "height":0,
@@ -339,7 +339,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {
