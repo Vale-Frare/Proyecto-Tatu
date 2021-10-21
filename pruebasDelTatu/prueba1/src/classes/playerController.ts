@@ -41,7 +41,7 @@ export class Slider {
         let context = this;
 
         let bolita_fantasma = scene.add.sprite(data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1540), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1540), 'tatu_bebe');
-        bolita_fantasma.setScale(0.3);
+        bolita_fantasma.setScale(0.265);
         bolita_fantasma.setAlpha(0);
 
         function evaluar_bola_mas_cercana(borde, bola) {
@@ -75,7 +75,7 @@ export class Slider {
                 context.bola_cercana = bola;
             }
         }
-                                                                        //  el 75 seria la precision.
+
         var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 85,60, scene);
         lc.setAlpha(0);
         lc.bolitas.forEach(bolita => {
@@ -109,17 +109,7 @@ export class Slider {
                 }
             });
 
-            scene.tweens.add({
-                targets: data.lanzador,
-                rotation: -0.8+((mini_bolita.x - this.minimo) * this.diferencia),
-                duration: 150,
-                yoyo: false,
-                ease: 'Linear',
-                loop: 0,
-                onUpdate: function(){
-                    Slider.refreshLine(context, linea_punteada_real, scene, lc, bolita_fantasma, data);
-                }
-            });
+            Slider.refreshLine(mini_bolita, this.minimo, this.diferencia, context, linea_punteada_real, scene, lc, bolita_fantasma, data)
 
         }, this)
         .on('drag', function(pointer, dragX, dragY){
@@ -131,17 +121,7 @@ export class Slider {
             else{
                 mini_bolita.x = Phaser.Math.Clamp(pointer.x, this.minimo, this.maximo);
 
-                scene.tweens.add({
-                    targets: data.lanzador,
-                    rotation: -0.8+((mini_bolita.x - this.minimo) * this.diferencia),
-                    duration: 150,
-                    yoyo: false,
-                    ease: 'Linear',
-                    loop: 0,
-                    onUpdate: function(){
-                        Slider.refreshLine(context, linea_punteada_real, scene, lc, bolita_fantasma, data);
-                    }
-                });
+                Slider.refreshLine(mini_bolita, this.minimo, this.diferencia, context, linea_punteada_real, scene, lc, bolita_fantasma, data)
 
                 if(data.bolitaALanzar < data.deck.length){
                     scene.tweens.add({
@@ -188,27 +168,38 @@ export class Slider {
         }, this);
     }
 
-    static refreshLine(context, linea_punteada_real, scene, lc, bolita_fantasma, data){
-        if (context.bola_cercana) {
-            context.linea_punteada_objetivo.x = context.bola_cercana.x;
-            context.linea_punteada_objetivo.y = context.bola_cercana.y;
-        }
-        linea_punteada_real.updatePosTweens(context.linea_punteada_objetivo.x, context.linea_punteada_objetivo.y, scene);
-        bolita_fantasma.x = context.linea_punteada_objetivo.x;
-        bolita_fantasma.y = context.linea_punteada_objetivo.y;
-        if (context.bola_fantasma_tocando_bolita) {
-            bolita_fantasma.setAlpha(0);
-        }else {
-            bolita_fantasma.setAlpha(0.2);
-        }
-        lc.bolitas.forEach(bolita => {
-            if (bolita == context.bola_cercana) {
-                bolita.fillAlpha = 0;
-            } else {
-                bolita.fillAlpha = 0;
+    static refreshLine(mini_bolita, minimo, diferencia, context, linea_punteada_real, scene, lc, bolita_fantasma, data){
+        scene.tweens.add({
+            targets: data.lanzador,
+            rotation: -0.8+((mini_bolita.x - minimo) * diferencia),
+            duration: 150,
+            yoyo: false,
+            ease: 'Linear',
+            loop: 0,
+            onUpdate: function(){
+                if (context.bola_cercana) {
+                    context.linea_punteada_objetivo.x = context.bola_cercana.x;
+                    context.linea_punteada_objetivo.y = context.bola_cercana.y;
+                }
+                linea_punteada_real.updatePosTweens(context.linea_punteada_objetivo.x, context.linea_punteada_objetivo.y, scene);
+                bolita_fantasma.x = context.linea_punteada_objetivo.x;
+                bolita_fantasma.y = context.linea_punteada_objetivo.y;
+                bolita_fantasma.rotation = -0.8+((mini_bolita.x - minimo) * diferencia);
+                if (context.bola_fantasma_tocando_bolita) {
+                    bolita_fantasma.setAlpha(0);
+                }else {
+                    bolita_fantasma.setAlpha(0.2);
+                }
+                lc.bolitas.forEach(bolita => {
+                    if (bolita == context.bola_cercana) {
+                        bolita.fillAlpha = 0;
+                    } else {
+                        bolita.fillAlpha = 0;
+                    }
+                });
+                context.bola_cercana = null;
+                lc.updatePos(data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1900), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1900));
             }
         });
-        context.bola_cercana = null;
-        lc.updatePos(data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1900), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1900));
     }
 }

@@ -15,7 +15,6 @@ export class lineController {
         this.x2 = x2;
         this.y2 = y2;
         this.cantidad_bolitas = cantidad_bolitas;
-        //this.spacing = Math.abs(Math.sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)) / cantidad_bolitas;
 
         for (let i = 0; i < cantidad_bolitas + 1; i++) {
             if (i != 0) {
@@ -48,7 +47,7 @@ export class lineController {
             if(bolita) {
                 scene.tweens.addCounter({
                     from: 0,
-                    to: 0.9,
+                    to: 0.7,
                     ease: 'Power2',
                     duration: 400,
                     onUpdate: function (tween) {
@@ -89,7 +88,8 @@ export class lineController {
                 x: Phaser.Math.Linear(this.x1, x, i/this.cantidad_bolitas),
                 y: Phaser.Math.Linear(this.y1, y, i/this.cantidad_bolitas),
                 duration: 20,
-                ease: 'Linear'
+                ease: 'Linear',
+                depth: 1
             });
         }
     }

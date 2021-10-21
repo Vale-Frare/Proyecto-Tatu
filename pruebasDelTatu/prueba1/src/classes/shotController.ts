@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-//import {AccionesBolitas} from './helpers';
 
 export class shotController {
 
@@ -75,7 +74,7 @@ export class shotController {
             emitZone:  { source: geom },
             rotate: { start: a.angle - 90, end: a.angle - 90},
         });
-        particles.depth = -2;
+        particles.depth = -1;
         _.startFollow(a);
         _.setBlendMode(Phaser.BlendModes.NORMAL);
         a.emitter = _;

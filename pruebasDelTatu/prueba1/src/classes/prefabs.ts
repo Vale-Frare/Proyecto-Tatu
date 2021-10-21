@@ -52,12 +52,12 @@ export class BolitaFantasma{
         this.object.body.setCircle(this.object.width/2);
     }
 
-    updatePos(x, y, rotation, scene, velocidad) {
-        this.object.x = x;
-        this.object.y = y;
-        this.object.rotation = rotation;
-        scene.physics.velocityFromRotation(this.object.rotation, velocidad, this.object.body.velocity);
-    }
+    // updatePos(x, y, rotation, scene, velocidad) {
+    //     this.object.x = x;
+    //     this.object.y = y;
+    //     this.object.rotation = rotation;
+    //     scene.physics.velocityFromRotation(this.object.rotation, velocidad, this.object.body.velocity);
+    // }
 
 }
 
@@ -94,7 +94,7 @@ export class BolitaLanzada {
             emitZone:  { source: geom },
             rotate: { start: this.object.angle - 90, end: this.object.angle - 90 },
         });
-        particles.depth = -2;
+        particles.depth = -1;
 
         emitter.setPosition(x, y);
         emitter.startFollow(this.object);
@@ -231,17 +231,6 @@ export class BolitaDeck2 {
                             bolita.obj.scale = Math.abs(value);
                         }
                     });
-                    // this.scene.tweens.addCounter({
-                    //     from: bolita.obj.tintTopLeft,
-                    //     to: colorI,
-                    //     ease: 'Cubic',
-                    //     duration: 500,
-                    //     onUpdate: function (tween)
-                    //     {
-                    //         const value = tween.getValue();
-                    //         bolita.obj.setTint(value);
-                    //     }
-                    // });
                     bolita.color = this.data.bolitasTextYColorsInt[_];
                 }
             });

@@ -2,12 +2,72 @@ import Phaser from 'phaser';
 import Config from '../config';
 
 export default class Hud extends Phaser.Scene {
-    constructor() {
+    private tiempo_inicial;
+    private un_segundo:number = 1000;
+
+    constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
+        this.tiempo_inicial = tiempo_inicial;
     }
 
     preload() {
         
+    }
+
+    create(){
+
+        let texto_tiempo = this.textoTiempo('TIEMPO 02:00');
+        texto_tiempo.depth = 10;
+
+        let texto_acciones = this.add.text(532, 125, 'ACCIONES: 30', { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
+        texto_acciones.depth = 10;
+
+    }
+
+    updateTiempo(delta){
+
+        this.un_segundo -= delta;
+
+        if(this.un_segundo <= 0 && this.tiempo_inicial > 0){
+            this.tiempo_inicial--
+            this.un_segundo += 1000;
+
+            let segundos = 0;
+            let minutos = 0;
+
+            if(this.tiempo_inicial>59){
+                minutos = Phaser.Math.RoundTo(this.tiempo_inicial/60)
+            }
+            segundos = this.tiempo_inicial - (minutos*60);
+
+            this.textoTiempo('TIEMPO' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
+        }
+        else{
+            if(this.tiempo_inicial <= 0){
+                this.textoTiempo('TIEMPO 00:00');
+            }
+        }
+
+    }
+
+    textoTiempo(texto){
+
+        return this.add.text(532, 50, texto, { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
+
+    }
+
+    agregarCero(numero){
+
+        let resultado = '';
+        if(numero > 9){
+            resultado = resultado + numero;
+        }
+        else{
+            resultado = '0' + numero;
+        }
+
+        return resultado;
+
     }
 
     mostrarHudPosta(key: string) {

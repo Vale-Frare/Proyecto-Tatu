@@ -5,6 +5,7 @@ import {Bolita, BolitaDeck, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
 import {lineController} from '../classes/lineController';
+import Hud from './hud';
 
 let data: Data = new Data();
 
@@ -14,9 +15,6 @@ export default class Scene1 extends Phaser.Scene {
     }
     
     create() {
-        let texto = `Cantidad de bolitas: ${data.bolitas.length}`;
-        data.text1 = new Phaser.GameObjects.Text(this, 0, 0, texto, { fontFamily: 'Arial', fontSize: '75px', color: 'white' }).setOrigin(0);
-
         data.lanzador = this.add.sprite(900,1800,'flecha');
         data.lanzador.setDepth(5);
 
@@ -36,7 +34,7 @@ export default class Scene1 extends Phaser.Scene {
         var contador = 0;
         fondos.forEach((fondo,index) => {
             let f = this.add.image(fondo.x, fondo.y, fondo.key).setOrigin(0);
-            f.depth = fondo.depth;
+            f.depth = fondo.depth + 1;
             if (contador == 0) {
                 bordes.forEach((borde) => {
                     let b = this.physics.add.sprite(borde.x, borde.y, borde.key).setOrigin(0,1);
@@ -56,19 +54,7 @@ export default class Scene1 extends Phaser.Scene {
         return Matriz.convertirAGrupos(matrizNivelEmbolsada);
     }    
 
-    update() {
-        // if (!Config.config.physics.arcade.debug) { 
-        //     // data.debugRayita.x = data.lanzador.x - 540;
-        //     // data.debugRayita.y = data.lanzador.y - 240;
-        //     // data.debugRayita.rotation = data.lanzador.rotation;
-        // }else {
-        //     // data.debugRayita.x = -500;
-        //     // data.debugRayita.y = -500;
-        //     // data.debugRayita.rotation = 0;
-        // }
-
-        data.text1.text = `Cantidad de bolitas: ${data.bolitas.length}`;
-
+    update(time, delta) {
         data.bolitas.forEach(bolita => {
             if (bolita.scene == undefined){
                 data.bolitas.splice(data.bolitas.indexOf(bolita), 1);
