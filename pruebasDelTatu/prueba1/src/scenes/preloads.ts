@@ -42,6 +42,10 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("pausa", "assets/hud/pausa.png");
         this.load.spritesheet("sonido_1", "assets/hud/sonido_1.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("sonido_2", "assets/hud/sonido_2.png", {frameHeight: 129, frameWidth: 132});
+        this.load.image("boton_reanudar", "assets/hud/boton_reanudar.png");
+        this.load.image("boton_reiniciar", "assets/hud/boton_reiniciar.png");
+        this.load.image("boton_volver_a_niveles", "assets/hud/boton_volver_a_niveles.png");
+        this.load.image("panel_pausa", "assets/hud/panel_pausa.png");
              
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([
