@@ -19,7 +19,7 @@ export default class Hud extends Phaser.Scene {
         let texto_tiempo = this.textoTiempo('TIEMPO 02:00');
         texto_tiempo.depth = 10;
 
-        let texto_acciones = this.add.text(532, 125, 'ACCIONES: 30', { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
+        let texto_acciones = this.textoAcciones('ACCIONES: 30');
         texto_acciones.depth = 10;
 
     }
@@ -50,9 +50,22 @@ export default class Hud extends Phaser.Scene {
 
     }
 
+    updateAcciones(){
+
+        let data_deck_length = 20;
+        this.textoAcciones('ACCIONES: ' + data_deck_length);
+
+    }
+
     textoTiempo(texto){
 
         return this.add.text(532, 50, texto, { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
+
+    }
+
+    textoAcciones(texto){
+
+        return this.add.text(532, 125, texto, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
 
     }
 

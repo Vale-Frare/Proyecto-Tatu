@@ -108,7 +108,7 @@ export default class Data {
     bolitaALanzar = 0;
 
     constructor() {
-        //  no hay nada
+        
     }
 
     setObjInDeck(obj, index) {
