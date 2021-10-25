@@ -498,7 +498,10 @@ export class AccionesBolitas {
         }, scene);
 
         new shotController(data, scene, bolita);
-        acciones.updateAcciones(data.deck.length);
+
+        data.tiros++;
+
+        acciones.updateAcciones(data.deck.length - data.tiros);
         
         data.bolitaALanzar += 1;
     }

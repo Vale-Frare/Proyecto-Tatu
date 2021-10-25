@@ -5,6 +5,7 @@ export default class Hud extends Phaser.Scene {
     private tiempo_inicial;
     private un_segundo:number = 1000;
     private texto_tiempo;
+    private texto_acciones: Phaser.GameObjects.Text;
 
     constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
@@ -257,26 +258,12 @@ export default class Hud extends Phaser.Scene {
 
         return path;
     }
-}
 
-export class HudAcciones extends Phaser.Scene{
-
-    private texto_acciones: Phaser.GameObjects.Text;
-    private datos;
-
-    constructor(dates, scene) {
-        super({ key: "hud_acciones" , active: true});
-        this.datos = dates;
-        if(this.datos){
-            this.texto_acciones = scene.add.text(532, 125, 'ACCIONES  ' + this.datos, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
-        }
+    mostrarAcciones(deck_lenght: number){
+        this.texto_acciones = this.add.text(532, 125, 'ACCIONES  ' + deck_lenght, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
     }
 
-    updateAcciones(texto){
-
-        console.log("se hace");
-        return this.texto_acciones.setText('ACCIONES  ' + texto);
-
+    updateAcciones(deck_lenght: number){
+        return this.texto_acciones.setText('ACCIONES  ' + deck_lenght);
     }
-
 }

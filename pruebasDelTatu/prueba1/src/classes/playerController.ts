@@ -93,7 +93,8 @@ export class Slider {
         linea_punteada_real.setColor(0xffffff);
         linea_punteada_real.setAlpha(0);
 
-        let acciones = new HudAcciones(deck.length, this.scene);
+        let acciones = scene.scene.get("hud");
+        acciones.mostrarAcciones(data.deck.length);
 
         mini_bolita.setInteractive({ draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){

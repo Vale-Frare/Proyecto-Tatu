@@ -107,6 +107,8 @@ export default class Data {
 
     bolitaALanzar = 0;
 
+    tiros = 0;
+
     constructor() {
         
     }
