@@ -9,7 +9,6 @@ export default class Preloads extends Phaser.Scene {
     }
     
     async preload() {
-        //localStorage.clear();
 
         this.load.image("rayita", "assets/rayita.png");
 

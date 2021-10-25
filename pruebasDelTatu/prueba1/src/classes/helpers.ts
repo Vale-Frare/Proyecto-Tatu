@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {BolitaLanzada} from '../classes/prefabs';
 import {shotController} from '../classes/shotController';
+import Hud from '../scenes/hud';
 
 export class Matriz {
     static deckFromMatriz(matriz, data) {
@@ -396,7 +397,7 @@ export class Aleatorizadores {
 }
 
 export class AccionesBolitas {
-    static tiro(scene: Phaser.Scene, data, rotacion) {
+    static tiro(scene: Phaser.Scene, data, rotacion, acciones) {
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
@@ -497,6 +498,7 @@ export class AccionesBolitas {
         }, scene);
 
         new shotController(data, scene, bolita);
+        acciones.updateAcciones(data.deck.length);
         
         data.bolitaALanzar += 1;
     }

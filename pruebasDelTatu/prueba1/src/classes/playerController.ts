@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import {AccionesBolitas} from './helpers';
 import {lineController} from '../classes/lineController';
-import {Bolita, BolitaFantasma} from '../classes/prefabs';
+import Hud, { HudAcciones } from '../scenes/hud';
 
 export class Slider {
     private x;
@@ -93,6 +93,8 @@ export class Slider {
         linea_punteada_real.setColor(0xffffff);
         linea_punteada_real.setAlpha(0);
 
+        let acciones = new HudAcciones(deck.length, this.scene);
+
         mini_bolita.setInteractive({ draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){
             mini_bolita.setTint(0x000000);
@@ -140,7 +142,7 @@ export class Slider {
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
             if(mini_bolita.tintTopLeft == 0x000000){
-                AccionesBolitas.tiro(this.scene, data, data.lanzador.rotation - (Math.PI/2));
+                AccionesBolitas.tiro(this.scene, data, data.lanzador.rotation - (Math.PI/2), acciones);
             }
             mini_bolita.setTint(0xffffff);
             mini_bolita.setScale(1);

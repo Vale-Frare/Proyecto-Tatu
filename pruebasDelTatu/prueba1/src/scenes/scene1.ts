@@ -1,15 +1,14 @@
 import Phaser from 'phaser';
 import Data from '../classes/data';
 import Config from '../config';
-import {Bolita, BolitaDeck, BolitaDeck2} from '../classes/prefabs'
-import {Matriz, Aleatorizadores, AccionesBolitas} from '../classes/helpers';
+import {Bolita, BolitaDeck2} from '../classes/prefabs'
+import {Matriz, Aleatorizadores} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
-import {lineController} from '../classes/lineController';
-import Hud from './hud';
 
 let data: Data = new Data();
 
 export default class Scene1 extends Phaser.Scene {
+
     constructor() {
         super("Scene1");
     }

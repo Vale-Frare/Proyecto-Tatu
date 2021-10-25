@@ -4,30 +4,29 @@ import Config from '../config';
 export default class Hud extends Phaser.Scene {
     private tiempo_inicial;
     private un_segundo:number = 1000;
+    private texto_tiempo;
 
     constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
         this.tiempo_inicial = tiempo_inicial;
     }
 
-    preload() {
-        
-    }
-
     create(){
 
-        let texto_tiempo = this.textoTiempo('TIEMPO 02:00');
-        texto_tiempo.depth = 10;
+        this.texto_tiempo = this.add.text(532, 50, 'TIEMPO 02:00', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
 
-        let texto_acciones = this.textoAcciones('ACCIONES: 30');
-        texto_acciones.depth = 10;
+    }
+
+    update(time, delta){
+
+        this.updateTiempo(delta);
 
     }
 
     updateTiempo(delta){
 
         this.un_segundo -= delta;
-
+        
         if(this.un_segundo <= 0 && this.tiempo_inicial > 0){
             this.tiempo_inicial--
             this.un_segundo += 1000;
@@ -36,11 +35,11 @@ export default class Hud extends Phaser.Scene {
             let minutos = 0;
 
             if(this.tiempo_inicial>59){
-                minutos = Phaser.Math.RoundTo(this.tiempo_inicial/60)
+                minutos = Math.floor(this.tiempo_inicial/60)
             }
             segundos = this.tiempo_inicial - (minutos*60);
 
-            this.textoTiempo('TIEMPO' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
+            this.textoTiempo('TIEMPO ' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
         }
         else{
             if(this.tiempo_inicial <= 0){
@@ -50,16 +49,9 @@ export default class Hud extends Phaser.Scene {
 
     }
 
-    updateAcciones(){
-
-        let data_deck_length = 20;
-        this.textoAcciones('ACCIONES: ' + data_deck_length);
-
-    }
-
     textoTiempo(texto){
 
-        return this.add.text(532, 50, texto, { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
+        return this.texto_tiempo.setText(texto);
 
     }
 
@@ -81,6 +73,16 @@ export default class Hud extends Phaser.Scene {
 
         return resultado;
 
+    }
+
+    static returnDeckLength(cosa:any = false){
+        //console.log(cosa);
+        if(cosa){
+            return cosa;
+        }
+        else{
+            return;
+        }
     }
 
     mostrarHudPosta(key: string) {
@@ -255,4 +257,26 @@ export default class Hud extends Phaser.Scene {
 
         return path;
     }
+}
+
+export class HudAcciones extends Phaser.Scene{
+
+    private texto_acciones: Phaser.GameObjects.Text;
+    private datos;
+
+    constructor(dates, scene) {
+        super({ key: "hud_acciones" , active: true});
+        this.datos = dates;
+        if(this.datos){
+            this.texto_acciones = scene.add.text(532, 125, 'ACCIONES  ' + this.datos, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
+        }
+    }
+
+    updateAcciones(texto){
+
+        console.log("se hace");
+        return this.texto_acciones.setText('ACCIONES  ' + texto);
+
+    }
+
 }

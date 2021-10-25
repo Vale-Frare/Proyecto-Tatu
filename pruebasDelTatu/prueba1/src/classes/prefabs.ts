@@ -52,13 +52,6 @@ export class BolitaFantasma{
         this.object.body.setCircle(this.object.width/2);
     }
 
-    // updatePos(x, y, rotation, scene, velocidad) {
-    //     this.object.x = x;
-    //     this.object.y = y;
-    //     this.object.rotation = rotation;
-    //     scene.physics.velocityFromRotation(this.object.rotation, velocidad, this.object.body.velocity);
-    // }
-
 }
 
 export class BolitaLanzada {
