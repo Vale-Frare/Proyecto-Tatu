@@ -21,7 +21,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.cargarNivelNuevo();
 
-        new Slider(this, data, data.deck, 810, y + 75);
+        data.slider = new Slider(this, data, data.deck, 810, y + 75);
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -56,6 +56,12 @@ export default class Scene1 extends Phaser.Scene {
     }    
 
     update(time, delta) {
+        if (data.pausa) {
+            data.slider.mini_bolita.disableInteractive();
+        }else {
+            data.slider.mini_bolita.setInteractive();
+        }
+
         data.bolitas.forEach(bolita => {
             if (bolita.scene == undefined){
                 data.bolitas.splice(data.bolitas.indexOf(bolita), 1);

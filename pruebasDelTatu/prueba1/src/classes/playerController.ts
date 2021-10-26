@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {AccionesBolitas} from './helpers';
 import {lineController} from '../classes/lineController';
+import Hud from '../scenes/hud';
 
 export class Slider {
     private x;
@@ -20,13 +21,16 @@ export class Slider {
     private bola_cercana;
     private linea_punteada_objetivo = {x: 0, y: 0};
 
+    public mini_bolita;
+
     constructor(scene: Phaser.Scene, data, deck, x: number = 800, y: number = 1875, texMinibola: string = 'mini_bolita', texSlider: string = 'barrita') {
         this.x = x;
         this.y = y;
         this.scene = scene;
 
         let barrita = scene.add.sprite(x,y,texSlider).setOrigin(0);
-        let mini_bolita = scene.add.sprite(x+(barrita.width/2),y+(barrita.height/2),texMinibola);
+        this.mini_bolita = scene.add.sprite(x+(barrita.width/2),y+(barrita.height/2),texMinibola);
+        let mini_bolita = this.mini_bolita;
         barrita.depth = 5;
         mini_bolita.depth = 5;
         
@@ -92,8 +96,9 @@ export class Slider {
         linea_punteada_real.setColor(0xffffff);
         linea_punteada_real.setAlpha(0);
 
-        let acciones = scene.scene.get("hud");
+        let acciones: Hud = scene.scene.get("hud");
         acciones.mostrarAcciones(data.deck.length);
+        acciones.pasarData(data);
 
         mini_bolita.setInteractive({ draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){

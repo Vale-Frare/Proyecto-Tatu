@@ -1,6 +1,8 @@
-import Phaser from 'phaser';
-
 export default class Data {
+    pausa: boolean = false;
+
+    slider;
+
     deckController;
 
     debugRayita;

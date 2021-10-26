@@ -60,12 +60,6 @@
                  "height":171,
                  "id":243,
                  "name":"cosa_verde",
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_1"
-                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -74,7 +68,7 @@
                  "y":180
                 }, 
                 {
-                 "gid":7,
+                 "gid":6,
                  "height":820,
                  "id":258,
                  "name":"panel_pausa",
@@ -109,37 +103,33 @@
          "objects":[
                 {
                  "gid":2,
-                 "height":122,
-                 "id":244,
-                 "name":"pausa",
+                 "height":129,
+                 "id":250,
+                 "name":"sonido_1",
                  "properties":[
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"pausa"
-                        }, 
-                        {
-                         "name":"animation_id",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }, 
-                        {
-                         "name":"animation_type",
-                         "type":"string",
-                         "value":"pingpong"
+                         "value":"mute_sonido_1"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":201,
-                 "x":60,
-                 "y":151
+                 "width":132,
+                 "x":776,
+                 "y":155
                 }, 
                 {
                  "gid":3,
                  "height":129,
-                 "id":250,
+                 "id":251,
                  "name":"sonido_1",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"mute_sonido_1"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -150,38 +140,32 @@
                 {
                  "gid":4,
                  "height":129,
-                 "id":251,
-                 "name":"sonido_1",
+                 "id":252,
+                 "name":"sonido_2",
                  "properties":[
                         {
-                         "name":"animation_id",
+                         "name":"action",
                          "type":"string",
-                         "value":"nodos_1"
+                         "value":"mute_sonido_2"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":132,
-                 "x":776,
+                 "x":920,
                  "y":155
                 }, 
                 {
                  "gid":5,
                  "height":129,
-                 "id":252,
-                 "name":"sonido_2",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":132,
-                 "x":920,
-                 "y":155
-                }, 
-                {
-                 "gid":6,
-                 "height":129,
                  "id":253,
                  "name":"sonido_2",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"mute_sonido_2"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -190,7 +174,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":8,
+                 "gid":7,
                  "height":152,
                  "id":255,
                  "name":"boton_reanudar",
@@ -223,7 +207,7 @@
                  "y":1195
                 }, 
                 {
-                 "gid":9,
+                 "gid":8,
                  "height":152,
                  "id":256,
                  "name":"boton_reiniciar",
@@ -244,6 +228,57 @@
                  "width":592,
                  "x":-967,
                  "y":1377
+                }, 
+                {
+                 "gid":9,
+                 "height":64,
+                 "id":289,
+                 "name":"titulo_pausa",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":276,
+                 "x":-812,
+                 "y":969
+                }, 
+                {
+                 "gid":10,
+                 "height":122,
+                 "id":291,
+                 "name":"arriba_izquierda",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"pausaYMapa"
+                        }, 
+                        {
+                         "name":"animation_id",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"animation_type",
+                         "type":"string",
+                         "value":"pingpong"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":201,
+                 "x":60,
+                 "y":150
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -345,68 +380,9 @@
          "visible":true,
          "x":0,
          "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":11,
-         "name":"nodos_1",
-         "objects":[
-                {
-                 "height":0,
-                 "id":285,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":538,
-                 "y":101
-                }, 
-                {
-                 "height":0,
-                 "id":286,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":542.666666666667,
-                 "y":-292
-                }, 
-                {
-                 "height":0,
-                 "id":287,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":561.333333333333,
-                 "y":-453.333333333333
-                }, 
-                {
-                 "height":0,
-                 "id":288,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":646.666666666667,
-                 "y":-697.333333333333
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":289,
+ "nextobjectid":296,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -434,21 +410,8 @@
          "tilewidth":329
         }, 
         {
-         "columns":1,
-         "firstgid":2,
-         "image":"..\/hud\/pausa.png",
-         "imageheight":122,
-         "imagewidth":201,
-         "margin":0,
-         "name":"pausa",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":122,
-         "tilewidth":201
-        }, 
-        {
          "columns":2,
-         "firstgid":3,
+         "firstgid":2,
          "image":"..\/hud\/sonido_1.png",
          "imageheight":129,
          "imagewidth":264,
@@ -461,7 +424,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":5,
+         "firstgid":4,
          "image":"..\/hud\/sonido_2.png",
          "imageheight":129,
          "imagewidth":264,
@@ -474,7 +437,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":7,
+         "firstgid":6,
          "grid":
             {
              "height":995,
@@ -493,7 +456,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":8,
+         "firstgid":7,
          "grid":
             {
              "height":152,
@@ -512,7 +475,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":9,
+         "firstgid":8,
          "grid":
             {
              "height":152,
@@ -528,6 +491,32 @@
          "tilecount":1,
          "tileheight":152,
          "tilewidth":592
+        }, 
+        {
+         "columns":1,
+         "firstgid":9,
+         "image":"..\/hud\/titulo_pausa.png",
+         "imageheight":64,
+         "imagewidth":276,
+         "margin":0,
+         "name":"titulo_pausa",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":64,
+         "tilewidth":276
+        }, 
+        {
+         "columns":2,
+         "firstgid":10,
+         "image":"..\/hud\/arriba_izquierda.png",
+         "imageheight":122,
+         "imagewidth":402,
+         "margin":0,
+         "name":"arriba_izquierda",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":122,
+         "tilewidth":201
         }],
  "tilewidth":114,
  "type":"map",
