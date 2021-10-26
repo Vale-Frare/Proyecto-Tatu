@@ -75,10 +75,15 @@
                 }, 
                 {
                  "gid":7,
-                 "height":995,
+                 "height":820,
                  "id":258,
                  "name":"panel_pausa",
                  "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
                         {
                          "name":"path",
                          "type":"string",
@@ -87,7 +92,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":650,
+                 "width":654,
                  "x":-996,
                  "y":1440
                 }],
@@ -191,9 +196,19 @@
                  "name":"boton_reanudar",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"pausa"
+                        }, 
+                        {
                          "name":"animation_id",
                          "type":"string",
                          "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
                         }, 
                         {
                          "name":"path",
@@ -203,9 +218,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":579,
-                 "x":-969,
-                 "y":990
+                 "width":588,
+                 "x":-977,
+                 "y":1195
                 }, 
                 {
                  "gid":9,
@@ -214,23 +229,10 @@
                  "name":"boton_reiniciar",
                  "properties":[
                         {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":579,
-                 "x":-969,
-                 "y":1170
-                }, 
-                {
-                 "gid":10,
-                 "height":152,
-                 "id":257,
-                 "name":"boton_volver_a_niveles",
-                 "properties":[
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
                         {
                          "name":"path",
                          "type":"string",
@@ -239,9 +241,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":579,
-                 "x":-969,
-                 "y":1350
+                 "width":592,
+                 "x":-967,
+                 "y":1377
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -287,8 +289,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":136,
-                 "y":365.060606060606
+                 "x":74,
+                 "y":415.060606060606
                 }, 
                 {
                  "height":0,
@@ -299,8 +301,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":344,
-                 "y":379.060606060606
+                 "x":320,
+                 "y":445.060606060606
                 }, 
                 {
                  "height":0,
@@ -311,8 +313,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":532.666666666667,
-                 "y":428.393939393939
+                 "x":590.666666666667,
+                 "y":588.393939393939
                 }, 
                 {
                  "height":0,
@@ -323,8 +325,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":582,
-                 "y":659.060606060606
+                 "x":688,
+                 "y":839.060606060606
                 }, 
                 {
                  "height":0,
@@ -336,7 +338,7 @@
                  "visible":true,
                  "width":0,
                  "x":540,
-                 "y":811.060606060606
+                 "y":1081
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -358,8 +360,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":538.166666666667,
-                 "y":101.333333333333
+                 "x":538,
+                 "y":101
                 }, 
                 {
                  "height":0,
@@ -415,7 +417,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {
@@ -473,54 +475,59 @@
         {
          "columns":1,
          "firstgid":7,
+         "grid":
+            {
+             "height":995,
+             "orientation":"orthogonal",
+             "width":650
+            },
          "image":"..\/hud\/panel_pausa.png",
-         "imageheight":995,
-         "imagewidth":650,
+         "imageheight":820,
+         "imagewidth":654,
          "margin":0,
          "name":"panel_pausa",
          "spacing":0,
          "tilecount":1,
-         "tileheight":995,
-         "tilewidth":650
+         "tileheight":820,
+         "tilewidth":654
         }, 
         {
          "columns":1,
          "firstgid":8,
+         "grid":
+            {
+             "height":152,
+             "orientation":"orthogonal",
+             "width":579
+            },
          "image":"..\/hud\/boton_reanudar.png",
          "imageheight":152,
-         "imagewidth":579,
+         "imagewidth":588,
          "margin":0,
          "name":"boton_reanudar",
          "spacing":0,
          "tilecount":1,
          "tileheight":152,
-         "tilewidth":579
+         "tilewidth":588
         }, 
         {
          "columns":1,
          "firstgid":9,
+         "grid":
+            {
+             "height":152,
+             "orientation":"orthogonal",
+             "width":579
+            },
          "image":"..\/hud\/boton_reiniciar.png",
          "imageheight":152,
-         "imagewidth":579,
+         "imagewidth":592,
          "margin":0,
          "name":"boton_reiniciar",
          "spacing":0,
          "tilecount":1,
          "tileheight":152,
-         "tilewidth":579
-        }, 
-        {
-         "columns":1,
-         "firstgid":10,
-         "image":"..\/hud\/boton_volver_a_niveles.png",
-         "imageheight":152,
-         "imagewidth":579,
-         "margin":0,
-         "name":"boton_volver_a_niveles",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":152,
-         "tilewidth":579
+         "tilewidth":592
         }],
  "tilewidth":114,
  "type":"map",

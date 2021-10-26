@@ -2,7 +2,6 @@ export class hudHelper {
     static cargarHudDesdeJson(file: string) {
         return new Promise((resolve, reject) => {
             fetch(file).then((response) => response.json()).then((data) => {
-                console.log("Recopilando data del hud");
                 let newData = {
                     layers: { 
                         hud_botones: {content:[], depth: 5},

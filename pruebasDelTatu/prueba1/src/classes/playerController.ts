@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import {AccionesBolitas} from './helpers';
 import {lineController} from '../classes/lineController';
-import Hud, { HudAcciones } from '../scenes/hud';
 
 export class Slider {
     private x;

@@ -6,16 +6,24 @@ export default class Hud extends Phaser.Scene {
     private un_segundo:number = 1000;
     private texto_tiempo;
     private texto_acciones: Phaser.GameObjects.Text;
+    private blur: Phaser.GameObjects.Sprite;
+    private tweensActivos = {};
 
     constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
         this.tiempo_inicial = tiempo_inicial;
     }
 
+    preload() {
+        this.load.image("blur", "assets/img/blur.png"); 
+    }
+
     create(){
+        this.texto_tiempo = this.add.text(532, 50, 'TIEMPO 02:00', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
 
-        this.texto_tiempo = this.add.text(532, 50, 'TIEMPO 02:00', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
-
+        this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(false).setBlendMode(Phaser.BlendModes.MULTIPLY);
+        this.blur.setTint(0x000000);
+        this.blur.alpha = 0.9;
     }
 
     update(time, delta){
@@ -56,12 +64,6 @@ export default class Hud extends Phaser.Scene {
 
     }
 
-    textoAcciones(texto){
-
-        return this.add.text(532, 125, texto, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5);
-
-    }
-
     agregarCero(numero){
 
         let resultado = '';
@@ -74,16 +76,6 @@ export default class Hud extends Phaser.Scene {
 
         return resultado;
 
-    }
-
-    static returnDeckLength(cosa:any = false){
-        //console.log(cosa);
-        if(cosa){
-            return cosa;
-        }
-        else{
-            return;
-        }
     }
 
     mostrarHudPosta(key: string) {
@@ -100,7 +92,6 @@ export default class Hud extends Phaser.Scene {
                 let layer = hudAMostrarLayers[key];
                 layer.content.forEach(element => {
                     let obj;
-                    console.log(element.name);
                     obj = scene.add.image(element.x, element.y, element.name).setAlpha(0);
 
                     if (element.properties) {
@@ -119,6 +110,14 @@ export default class Hud extends Phaser.Scene {
                     obj.x += obj.width/2;
                     obj.y -= obj.height/2;
                     obj.setDepth(layer.depth);
+
+                    if (element.properties) {
+                        element.properties.forEach(prop => {
+                            if (prop.name == "depth_offset") {
+                                obj.setDepth(obj.depth + parseInt(prop.value));
+                            }
+                        });
+                    }
 
                     if (key == "hud_botones") {
                         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
@@ -153,9 +152,6 @@ export default class Hud extends Phaser.Scene {
                                 if (prop.name == "animation_type") {
                                     animation_type = prop.value;
                                 }
-                                if (prop.name == "action") {
-                                    
-                                }
                             });
                         }
                         obj.setInteractive();
@@ -186,7 +182,6 @@ export default class Hud extends Phaser.Scene {
                                     return;
                                 }
                             }
-                            console.log(follower);
                             let initial_pos = [];
                             tweens[animation_id] = scene.tweens.add({
                                 targets: follower,
@@ -197,20 +192,16 @@ export default class Hud extends Phaser.Scene {
                                 repeat: 0,
                                 onStart: () => {
                                     if (initial_pos.length == 0) {
-                                        console.log(grupos);
                                         grupos[animation_id].forEach(element => {
-                                            console.log("se hace esto");
                                             initial_pos.push({x: element.x, y: element.y});
                                         });
                                     }
                                 },
                                 onUpdate: () => {
-                                    console.log("se hace esto despues");
                                     paths[animation_id].getPoint(follower.tiempo, follower.pos);
                                     grupos[animation_id].forEach((element, index) => {
                                         element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
                                         element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
-                                        //element.setDepth(20);
                                     });
                                 },
                                 onComplete: () => {
@@ -220,6 +211,14 @@ export default class Hud extends Phaser.Scene {
                                 }
                             });
                         });
+                        if (element.properties) {
+                            element.properties.forEach(prop => {
+                                if (prop.name == "action") {
+                                    let callback: string = prop.value;
+                                    obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}");`)}, this);
+                                }
+                            });
+                        }
                     }
 
                     objetos.push(obj);
@@ -238,6 +237,8 @@ export default class Hud extends Phaser.Scene {
             }
         });
 
+        console.log(tweens);
+        this.tweensActivos = tweens;
         return ":D";
     }
 
@@ -260,10 +261,18 @@ export default class Hud extends Phaser.Scene {
     }
 
     mostrarAcciones(deck_lenght: number){
-        this.texto_acciones = this.add.text(532, 125, 'ACCIONES  ' + deck_lenght, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(10);
+        this.texto_acciones = this.add.text(532, 125, 'ACCIONES  ' + deck_lenght, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(4);
     }
 
     updateAcciones(deck_lenght: number){
         return this.texto_acciones.setText('ACCIONES  ' + deck_lenght);
     }
+
+    pausa(animation_id: string) {
+        console.log(this.tweensActivos);
+        if (!this.tweensActivos[animation_id].isPlaying()) {
+            this.blur.setVisible(!this.blur.visible);
+        }
+    }
+
 }

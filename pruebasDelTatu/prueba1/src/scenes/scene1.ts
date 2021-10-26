@@ -14,12 +14,14 @@ export default class Scene1 extends Phaser.Scene {
     }
     
     create() {
-        data.lanzador = this.add.sprite(900,1800,'flecha');
+        let y = 1700;
+
+        data.lanzador = this.add.sprite(900, y,'flecha');
         data.lanzador.setDepth(5);
 
         this.cargarNivelNuevo();
 
-        new Slider(this, data, data.deck);
+        new Slider(this, data, data.deck, 810, y + 75);
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -74,7 +76,7 @@ export default class Scene1 extends Phaser.Scene {
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 
-        data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1800);
+        data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1700);
 
         this.input.keyboard.on('keydown-' + 'T', function (event) { 
             data.deckController.removerBolita(data.bolitaALanzar + 1);
