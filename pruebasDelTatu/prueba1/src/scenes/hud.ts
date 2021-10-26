@@ -10,10 +10,15 @@ export default class Hud extends Phaser.Scene {
     private tweensActivos = {};
     private dato;
     private boton_pausa;
+    private paths = {};
+    private nodos = {};
+    private grupos = {};
+    private botones = [];
 
     constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
         this.tiempo_inicial = tiempo_inicial;
+        this.dato = {pausa: false};
     }
 
     preload() {
@@ -25,15 +30,14 @@ export default class Hud extends Phaser.Scene {
 
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
-        //this.blur.alpha = 0.9;
     }
 
     update(time, delta){
-
+        
         if(!this.dato.pausa){
             this.updateTiempo(delta);
         }
-
+        
     }
 
     pasarData(dato){
@@ -128,6 +132,8 @@ export default class Hud extends Phaser.Scene {
                     }
 
                     if (key == "hud_botones") {
+                        obj.name = element.name;
+                        this.botones.push(obj);
                         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
                         let path;
                         let graphics = this.add.graphics();
@@ -143,6 +149,7 @@ export default class Hud extends Phaser.Scene {
                                     let value = hudAMostrar.animations[prop.value];
                                     path = new Phaser.Curves.Path(value[0].x, value[0].y);
                                     nodos = value;
+                                    this.nodos[prop.value] = nodos;
                                     animation_id = prop.value;
                                     
                                     for(let i = 0; i < value.length; i+=3) {
@@ -158,6 +165,7 @@ export default class Hud extends Phaser.Scene {
                                         path.draw(graphics); 
                                     }
                                     paths[prop.value] = path;
+                                    this.paths[prop.value] = path;
                                 }
                                 if (prop.name == "animation_type") {
                                     animation_type = prop.value;
@@ -194,33 +202,36 @@ export default class Hud extends Phaser.Scene {
                             }
                             if (animado) {
                                 let initial_pos = [];
-                                tweens[animation_id] = scene.tweens.add({
-                                    targets: follower,
-                                    tiempo: 1,
-                                    ease: 'Power2',
-                                    duration: 1000,
-                                    yoyo: false,
-                                    repeat: 0,
-                                    onStart: () => {
-                                        if (initial_pos.length == 0) {
-                                            grupos[animation_id].forEach(element => {
-                                                initial_pos.push({x: element.x, y: element.y});
+                                
+                                if(obj.frame.name == "0" || obj.frame.name == "__BASE") {
+                                    tweens[animation_id] = scene.tweens.add({
+                                        targets: follower,
+                                        tiempo: 1,
+                                        ease: 'Power2',
+                                        duration: 1000,
+                                        yoyo: false,
+                                        repeat: 0,
+                                        onStart: () => {
+                                            if (initial_pos.length == 0) {
+                                                grupos[animation_id].forEach(element => {
+                                                    initial_pos.push({x: element.x, y: element.y});
+                                                });
+                                            }
+                                        },
+                                        onUpdate: () => {
+                                            paths[animation_id].getPoint(follower.tiempo, follower.pos);
+                                            grupos[animation_id].forEach((element, index) => {
+                                                element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
+                                                element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
                                             });
+                                        },
+                                        onComplete: () => {
+                                            paths[animation_id] = this.revertirPath(nodos);
+                                            follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
+                                            initial_pos = [];
                                         }
-                                    },
-                                    onUpdate: () => {
-                                        paths[animation_id].getPoint(follower.tiempo, follower.pos);
-                                        grupos[animation_id].forEach((element, index) => {
-                                            element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
-                                            element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
-                                        });
-                                    },
-                                    onComplete: () => {
-                                        paths[animation_id] = this.revertirPath(nodos);
-                                        follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
-                                        initial_pos = [];
-                                    }
-                                });
+                                    });
+                                }
                             }
                         });
                         if (element.properties) {
@@ -228,14 +239,14 @@ export default class Hud extends Phaser.Scene {
                                 if (prop.name == "action") {
                                     let callback: string = prop.value;
                                     if (prop.value == "pausa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
-                                    else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}", obj); this.boton_pausa = obj`)}, this)}
+                                    else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
                                     else {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}(obj);`)}, this)};
                                 }
 
                             });
                         }
                     }
-
+                    this.grupos = grupos;
                     objetos.push(obj);
                 });
             });
@@ -328,4 +339,77 @@ export default class Hud extends Phaser.Scene {
         obj.setFrame(obj.frame.name == 0 ? 1 : 0);
     }
 
+    play_animacion(animation_id: string, pìngpong: boolean = true, blur: boolean = true) {
+        let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
+        let initial_pos = [];
+        let paths = this.paths;
+        let nodos = this.nodos[animation_id];
+        let grupos = this.grupos;
+        this.tweensActivos[animation_id] = this.tweens.add({
+            targets: follower,
+            tiempo: 1,
+            ease: 'Power2',
+            duration: 1000,
+            yoyo: false,
+            repeat: 0,
+            onStart: () => {
+                this.blur_blur();
+                if (initial_pos.length == 0) {
+                    grupos[animation_id].forEach(element => {
+                        initial_pos.push({x: element.x, y: element.y});
+                    });
+                }
+            },
+            onUpdate: () => {
+                paths[animation_id].getPoint(follower.tiempo, follower.pos);
+                grupos[animation_id].forEach((element, index) => {
+                    element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
+                    element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
+                });
+            },
+            onComplete: () => {
+                if (pìngpong) {
+                    paths[animation_id] = this.revertirPath(nodos);
+                    follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
+                    initial_pos = [];
+                }
+            }
+        });
+    }
+
+    blur_blur() {
+        try {
+            this.tweens.add({
+                targets: this.blur,
+                alpha: this.blur.alpha == 0 ? 0.9 : 0,
+                duration: 1000,
+                ease: 'Power2',
+                yoyo: false,
+                repeat: 0
+            });
+        }catch (e) {
+            setTimeout(() => {
+                this.tweens.add({
+                    targets: this.blur,
+                    alpha: this.blur.alpha == 0 ? 0.9 : 0,
+                    duration: 1000,
+                    ease: 'Power2',
+                    yoyo: false,
+                    repeat: 0
+                });
+            }, 1000);
+        }
+    }
+
+    desactivar_todo_menos(name: string) {
+        this.botones.forEach(element => {
+            if (element.name != name) {
+                element.disableInteractive();
+            }
+        });
+    }
+
+    cambiar_boton_niveles() {
+        this.boton_pausa.setFrame(this.boton_pausa.frame.name == 0 ? 1 : 0);
+    }
 }

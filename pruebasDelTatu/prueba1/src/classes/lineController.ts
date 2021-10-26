@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Config from '../config';
 
 export class lineController {  
     private x1: number;
@@ -15,6 +16,10 @@ export class lineController {
         this.x2 = x2;
         this.y2 = y2;
         this.cantidad_bolitas = cantidad_bolitas;
+
+        if (Config.config.physics.arcade.debug) {
+            scene.add.circle(x1, y1, 40, 0xffffff, 1).setOrigin(0.5).setDepth(30);
+        }
 
         for (let i = 0; i < cantidad_bolitas + 1; i++) {
             if (i != 0) {

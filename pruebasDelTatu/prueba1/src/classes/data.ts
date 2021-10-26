@@ -111,6 +111,10 @@ export default class Data {
 
     tiros = 0;
 
+    bolas_destruidas = 0;
+
+    bolas_lanzadas = [];
+
     constructor() {
         
     }

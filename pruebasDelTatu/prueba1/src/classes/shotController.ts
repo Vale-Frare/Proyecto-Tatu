@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Hud from '../scenes/hud';
 
 export class shotController {
 
@@ -8,14 +9,16 @@ export class shotController {
     private data;
     private bolita;
     private scene;
+    private nivel_finalizado;
 
-    constructor(data, scene, bolita, overlaps = []) {
+    constructor(data, scene, bolita, nivel_finalizado, overlaps = []) {
         this.overlaps = overlaps;
         this.paDespues = this.paDespues;
         this.bounces = 0;
         this.data = data;
         this.scene = scene;
         this.bolita = bolita;
+        this.nivel_finalizado = nivel_finalizado;
 
         this.colisionesBordes();
     }
@@ -81,6 +84,22 @@ export class shotController {
         this.bounces++;
         if (this.bounces >= 5) {
             a.destroy();
+            this.data.bolas_destruidas++;
+
+            this.data.nivelCargado.forEach(fila => {
+                fila.forEach(bolita => {
+                    if(bolita){
+                        this.nivel_finalizado = false;
+                    }
+                })
+            });
+
+            if(!this.nivel_finalizado && (this.data.deck.length-this.data.bolas_destruidas) == 0){
+                let hud: Hud = this.scene.get("hud");
+                hud.play_animacion("nodos_2");
+                hud.cambiar_boton_niveles();
+                this.data.pausa = true;
+            }
 
             a.emitter.followOffset.x += 2000;
             let emitter = a.emitter;

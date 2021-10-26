@@ -60,6 +60,9 @@ export class BolitaLanzada {
     y: number = 0;
 
     constructor(scene, x, y, scale, data, rotacion) {
+        if (Config.config.physics.arcade.debug) {
+            scene.add.circle(x, y, 20, 0xff0000, 1).setOrigin(0.5).setDepth(30);
+        }
         this.object = scene.physics.add.sprite(x,y,'tatu_bebe');
 
         this.object.setScale(scale);

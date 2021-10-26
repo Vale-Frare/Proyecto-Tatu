@@ -4,6 +4,7 @@ import Config from '../config';
 import {Bolita, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
+import Hud from '../scenes/hud';
 
 let data: Data = new Data();
 
@@ -60,6 +61,18 @@ export default class Scene1 extends Phaser.Scene {
             data.slider.mini_bolita.disableInteractive();
         }else {
             data.slider.mini_bolita.setInteractive();
+        }
+
+        if (data.pausa) {
+            data.bolitas.forEach((b) => {
+                b.anims.pause();
+            });
+            this.physics.pause();
+        }else {
+            data.bolitas.forEach((b) => {
+                b.anims.resume();
+            });
+            this.physics.resume();
         }
 
         data.bolitas.forEach(bolita => {

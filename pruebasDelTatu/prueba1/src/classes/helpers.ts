@@ -398,6 +398,7 @@ export class Aleatorizadores {
 
 export class AccionesBolitas {
     static tiro(scene: Phaser.Scene, data, rotacion, acciones) {
+        let nivel_finalizado = true;
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
@@ -443,11 +444,12 @@ export class AccionesBolitas {
             }
             //  vale: finalmente se rompe la bolita lanzada.
     
-            let colores = [];
+            let colores = [];            
 
             data.nivelCargado.forEach(fila => {
                 fila.forEach(bolita => {
                     if(bolita){
+                        nivel_finalizado = false;
                         if(colores.length == 0){
                             colores.push(bolita.texture.key);
                         }
@@ -466,8 +468,22 @@ export class AccionesBolitas {
                 })
             })
             data.deckController.reemplazarColor(colores);
+            if(nivel_finalizado){
+                let hud: Hud = this.scene.get("hud");
+                hud.play_animacion("nodos_1");
+                hud.cambiar_boton_niveles();
+                data.pausa = true;
+            }
 
             bola_lanzada.destroy();
+
+            data.bolas_destruidas++;
+            if(!nivel_finalizado && (data.deck.length-data.bolas_destruidas) == 0){
+                let hud: Hud = this.scene.get("hud");
+                hud.play_animacion("nodos_2");
+                hud.cambiar_boton_niveles();
+                data.pausa = true;
+            }
         }
         
         if (data.deckTween != undefined) {
@@ -478,7 +494,7 @@ export class AccionesBolitas {
         }
         data.deckController.tirar();
         
-        let bolita = new BolitaLanzada(scene, 900, 1800, 0.3, data, rotacion).object;
+        let bolita = new BolitaLanzada(scene, data.lanzador.x, data.lanzador.y, 0.265, data, rotacion).object;
         bolita.anims.play('tatu_bebe');
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
 
@@ -497,7 +513,7 @@ export class AccionesBolitas {
             });
         }, scene);
 
-        new shotController(data, scene, bolita);
+        new shotController(data, scene, bolita, nivel_finalizado);
 
         data.tiros++;
 
