@@ -176,7 +176,7 @@ export default class Hud extends Phaser.Scene {
 
                                     if (Config.config.physics.arcade.debug) {
                                         graphics.clear();
-                                        graphics.lineStyle(2, 0xffffff, 1);
+                                        graphics.lineStyle(10, this.HEXToVBColor(hudAMostrar.nodos_colores[prop.value]), 1);
 
                                         path.draw(graphics); 
                                     }
@@ -283,6 +283,11 @@ export default class Hud extends Phaser.Scene {
         return ":D";
     }
 
+    HEXToVBColor(rrggbb) {
+        var bbggrr = rrggbb.substr(5, 3) + rrggbb.substr(3, 3) + rrggbb.substr(1, 3);
+        return parseInt(bbggrr, 16);
+    }
+
     mostrarHud(key: string) {
         this.mostrarHudPosta(key);
     }
@@ -347,6 +352,8 @@ export default class Hud extends Phaser.Scene {
 
     pausaYMapa(animation_id: string, obj: any) {
         if (obj.frame.name == 0) {
+            this.play_animacion("nodos_0", true);
+            this.blur_on();
             if (this.tweensActivos[animation_id]) {
                 if (!this.tweensActivos[animation_id].isPlaying()) {
                     this.tweens.add({
@@ -446,7 +453,6 @@ export default class Hud extends Phaser.Scene {
         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
         let initial_pos = [];
         let path = this.revertirPath(this.nodos[animation_id]);
-        console.log(this.nodos[animation_id]);
         let grupos = this.grupos;
         this.tweensActivos[animation_id] = this.tweens.add({
             targets: follower,
@@ -511,6 +517,17 @@ export default class Hud extends Phaser.Scene {
         });
     }
 
+    blur_on() {
+        this.tweens.add({
+            targets: this.blur,
+            alpha: .9,
+            duration: 1000,
+            ease: 'Power2',
+            yoyo: false,
+            repeat: 0
+        });
+    }
+
     desactivar_todo_menos(name: string) {
         this.botones.forEach(element => {
             if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2") {
@@ -533,6 +550,13 @@ export default class Hud extends Phaser.Scene {
         console.log("Siguiente niveEEEEEEEEEEEEEEEEEEEEEEEEL 🤣😂😂🤣🤣");
     }
 
+    reanudar() {
+        this.reactivar_todo();
+        this.boton_pausa.setFrame(0);
+        this.play_animacion_invertida("nodos_0", true);
+        this.blur_off();
+    }
+ 
     reiniciar_derrota() {
         let scene = this.scene.get("Scene1");
         scene.scene.restart();

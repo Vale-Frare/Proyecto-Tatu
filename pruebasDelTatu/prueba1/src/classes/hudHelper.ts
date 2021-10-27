@@ -8,12 +8,14 @@ export class hudHelper {
                         hud_paneles: {content:[], depth: 4},
                         hud_fondo: {content:[], depth: 3}
                     },
-                    animations: {}
+                    animations: {},
+                    nodos_colores: {}
                 }
 
                 data.layers.forEach((layer) => {
                     if (layer.name.substring(0, 5) == "nodos") {
                         newData.animations[layer.name] = layer.objects;
+                        newData.nodos_colores[layer.name] = layer.color;
                     }else if (layer.name != "fondo" && layer.name.substring(0, 5) != "nodos") {
                         if (layer.properties) {
                             newData.layers[layer.name] = {

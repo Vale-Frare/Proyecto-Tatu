@@ -14,6 +14,13 @@ export default class SoundManager extends Phaser.Scene{
         super({key: 'soundManager', active: true});
     }
 
+    create() {
+        let canvas = document.getElementsByTagName("canvas")[0];
+        canvas.addEventListener("onFocus", () => {
+            this.muteMusic(false);
+        });
+    }
+
     muteMusic(bool){
         if(bool){
             this.musica.pause();

@@ -80,9 +80,12 @@ export class Slider {
             }
         }
 
-        var lc = new lineController(data.lanzador.x, data.lanzador.y, 0, 0, 85,60, scene);
+        var lc = new lineController(data.lanzador.x, data.lanzador.y, data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1540), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1540), 95,53, scene);
         lc.setAlpha(0);
         lc.bolitas.forEach(bolita => {
+            if (bolita.body) {
+                bolita.body.setCircle(bolita.width/2);
+            }
             data.bordes.forEach((borde, index) => {
                 if (index != 1) {
                     scene.physics.add.overlap(borde, bolita, evaluar_bola_mas_cercana);
@@ -208,7 +211,7 @@ export class Slider {
                     }
                 });
                 context.bola_cercana = null;
-                lc.updatePos(data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1900), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1900));
+                lc.updatePos(data.lanzador.x + (Math.cos(data.lanzador.rotation - Math.PI/2) * 1700), data.lanzador.y + (Math.sin(data.lanzador.rotation - Math.PI/2) * 1700));
             }
         });
     }

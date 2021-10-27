@@ -228,12 +228,7 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"pausa"
-                        }, 
-                        {
-                         "name":"animation_id",
-                         "type":"string",
-                         "value":"nodos_0"
+                         "value":"reanudar"
                         }, 
                         {
                          "name":"depth_offset",
@@ -313,16 +308,6 @@
                          "name":"action",
                          "type":"string",
                          "value":"pausaYMapa"
-                        }, 
-                        {
-                         "name":"animation_id",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }, 
-                        {
-                         "name":"animation_type",
-                         "type":"string",
-                         "value":"pingpong"
                         }],
                  "rotation":0,
                  "type":"",
@@ -436,7 +421,7 @@
                 {
                  "height":530,
                  "id":336,
-                 "name":"cuadrado_blanco",
+                 "name":"controlador_nodos_1",
                  "properties":[
                         {
                          "name":"animation_id",
@@ -453,7 +438,7 @@
                 {
                  "height":530,
                  "id":339,
-                 "name":"cuadrado_blanco",
+                 "name":"controlador_nodos_2",
                  "properties":[
                         {
                          "name":"animation_id",
@@ -466,6 +451,23 @@
                  "width":530,
                  "x":835,
                  "y":-621
+                }, 
+                {
+                 "height":530,
+                 "id":340,
+                 "name":"controlador_nodos_0",
+                 "properties":[
+                        {
+                         "name":"animation_id",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":530,
+                 "x":-304.393939393939,
+                 "y":-619.545454545455
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -656,7 +658,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":558,
+                 "x":540,
                  "y":1238
                 }],
          "opacity":1,
@@ -752,7 +754,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":546,
+                 "x":540,
                  "y":1058
                 }],
          "opacity":1,
@@ -762,7 +764,7 @@
          "y":0
         }],
  "nextlayerid":14,
- "nextobjectid":340,
+ "nextobjectid":341,
  "orientation":"hexagonal",
  "properties":[
         {
