@@ -493,6 +493,7 @@ export class AccionesBolitas {
             if(!nivel_finalizado && (data.deck.length-data.bolas_destruidas) == 0){
                 let hud: Hud = this.scene.get("hud");
                 hud.play_animacion("nodos_2");
+                hud.desactivar_todo_menos("boton_reiniciar");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
                 sm.playMusic("derrota", 0.1, false);

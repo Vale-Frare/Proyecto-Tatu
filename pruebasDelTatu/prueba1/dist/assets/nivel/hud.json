@@ -261,7 +261,7 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"reiniciar"
+                         "value":"reiniciar_pausa"
                         }, 
                         {
                          "name":"depth_offset",
@@ -391,7 +391,7 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"reiniciar"
+                         "value":"reiniciar_derrota"
                         }, 
                         {
                          "name":"depth_offset",
@@ -474,6 +474,7 @@
          "y":0
         }, 
         {
+         "color":"#ff5500",
          "draworder":"topdown",
          "id":10,
          "name":"nodos_0",
@@ -569,6 +570,7 @@
          "y":0
         }, 
         {
+         "color":"#55aa00",
          "draworder":"topdown",
          "id":12,
          "name":"nodos_1",
@@ -664,6 +666,7 @@
          "y":0
         }, 
         {
+         "color":"#5500ff",
          "draworder":"topdown",
          "id":13,
          "name":"nodos_2",
@@ -677,8 +680,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1178,
-                 "y":2142
+                 "x":1641.63636363636,
+                 "y":2460.18181818182
                 }, 
                 {
                  "height":0,
@@ -689,8 +692,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":864,
-                 "y":2232
+                 "x":1036.72727272727,
+                 "y":2419.87878787879
                 }, 
                 {
                  "height":0,
@@ -770,7 +773,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {

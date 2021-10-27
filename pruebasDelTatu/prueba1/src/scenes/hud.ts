@@ -70,6 +70,7 @@ export default class Hud extends Phaser.Scene {
             if(this.tiempo_inicial <= 0){
                 this.textoTiempo('TIEMPO 00:00');
                 this.play_animacion("nodos_2");
+                this.desactivar_todo_menos("boton_reiniciar");
                 this.cambiar_boton_niveles();
                 this.dato.pausa = true;
                 this.sm.playMusic("derrota", 0.1, false);
@@ -239,7 +240,7 @@ export default class Hud extends Phaser.Scene {
                                                 element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
                                                 element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
                                             });
-                                        },
+                                        },  
                                         onComplete: () => {
                                             paths[animation_id] = this.revertirPath(nodos);
                                             follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
@@ -286,8 +287,40 @@ export default class Hud extends Phaser.Scene {
         this.mostrarHudPosta(key);
     }
 
-    revertirPath(nodos) {
+    revertirPathPerma(nodos) {
         let nodosR = nodos.reverse();
+
+        let path = new Phaser.Curves.Path(nodosR[0].x, nodosR[0].y);
+        
+        for(let i = 0; i < nodosR.length; i+=3) {
+            if (i != nodosR.length - 1) {
+                path.cubicBezierTo(nodosR[i+3].x, nodosR[i+3].y, nodosR[i+1].x, nodosR[i+1].y, nodosR[i+2].x, nodosR[i+2].y);
+            }
+        }
+
+        return path;
+    }
+
+    revertirPath(nodos) {
+        let nodosR = [];
+        nodos.forEach(nodo => {
+            nodosR.push(nodo);
+        });
+        nodosR = nodosR.reverse();
+
+        let path = new Phaser.Curves.Path(nodosR[0].x, nodosR[0].y);
+        
+        for(let i = 0; i < nodosR.length; i+=3) {
+            if (i != nodosR.length - 1) {
+                path.cubicBezierTo(nodosR[i+3].x, nodosR[i+3].y, nodosR[i+1].x, nodosR[i+1].y, nodosR[i+2].x, nodosR[i+2].y);
+            }
+        }
+
+        return path;
+    }
+
+    nodosToPath(nodos) {
+        let nodosR = nodos;
 
         let path = new Phaser.Curves.Path(nodosR[0].x, nodosR[0].y);
         
@@ -401,7 +434,7 @@ export default class Hud extends Phaser.Scene {
             },
             onComplete: () => {
                 if (pingpong) {
-                    paths[animation_id] = this.revertirPath(nodos);
+                    //paths[animation_id] = this.revertirPath(nodos);
                     follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
                     initial_pos = [];
                 }
@@ -412,8 +445,8 @@ export default class Hud extends Phaser.Scene {
     play_animacion_invertida(animation_id: string, blur: boolean = false) {
         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
         let initial_pos = [];
-        let paths = this.paths;
-        let nodos = this.revertirPath(this.nodos[animation_id]);
+        let path = this.revertirPath(this.nodos[animation_id]);
+        console.log(this.nodos[animation_id]);
         let grupos = this.grupos;
         this.tweensActivos[animation_id] = this.tweens.add({
             targets: follower,
@@ -431,11 +464,14 @@ export default class Hud extends Phaser.Scene {
                 }
             },
             onUpdate: () => {
-                paths[animation_id].getPoint(follower.tiempo, follower.pos);
+                path.getPoint(follower.tiempo, follower.pos);
                 grupos[animation_id].forEach((element, index) => {
                     element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
                     element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
                 });
+            },
+            onComplete: () => {
+                //this.paths[animation_id] = this.revertirPath(this.nodos[animation_id]);
             }
         });
     }
@@ -464,11 +500,28 @@ export default class Hud extends Phaser.Scene {
         }
     }
 
+    blur_off() {
+        this.tweens.add({
+            targets: this.blur,
+            alpha: 0,
+            duration: 1000,
+            ease: 'Power2',
+            yoyo: false,
+            repeat: 0
+        });
+    }
+
     desactivar_todo_menos(name: string) {
         this.botones.forEach(element => {
-            if (element.name != name) {
+            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2") {
                 element.disableInteractive();
             }
+        });
+    }
+
+    reactivar_todo() {
+        this.botones.forEach(element => {
+            element.setInteractive();
         });
     }
 
@@ -480,10 +533,23 @@ export default class Hud extends Phaser.Scene {
         console.log("Siguiente niveEEEEEEEEEEEEEEEEEEEEEEEEL 🤣😂😂🤣🤣");
     }
 
-    reiniciar() {
+    reiniciar_derrota() {
         let scene = this.scene.get("Scene1");
         scene.scene.restart();
         this.play_animacion_invertida("nodos_2", true);
+        this.reactivar_todo();
+        this.boton_pausa.setFrame(0);
+        this.blur_off();
         console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
     } 
+
+    reiniciar_pausa() {
+        let scene = this.scene.get("Scene1");
+        scene.scene.restart();
+        this.play_animacion_invertida("nodos_0", true);
+        this.reactivar_todo();
+        this.boton_pausa.setFrame(0);
+        this.blur_off();
+        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
+    }
 }

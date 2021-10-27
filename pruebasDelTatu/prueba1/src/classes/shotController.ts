@@ -100,6 +100,7 @@ export class shotController {
                 let sm: SoundManager = this.scene.scene.get("soundManager");
 
                 hud.play_animacion("nodos_2");
+                hud.desactivar_todo_menos("boton_reiniciar");
                 hud.cambiar_boton_niveles();
                 this.data.pausa = true;
                 sm.playMusic("derrota", 0.1, false);
