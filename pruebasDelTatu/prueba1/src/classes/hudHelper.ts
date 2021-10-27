@@ -9,13 +9,17 @@ export class hudHelper {
                         hud_fondo: {content:[], depth: 3}
                     },
                     animations: {},
-                    nodos_colores: {}
+                    nodos_colores: {},
+                    playable: false,
+                    fondo: null
                 }
 
                 data.layers.forEach((layer) => {
                     if (layer.name.substring(0, 5) == "nodos") {
                         newData.animations[layer.name] = layer.objects;
                         newData.nodos_colores[layer.name] = layer.color;
+                    }else if (layer.name == "fondo") {
+                        newData.fondo = data.tilesets[parseInt(layer.id) - 1].name;
                     }else if (layer.name != "fondo" && layer.name.substring(0, 5) != "nodos") {
                         if (layer.properties) {
                             newData.layers[layer.name] = {
@@ -30,6 +34,12 @@ export class hudHelper {
                                 properties: null
                             }
                         }
+                    }
+                });
+
+                data.properties.forEach((prop) => {
+                    if (prop.name == "playable") {
+                        newData.playable = prop.value;
                     }
                 });
 

@@ -9,6 +9,7 @@ export default class SoundManager extends Phaser.Scene{
     private sonido_tatu_choca_color_correcto;
     private sonido_tatu_choca_color_incorrecto;
     private mute_sound: boolean = false;
+    private mute_music: boolean = false;
 
     constructor(){
         super({key: 'soundManager', active: true});
@@ -23,12 +24,14 @@ export default class SoundManager extends Phaser.Scene{
 
     muteMusic(bool){
         if(bool){
+            this.mute_music = true;
             this.musica.pause();
             if(this.musica_poco_tiempo){
                 this.musica_poco_tiempo.pause();
             }
         }
         else{
+            this.mute_music = false;
             this.musica.resume();
             if(this.musica_poco_tiempo){
                 this.musica_poco_tiempo.resume();
@@ -41,7 +44,13 @@ export default class SoundManager extends Phaser.Scene{
             this.musica.stop();
         }
         this.musica = this.sound.add(nombre, {volume: volumen, loop: lup});
-        this.musica.play();
+        if(this.mute_music){
+            this.musica.play();
+            this.musica.pause();
+        }
+        else{
+            this.musica.play();
+        }
     }
 
     playMusicPocoTiempo(){

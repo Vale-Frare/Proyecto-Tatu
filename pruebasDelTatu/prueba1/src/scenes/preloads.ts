@@ -52,6 +52,9 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("panel_derrota", "assets/hud/panel_derrota.png");
         this.load.image("titulo_derrota", "assets/hud/titulo_derrota.png");
 
+        this.load.image("boton_continuar", "assets/hud/boton_continuar.png");
+        this.load.image("rayo_concientizador", "assets/hud/rayo_concientizador.png");
+
         this.load.audio("derrota", "assets/audio/derrota.mp3");
         this.load.audio("lvl_1", "assets/audio/lvl_1.mp3");
         this.load.audio("poco_tiempo", "assets/audio/poco_tiempo.mp3");
@@ -64,13 +67,14 @@ export default class Preloads extends Phaser.Scene {
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([
             tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json"),
-            hudHelper.cargarHudDesdeJson("assets/nivel/hud.json")
+            hudHelper.cargarHudDesdeJson("assets/nivel/hud.json"),
+            hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json")
         ]);
     }
 
     create() {
         let hud = this.scene.get("hud");
-        hud.mostrarHud('hud');
+        hud.mostrarHud('rayo_concientizador');
 
         this.anims.create({
             key: "tatu_bebe",

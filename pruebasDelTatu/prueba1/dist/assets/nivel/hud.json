@@ -771,11 +771,16 @@
          "name":"lugar_de_comienzo",
          "type":"string",
          "value":""
+        }, 
+        {
+         "name":"playable",
+         "type":"bool",
+         "value":true
         }],
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {
