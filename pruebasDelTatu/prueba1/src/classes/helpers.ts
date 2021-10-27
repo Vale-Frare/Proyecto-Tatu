@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {BolitaLanzada} from '../classes/prefabs';
 import {shotController} from '../classes/shotController';
 import Hud from '../scenes/hud';
+import SoundManager from '../scenes/soundManager';
 
 export class Matriz {
     static deckFromMatriz(matriz, data) {
@@ -399,6 +400,8 @@ export class Aleatorizadores {
 export class AccionesBolitas {
     static tiro(scene: Phaser.Scene, data, rotacion, acciones) {
         let nivel_finalizado = true;
+        let color_correcto = false;
+        let sm: SoundManager = scene.scene.get("soundManager");
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
@@ -412,6 +415,7 @@ export class AccionesBolitas {
             if (bola_lanzada.tintTopLeft == data.bolitasTextYColors[bola_level.texture.key]) {
                 //  vale: se obtiene el grupo de la bolita a romper en base a la posición.
                 let count = 0;
+                color_correcto = true;
                 data.nivelCargado.forEach(fila => {
                     fila.forEach(bolita => {
                         if (bolita){
@@ -473,9 +477,17 @@ export class AccionesBolitas {
                 hud.play_animacion("nodos_1");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
+                sm.playMusic("victoria", 0.1, false);
             }
 
             bola_lanzada.destroy();
+
+            if(color_correcto){
+                sm.playSoundTatuChocaColorCorrecto();
+            }
+            else{
+                sm.playSoundTatuChocaColorIncorrecto();
+            }
 
             data.bolas_destruidas++;
             if(!nivel_finalizado && (data.deck.length-data.bolas_destruidas) == 0){
@@ -483,6 +495,7 @@ export class AccionesBolitas {
                 hud.play_animacion("nodos_2");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
+                sm.playMusic("derrota", 0.1, false);
             }
         }
         

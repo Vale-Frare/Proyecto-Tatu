@@ -5,8 +5,9 @@ import {Bolita, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
 import Hud from '../scenes/hud';
+import SoundManager from '../scenes/soundManager';
 
-let data: Data = new Data();
+let data: Data = null;
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -15,6 +16,8 @@ export default class Scene1 extends Phaser.Scene {
     }
     
     create() {
+        data = new Data();
+
         let y = 1700;
 
         data.lanzador = this.add.sprite(900, y,'flecha');
@@ -23,6 +26,9 @@ export default class Scene1 extends Phaser.Scene {
         this.cargarNivelNuevo();
 
         data.slider = new Slider(this, data, data.deck, 810, y + 75);
+        
+        let sm: SoundManager = this.scene.get("soundManager");
+        sm.playMusic("lvl_1", 0.1, true);
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -65,12 +71,16 @@ export default class Scene1 extends Phaser.Scene {
 
         if (data.pausa) {
             data.bolitas.forEach((b) => {
-                b.anims.pause();
+                if (b.anims) {
+                    b.anims.pause();
+                }
             });
             this.physics.pause();
         }else {
             data.bolitas.forEach((b) => {
-                b.anims.resume();
+                if (b.anims) {
+                    b.anims.resume();
+                }
             });
             this.physics.resume();
         }

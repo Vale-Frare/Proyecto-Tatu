@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {AccionesBolitas} from './helpers';
 import {lineController} from '../classes/lineController';
 import Hud from '../scenes/hud';
+import SoundManager from '../scenes/soundManager';
 
 export class Slider {
     private x;
@@ -146,8 +147,10 @@ export class Slider {
             }
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
-            if(mini_bolita.tintTopLeft == 0x000000){
+            if(mini_bolita.tintTopLeft == 0x000000 && (data.deck.length-data.tiros) > 0){
                 AccionesBolitas.tiro(this.scene, data, data.lanzador.rotation - (Math.PI/2), acciones);
+                let sm: SoundManager = scene.scene.get("soundManager");
+                sm.playSoundTatuLanzado();
             }
             mini_bolita.setTint(0xffffff);
             mini_bolita.setScale(1);

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Hud from '../scenes/hud';
+import SoundManager from '../scenes/soundManager';
 
 export class shotController {
 
@@ -95,10 +96,13 @@ export class shotController {
             });
 
             if(!this.nivel_finalizado && (this.data.deck.length-this.data.bolas_destruidas) == 0){
-                let hud: Hud = this.scene.get("hud");
+                let hud: Hud = this.scene.scene.get("hud");
+                let sm: SoundManager = this.scene.scene.get("soundManager");
+
                 hud.play_animacion("nodos_2");
                 hud.cambiar_boton_niveles();
                 this.data.pausa = true;
+                sm.playMusic("derrota", 0.1, false);
             }
 
             a.emitter.followOffset.x += 2000;

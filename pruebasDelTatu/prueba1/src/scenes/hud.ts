@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Config from '../config';
+import SoundManager from './soundManager';
 
 export default class Hud extends Phaser.Scene {
     private tiempo_inicial;
@@ -14,6 +15,8 @@ export default class Hud extends Phaser.Scene {
     private nodos = {};
     private grupos = {};
     private botones = [];
+    private hacer_una_vez:boolean = true;
+    private sm: SoundManager;
 
     constructor(tiempo_inicial: number = 120) {
         super({ key: "hud" , active: true});
@@ -30,6 +33,7 @@ export default class Hud extends Phaser.Scene {
 
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
+        this.sm = this.scene.get("soundManager");
     }
 
     update(time, delta){
@@ -65,6 +69,17 @@ export default class Hud extends Phaser.Scene {
         else{
             if(this.tiempo_inicial <= 0){
                 this.textoTiempo('TIEMPO 00:00');
+                this.play_animacion("nodos_2");
+                this.cambiar_boton_niveles();
+                this.dato.pausa = true;
+                this.sm.playMusic("derrota", 0.1, false);
+                this.sm.stopMusicPocoTiempo();
+            }
+            else{
+                if(this.tiempo_inicial <= 10 && this.tiempo_inicial >= 1 && this.hacer_una_vez){
+                    this.hacer_una_vez = false;
+                    this.sm.playMusicPocoTiempo();
+                }
             }
         }
 
@@ -286,7 +301,11 @@ export default class Hud extends Phaser.Scene {
     }
 
     mostrarAcciones(deck_lenght: number){
-        this.texto_acciones = this.add.text(532, 125, 'ACCIONES  ' + deck_lenght, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(4);
+        if (this.texto_acciones) {
+            this.texto_acciones.text = `ACCIONES ${deck_lenght}`;
+        }else {
+            this.texto_acciones = this.add.text(532, 125, `ACCIONES ${deck_lenght}`, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(4);
+        }
     }
 
     updateAcciones(deck_lenght: number){
@@ -333,13 +352,26 @@ export default class Hud extends Phaser.Scene {
 
     mute_sonido_1(obj){
         obj.setFrame(obj.frame.name == 0 ? 1 : 0);
+        
+        if(obj.frame.name == 0){
+            this.sm.muteMusic(false);
+        }
+        else{
+            this.sm.muteMusic(true);
+        }
     }
 
     mute_sonido_2(obj){
         obj.setFrame(obj.frame.name == 0 ? 1 : 0);
+        if(obj.frame.name == 0){
+            this.sm.muteSound(false);
+        }
+        else{
+            this.sm.muteSound(true);
+        }
     }
 
-    play_animacion(animation_id: string, pìngpong: boolean = true, blur: boolean = true) {
+    play_animacion(animation_id: string, pingpong: boolean = true, blur: boolean = true) {
         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
         let initial_pos = [];
         let paths = this.paths;
@@ -368,11 +400,42 @@ export default class Hud extends Phaser.Scene {
                 });
             },
             onComplete: () => {
-                if (pìngpong) {
+                if (pingpong) {
                     paths[animation_id] = this.revertirPath(nodos);
                     follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
                     initial_pos = [];
                 }
+            }
+        });
+    }
+
+    play_animacion_invertida(animation_id: string, blur: boolean = false) {
+        let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
+        let initial_pos = [];
+        let paths = this.paths;
+        let nodos = this.revertirPath(this.nodos[animation_id]);
+        let grupos = this.grupos;
+        this.tweensActivos[animation_id] = this.tweens.add({
+            targets: follower,
+            tiempo: 1,
+            ease: 'Power2',
+            duration: 1000,
+            yoyo: false,
+            repeat: 0,
+            onStart: () => {
+                this.blur_blur();
+                if (initial_pos.length == 0) {
+                    grupos[animation_id].forEach(element => {
+                        initial_pos.push({x: element.x, y: element.y});
+                    });
+                }
+            },
+            onUpdate: () => {
+                paths[animation_id].getPoint(follower.tiempo, follower.pos);
+                grupos[animation_id].forEach((element, index) => {
+                    element.x = follower.pos.x + (initial_pos[index].x - initial_pos[0].x);
+                    element.y = follower.pos.y + (initial_pos[index].y - initial_pos[0].y);
+                });
             }
         });
     }
@@ -412,4 +475,15 @@ export default class Hud extends Phaser.Scene {
     cambiar_boton_niveles() {
         this.boton_pausa.setFrame(this.boton_pausa.frame.name == 0 ? 1 : 0);
     }
+
+    siguiente_nivel() {
+        console.log("Siguiente niveEEEEEEEEEEEEEEEEEEEEEEEEL 🤣😂😂🤣🤣");
+    }
+
+    reiniciar() {
+        let scene = this.scene.get("Scene1");
+        scene.scene.restart();
+        this.play_animacion_invertida("nodos_2", true);
+        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
+    } 
 }
