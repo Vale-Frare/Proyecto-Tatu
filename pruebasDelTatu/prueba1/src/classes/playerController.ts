@@ -30,13 +30,15 @@ export class Slider {
         this.scene = scene;
 
         let barrita = scene.add.sprite(x,y,texSlider).setOrigin(0);
-        this.mini_bolita = scene.add.sprite(x+(barrita.width/2),y+(barrita.height/2),texMinibola);
+        barrita.setScale(1.25, 2);
+        this.mini_bolita = scene.add.sprite(x+(barrita.width/1.6),y+(barrita.height),texMinibola);
         let mini_bolita = this.mini_bolita;
+        mini_bolita.setScale(1.5);
         barrita.depth = 5;
         mini_bolita.depth = 5;
         
-        this.minimo = mini_bolita.x - (barrita.width/2);
-        this.maximo = mini_bolita.x + (barrita.width/2);
+        this.minimo = mini_bolita.x - (barrita.width/1.6);
+        this.maximo = mini_bolita.x + (barrita.width/1.6);
         this.diferencia = Math.floor(this.maximo - this.minimo);
         data.lanzador.rotation = -0.25;
         deck[data.bolitaALanzar].obj.rotation = data.lanzador.rotation - (Math.PI/2);
@@ -107,7 +109,7 @@ export class Slider {
         mini_bolita.setInteractive({ draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){
             mini_bolita.setTint(0x000000);
-            mini_bolita.setScale(1.5);
+            mini_bolita.setScale(2.5);
 
             linea_punteada_real.fadeIn(scene);
             scene.tweens.addCounter({
@@ -125,9 +127,9 @@ export class Slider {
         }, this)
         .on('drag', function(pointer, dragX, dragY){
 
-            if(pointer.x < (this.minimo-(mini_bolita.width/1.25)) || pointer.x > (this.maximo+(mini_bolita.width/1.25)) || pointer.y < (mini_bolita.y-(mini_bolita.height/1.25)) || pointer.y > (mini_bolita.y+(mini_bolita.height/1.25))){
+            if(pointer.x < (this.minimo-(mini_bolita.width*1.25)) || pointer.x > (this.maximo+(mini_bolita.width*1.25)) || pointer.y < (mini_bolita.y-(mini_bolita.height*1.25)) || pointer.y > (mini_bolita.y+(mini_bolita.height*1.25))){
                 mini_bolita.setTint(0xffffff);
-                mini_bolita.setScale(1);
+                mini_bolita.setScale(1.5);
             }
             else{
                 mini_bolita.x = Phaser.Math.Clamp(pointer.x, this.minimo, this.maximo);
@@ -146,7 +148,7 @@ export class Slider {
                 }
 
                 mini_bolita.setTint(0x000000);
-                mini_bolita.setScale(1.5);
+                mini_bolita.setScale(2.5);
             }
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
@@ -156,7 +158,7 @@ export class Slider {
                 sm.playSoundTatuLanzado();
             }
             mini_bolita.setTint(0xffffff);
-            mini_bolita.setScale(1);
+            mini_bolita.setScale(1.5);
             linea_punteada_real.fadeOut(scene);
             scene.tweens.addCounter({
                 from: 0.3,

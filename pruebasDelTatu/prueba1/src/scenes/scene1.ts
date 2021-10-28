@@ -25,7 +25,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.cargarNivelNuevo();
 
-        data.slider = new Slider(this, data, data.deck, 810, y + 75);
+        data.slider = new Slider(this, data, data.deck, 780, y + 75);
 
         let hud: Hud = this.scene.get("hud");
         hud.pasarData(data);
