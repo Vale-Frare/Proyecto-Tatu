@@ -325,6 +325,7 @@ export default class Hud extends Phaser.Scene {
     }
 
     mostrarHud(key: string) {
+        this.limpiarAtributos();
         this.mostrarHudPosta(key);
     }
 
@@ -569,25 +570,26 @@ export default class Hud extends Phaser.Scene {
     siguiente_nivel(nivel) {
         if (!nivel) return;
         if (typeof nivel !== "string") return;
-        let scene_rayo = this.scene.get('Scene1');
+        let scene_rayo = this.scene.get('SceneRayo');
         scene_rayo.scene.switch(nivel);
-        let len = this.dato.deck.length;
+        //let len = this.dato.deck.length;
         
-        this.limpiarAtributos();
         this.mostrarHud("hud");
-        this.mostrarAcciones(len);
+        //this.mostrarAcciones(len);
         
     }
 
     limpiarAtributos(){
-        this.objetos.forEach(element => {
-            if (element.name == "sonido_1") {
-                this.sonido_1 = element.frame.name == 0 ? true : false;
-            }else if (element.name == "sonido_2") {
-                this.sonido_2 = element.frame.name == 0 ? true : false;
-            }
-            element.destroy();
-        });
+        if (this.objetos) {
+            this.objetos.forEach(element => {
+                if (element.name == "sonido_1") {
+                    this.sonido_1 = element.frame.name == 0 ? true : false;
+                }else if (element.name == "sonido_2") {
+                    this.sonido_2 = element.frame.name == 0 ? true : false;
+                }
+                element.destroy();
+            });
+        }
         this.tiempo_inicial = 120;
         this.un_segundo = 1000;
         this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
@@ -638,5 +640,10 @@ export default class Hud extends Phaser.Scene {
         this.blur_off();
         this.dato.pausa = false;
         console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
+    }
+
+    seleccion_niveles() {
+        let scene = this.scene.get("SceneMainmenu");
+        scene.scene.switch("SceneLvlSelect");
     }
 }

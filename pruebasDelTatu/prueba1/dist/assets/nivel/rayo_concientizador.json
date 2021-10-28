@@ -41,8 +41,8 @@
                  "type":"",
                  "visible":true,
                  "width":329,
-                 "x":753.534000931532,
-                 "y":180.838612016768
+                 "x":754,
+                 "y":180
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -175,7 +175,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":369,
+ "nextobjectid":375,
  "orientation":"hexagonal",
  "properties":[
         {

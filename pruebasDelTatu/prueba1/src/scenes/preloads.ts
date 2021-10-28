@@ -55,6 +55,15 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("boton_continuar", "assets/hud/boton_continuar.png");
         this.load.image("rayo_concientizador", "assets/hud/rayo_concientizador.png");
 
+        this.load.image("menu_principal", "assets/hud/menu_principal.png");
+        this.load.image("ayuda", "assets/hud/ayuda.png");
+        this.load.image("boton_jugar", "assets/hud/boton_jugar.png");
+        this.load.image("boton_niveles", "assets/hud/boton_niveles.png");
+
+        this.load.image("niveles", "assets/hud/niveles.png");
+        this.load.spritesheet("tatusitos_niveles", "assets/hud/tatusitos_niveles.png", {frameHeight: 296, frameWidth: 161});
+        this.load.image("regresar", "assets/hud/regresar.png");
+
         this.load.audio("derrota", "assets/audio/derrota.mp3");
         this.load.audio("lvl_1", "assets/audio/lvl_1.mp3");
         this.load.audio("poco_tiempo", "assets/audio/poco_tiempo.mp3");
@@ -63,19 +72,19 @@ export default class Preloads extends Phaser.Scene {
         this.load.audio("tatu_lanzado", "assets/audio/tatu_lanzado.mp3");
         this.load.audio("tatu_rodando", "assets/audio/tatu_rodando.mp3");
         this.load.audio("victoria", "assets/audio/victoria.mp3");
+        this.load.audio("main_menu", "assets/audio/main_menu.mp3");
              
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([
             tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/hud.json"),
-            hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json")
+            hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json"),
+            hudHelper.cargarHudDesdeJson("assets/nivel/menu_principal.json")
+            hudHelper.cargarHudDesdeJson("assets/nivel/seleccion_niveles.json")
         ]);
     }
 
     create() {
-        let hud = this.scene.get("hud");
-        hud.mostrarHud('rayo_concientizador');
-
         this.anims.create({
             key: "tatu_bebe",
             frames: this.anims.generateFrameNumbers("tatu_bebe", {start: 0, end: 6}),
@@ -91,6 +100,6 @@ export default class Preloads extends Phaser.Scene {
         });
 
 
-        this.scene.start("Scene1");
+        this.scene.start("SceneMainmenu");
     }
 }
