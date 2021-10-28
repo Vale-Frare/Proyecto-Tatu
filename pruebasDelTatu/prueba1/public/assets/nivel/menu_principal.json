@@ -154,7 +154,12 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"jugar"
+                         "value":"siguiente_nivel"
+                        }, 
+                        {
+                         "name":"scene",
+                         "type":"string",
+                         "value":"Scene1"
                         }],
                  "rotation":0,
                  "type":"",
