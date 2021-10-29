@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 import {hudHelper} from '../classes/hudHelper';
 import {tiledHelper} from '../classes/tiledHelper';
-import Hud from '../scenes/hud';
-import SoundManager from './soundManager';
 
 export default class Preloads extends Phaser.Scene {
     constructor() {
@@ -77,10 +75,14 @@ export default class Preloads extends Phaser.Scene {
              
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl_3.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl1.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl2.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl3.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl4.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl5.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/hud.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json"),
-            hudHelper.cargarHudDesdeJson("assets/nivel/menu_principal.json")
+            hudHelper.cargarHudDesdeJson("assets/nivel/menu_principal.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/seleccion_niveles.json")
         ]);
     }
@@ -100,7 +102,7 @@ export default class Preloads extends Phaser.Scene {
             repeat: -1
         });
 
-        let sm: SoundManager = this.scene.get("soundManager");
+        let sm: any = this.scene.get("soundManager");
         sm.playMusic("main_menu", 0.1, true);
         this.scene.start("SceneMainmenu");
     }

@@ -4,8 +4,7 @@ import Config from '../config';
 import {Bolita, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
-import Hud from '../scenes/hud';
-import SoundManager from '../scenes/soundManager';
+import ProgressManager from './progressManager';
 
 let data: Data = null;
 
@@ -27,10 +26,10 @@ export default class Scene1 extends Phaser.Scene {
 
         data.slider = new Slider(this, data, data.deck, 780, y + 75);
 
-        let hud: Hud = this.scene.get("hud");
+        let hud: any = this.scene.get("hud");
         hud.pasarData(data);
         
-        let sm: SoundManager = this.scene.get("soundManager");
+        let sm: any = this.scene.get("soundManager");
         sm.playMusic("lvl_1", 0.1, true);
     }
 
@@ -104,7 +103,9 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
-        let nivel = this.cargarNivelDesdeTiled("lvl_3");
+        let progressManager: ProgressManager = this.scene.get("progressManager");
+
+        let nivel = this.cargarNivelDesdeTiled(progressManager.level_to_play);
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 

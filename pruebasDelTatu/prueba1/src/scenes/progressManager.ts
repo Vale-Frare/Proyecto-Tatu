@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 export default class ProgressManager extends Phaser.Scene {
+    public level_to_play = 'lvl2';
     public progress = {
         current: 1,
         zones: {
@@ -45,7 +46,7 @@ export default class ProgressManager extends Phaser.Scene {
     }
 
     update() {
-
+        console.log(this.level_to_play);
     }
 
     getProgressOfLevel(zone: string, level: number) {
@@ -81,5 +82,9 @@ export default class ProgressManager extends Phaser.Scene {
                 localStorage.setItem('progress', JSON.stringify(this.progress));
             }
         }
+    }
+
+    playLevel(level: number) {
+        this.level_to_play = `lvl${level}`;	
     }
 }

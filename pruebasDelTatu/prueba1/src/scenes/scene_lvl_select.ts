@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Hud from './hud';
 import ProgressManager from './progressManager';
 
 export default class SceneLvlSelect extends Phaser.Scene {
@@ -12,7 +11,7 @@ export default class SceneLvlSelect extends Phaser.Scene {
     create() {
         this.pm = new ProgressManager();
 
-        let hud: Hud = this.scene.get("hud");
+        let hud: any = this.scene.get("hud");
         hud.mostrarHud('seleccion_niveles');
 
     }

@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
 import Config from '../config';
-import SoundManager from './soundManager';
-import ProgressManager from './progressManager';
 
 export default class Hud extends Phaser.Scene {
     private sonido_1 = true;
@@ -20,7 +18,7 @@ export default class Hud extends Phaser.Scene {
     private grupos = {};
     private botones = [];
     private hacer_una_vez:boolean = true;
-    private sm: SoundManager;
+    private sm: any;
     private playable: boolean = false;
     private objetos;
 
@@ -215,7 +213,7 @@ export default class Hud extends Phaser.Scene {
                                     obj.setFrame(prop.value);
                                 }
                                 if (prop.name == "level") {
-                                    let progressManager: ProgressManager = this.scene.get('ProgressManager');
+                                    let progressManager: any = this.scene.get('ProgressManager');
                                     let progress = progressManager.getProgressOfLevel(
                                         progressManager.getCurrentZone(),
                                         prop.value
@@ -300,6 +298,7 @@ export default class Hud extends Phaser.Scene {
                                     let callback: string = prop.value;
                                     if (prop.value == "pausa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
                                     else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
+                                    else if (prop.value == "play_level") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}");`)}, this);}
                                     else {
                                         let sehace = true;
                                         element.properties.forEach(prop => {
@@ -337,6 +336,19 @@ export default class Hud extends Phaser.Scene {
 
         this.tweensActivos = tweens;
         return ":D";
+    }
+
+    play_level(level: number) {
+        let progressManager: any = this.scene.get('ProgressManager');
+        let progress = progressManager.getProgressOfLevel(progressManager.getCurrentZone(), level);
+        if (progress){
+            progressManager.playLevel(level);
+            let scene = this.scene.get('SceneLvlSelect');
+            scene.scene.switch('SceneRayo');
+            scene.scene.resume();
+        }else {
+            console.log("No te dejo jugar");
+        }
     }
 
     HEXToVBColor(rrggbb) {

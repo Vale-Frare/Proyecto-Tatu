@@ -6,7 +6,9 @@ export default class SceneRayo extends Phaser.Scene {
     }
 
     create() {
-        //mostrar Hud
+        let hudManager: any = this.scene.get('hud');
+        hudManager.mostrarHud("rayo_concientizador");
+        
     }
 
     update() {

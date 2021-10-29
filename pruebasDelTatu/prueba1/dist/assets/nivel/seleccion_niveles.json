@@ -152,6 +152,11 @@
                  "name":"tatusitos_niveles",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"play_level"
+                        }, 
+                        {
                          "name":"level",
                          "type":"int",
                          "value":1
@@ -169,6 +174,11 @@
                  "id":394,
                  "name":"tatusitos_niveles",
                  "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"play_level"
+                        }, 
                         {
                          "name":"level",
                          "type":"int",
@@ -188,6 +198,11 @@
                  "name":"tatusitos_niveles",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"play_level"
+                        }, 
+                        {
                          "name":"level",
                          "type":"int",
                          "value":3
@@ -206,6 +221,11 @@
                  "name":"tatusitos_niveles",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"play_level"
+                        }, 
+                        {
                          "name":"level",
                          "type":"int",
                          "value":4
@@ -223,6 +243,11 @@
                  "id":397,
                  "name":"tatusitos_niveles",
                  "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"play_level"
+                        }, 
                         {
                          "name":"level",
                          "type":"int",
