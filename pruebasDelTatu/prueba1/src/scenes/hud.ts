@@ -440,6 +440,14 @@ export default class Hud extends Phaser.Scene {
                 }
             }
         }else {
+            let scene = this.scene.get("Scene1");
+
+            let sm: any = this.scene.get("soundManager");
+            sm.playMusic("main_menu", 0.1, true);
+
+            this.mostrarHud("seleccion_niveles");
+            scene.scene.switch("SceneLvlSelect");
+            scene.scene.resume();
             console.log("Se va pal mapa");
         }
     }
@@ -621,7 +629,11 @@ export default class Hud extends Phaser.Scene {
         }
         this.tiempo_inicial = 120;
         this.un_segundo = 1000;
+        this.texto_acciones ? this.texto_acciones.destroy(): null;
+        this.texto_tiempo ? this.texto_tiempo.destroy(): null;
+        this.texto_acciones = null;
         this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
+        this.blur ? this.blur.destroy(): null;
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
         this.tweensActivos = {};

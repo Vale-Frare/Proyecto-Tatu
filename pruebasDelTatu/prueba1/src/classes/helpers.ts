@@ -478,6 +478,8 @@ export class AccionesBolitas {
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
                 sm.playMusic("victoria", 0.1, false);
+                let progressManager : any = this.scene.get("ProgressManager");
+                progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
             }
 
             bola_lanzada.destroy();

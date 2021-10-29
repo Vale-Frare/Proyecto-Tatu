@@ -46,7 +46,15 @@ export default class ProgressManager extends Phaser.Scene {
     }
 
     update() {
-        console.log(this.level_to_play);
+        //console.log(this.level_to_play);
+    }
+
+    getLevelToPlay() {
+        return this.level_to_play;
+    }
+
+    getLevelToPlayInt() {
+        return parseInt(this.level_to_play.replace('lvl', ''));
     }
 
     getProgressOfLevel(zone: string, level: number) {
@@ -77,8 +85,11 @@ export default class ProgressManager extends Phaser.Scene {
                 this.progress.current++;
             }
         }else {
+            console.log(this.progress, `lvl${level}`);
             if (this.progress.zones[zone].current === `lvl${level}`) {
                 this.progress.zones[zone].current = `lvl${level + 1}`;
+                this.progress.zones[zone][`lvl${level + 1}`] = true;
+                console.log(this.progress);
                 localStorage.setItem('progress', JSON.stringify(this.progress));
             }
         }

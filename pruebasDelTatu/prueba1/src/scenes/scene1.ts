@@ -103,9 +103,9 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
-        let progressManager: ProgressManager = this.scene.get("progressManager");
+        let progressManager: ProgressManager = this.scene.get("ProgressManager");
 
-        let nivel = this.cargarNivelDesdeTiled(progressManager.level_to_play);
+        let nivel = this.cargarNivelDesdeTiled(progressManager.getLevelToPlay());
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 
