@@ -149,7 +149,7 @@
                  "gid":8,
                  "height":296,
                  "id":391,
-                 "name":"boton_nivel",
+                 "name":"tatusitos_niveles",
                  "properties":[
                         {
                          "name":"level",
@@ -167,7 +167,7 @@
                  "gid":8,
                  "height":296,
                  "id":394,
-                 "name":"boton_nivel",
+                 "name":"tatusitos_niveles",
                  "properties":[
                         {
                          "name":"level",
@@ -185,7 +185,7 @@
                  "gid":8,
                  "height":296,
                  "id":395,
-                 "name":"boton_nivel",
+                 "name":"tatusitos_niveles",
                  "properties":[
                         {
                          "name":"level",
@@ -203,7 +203,7 @@
                  "gid":8,
                  "height":296,
                  "id":396,
-                 "name":"boton_nivel",
+                 "name":"tatusitos_niveles",
                  "properties":[
                         {
                          "name":"level",
@@ -221,7 +221,7 @@
                  "gid":8,
                  "height":296,
                  "id":397,
-                 "name":"boton_nivel",
+                 "name":"tatusitos_niveles",
                  "properties":[
                         {
                          "name":"level",

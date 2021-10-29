@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {hudHelper} from '../classes/hudHelper';
 import {tiledHelper} from '../classes/tiledHelper';
 import Hud from '../scenes/hud';
+import SoundManager from './soundManager';
 
 export default class Preloads extends Phaser.Scene {
     constructor() {
@@ -99,7 +100,8 @@ export default class Preloads extends Phaser.Scene {
             repeat: -1
         });
 
-
+        let sm: SoundManager = this.scene.get("soundManager");
+        sm.playMusic("main_menu", 0.1, true);
         this.scene.start("SceneMainmenu");
     }
 }

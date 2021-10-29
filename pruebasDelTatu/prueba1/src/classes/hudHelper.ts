@@ -19,7 +19,21 @@ export class hudHelper {
                         newData.animations[layer.name] = layer.objects;
                         newData.nodos_colores[layer.name] = layer.color;
                     }else if (layer.name == "fondo") {
-                        newData.fondo = data.tilesets[parseInt(layer.id) - 1].name;
+                        let index_tileset = 0;
+                        layer.data.forEach((numerito) => {
+                            if (numerito > 0) {
+                                index_tileset = numerito;
+                            }
+                        });
+                        if (index_tileset == 0) {
+                            
+                        }else {
+                            data.tilesets.forEach((tileset) => {
+                                if (tileset.firstgid == index_tileset) {
+                                    newData.fondo = tileset.name;
+                                }
+                            });
+                        }
                     }else if (layer.name != "fondo" && layer.name.substring(0, 5) != "nodos") {
                         if (layer.properties) {
                             newData.layers[layer.name] = {

@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Config from '../config';
 import SoundManager from './soundManager';
+import ProgressManager from './progressManager';
 
 export default class Hud extends Phaser.Scene {
     private sonido_1 = true;
@@ -213,6 +214,22 @@ export default class Hud extends Phaser.Scene {
                                 if (prop.name == "frame") {
                                     obj.setFrame(prop.value);
                                 }
+                                if (prop.name == "level") {
+                                    let progressManager: ProgressManager = this.scene.get('ProgressManager');
+                                    let progress = progressManager.getProgressOfLevel(
+                                        progressManager.getCurrentZone(),
+                                        prop.value
+                                    );
+                                    if (progress == true) {
+                                        if (progressManager.getCurrentOfZone(progressManager.getCurrentZone()) == `lvl${prop.value}`) {
+                                            obj.setFrame(1);
+                                        }else {
+                                            obj.setFrame(0);
+                                        }
+                                    }else {
+                                        obj.setFrame(2);
+                                    }
+                                }
                             });
                         }
                         obj.setInteractive();
@@ -284,13 +301,16 @@ export default class Hud extends Phaser.Scene {
                                     if (prop.value == "pausa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
                                     else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
                                     else {
+                                        let sehace = true;
                                         element.properties.forEach(prop => {
                                             if (prop.name == "scene") {
                                                 obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${prop.value}");`)}, this)
-                                            }else {
-                                                obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}(obj);`)}, this)
+                                                sehace = false;
                                             }
                                         });
+                                        if (sehace) {
+                                            obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}(obj);`)}, this);
+                                        }
                                     };
                                 }
 
@@ -572,11 +592,7 @@ export default class Hud extends Phaser.Scene {
         if (typeof nivel !== "string") return;
         let scene_rayo = this.scene.get('SceneRayo');
         scene_rayo.scene.switch(nivel);
-        //let len = this.dato.deck.length;
-        
-        this.mostrarHud("hud");
-        //this.mostrarAcciones(len);
-        
+        this.mostrarHud("hud");        
     }
 
     limpiarAtributos(){
@@ -587,6 +603,7 @@ export default class Hud extends Phaser.Scene {
                 }else if (element.name == "sonido_2") {
                     this.sonido_2 = element.frame.name == 0 ? true : false;
                 }
+                element.removeInteractive();
                 element.destroy();
             });
         }
@@ -645,5 +662,12 @@ export default class Hud extends Phaser.Scene {
     seleccion_niveles() {
         let scene = this.scene.get("SceneMainmenu");
         scene.scene.switch("SceneLvlSelect");
+        scene.scene.resume();
+    }
+
+    main_menu(){
+        let scene = this.scene.get("SceneLvlSelect");
+        scene.scene.switch("SceneMainmenu");
+        scene.scene.resume();
     }
 }
