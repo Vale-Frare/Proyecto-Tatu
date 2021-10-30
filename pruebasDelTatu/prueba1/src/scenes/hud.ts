@@ -241,7 +241,10 @@ export default class Hud extends Phaser.Scene {
                                 }
                             });
                         }
-                        obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.width/2, obj.height/2, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains});
+                        let configTatu = {hitArea: new Phaser.Geom.Circle(obj.width/2, obj.height/2, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains}
+                        let configTodo = {hitArea: new Phaser.Geom.Rectangle(0, 0, obj.width, obj.height), hitAreaCallback: Phaser.Geom.Rectangle.Contains}
+
+                        obj.setInteractive(element.name == "tatusitos_niveles" ? configTatu: configTodo);
                         let tweenDelObj;
                         obj
                         .on("pointerover", () => {
@@ -307,9 +310,9 @@ export default class Hud extends Phaser.Scene {
                             element.properties.forEach(prop => {
                                 if (prop.name == "action") {
                                     let callback: string = prop.value;
-                                    if (prop.value == "pausa") {obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains}).on("pointerup", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
+                                    if (prop.value == "pausa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
                                     else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
-                                    else if (prop.value == "play_level") {obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains}).on("pointerup", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}", ${element.properties.find(propiedad => propiedad.name === "zone").value});`)}, this);}
+                                    else if (prop.value == "play_level") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}", ${element.properties.find(propiedad => propiedad.name === "zone").value});`)}, this);}
                                     else {
                                         let sehace = true;
                                         element.properties.forEach(prop => {
@@ -322,7 +325,6 @@ export default class Hud extends Phaser.Scene {
                                             obj.setInteractive().on("pointerup", () => {eval(`this.${callback}(obj);`)}, this);
                                         }
                                     };
-                                    graphics.fillCircleShape(new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2));
                                 }
 
                             });

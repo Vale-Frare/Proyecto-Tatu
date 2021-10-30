@@ -13,6 +13,7 @@ export class tiledHelper {
                     basuraHeight: 0,
                     fondos: [],
                     bordes: [],
+                    colisionables: [],
                     lugar_de_inicio: ""
                 };
                 try {newData.lugar_de_inicio = data.properties.find(_ => _.name == "lugar_de_comienzo").value}
@@ -38,6 +39,14 @@ export class tiledHelper {
                     if (layer.name == "bordes") {
                         newData.bordesDepth = index - 1;
                         newData.bordes = layer.objects;
+                    }
+                    if (layer.name == "colisionables") {
+                        let objetos = layer.objects;
+                        console.log(data);
+                        layer.objects.forEach((object: any, index: number) => {
+                            objetos[index].textureKey = data.tilesets.find(_ => _.firstgid == object.gid).name.replace('Tiled', '');
+                        });
+                        newData.colisionables = objetos;
                     }
                 });
                 data.tilesets.forEach((tileset: any, index: number) => {

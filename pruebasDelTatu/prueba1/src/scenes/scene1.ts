@@ -38,6 +38,7 @@ export default class Scene1 extends Phaser.Scene {
         let ancho = data.mapaCargado.tileWidth;
         let fondos = data.mapaCargado.fondos;
         let bordes = data.mapaCargado.bordes;
+        let colisionables = data.mapaCargado.colisionables;
 
         var contador = 0;
         fondos.forEach((fondo,index) => {
@@ -59,7 +60,7 @@ export default class Scene1 extends Phaser.Scene {
 
         let matrizNivelEmbolsada = Aleatorizadores.aleatorizarConLaBolsa(matrizNivel, 3);
 
-        return Matriz.convertirAGrupos(matrizNivelEmbolsada);
+        return {nivel: Matriz.convertirAGrupos(matrizNivelEmbolsada), col: colisionables};
     }    
 
     update(time, delta) {
@@ -103,7 +104,18 @@ export default class Scene1 extends Phaser.Scene {
     cargarNivelNuevo() {
         let progressManager: any = this.scene.get("ProgressManager");
 
-        let nivel = this.cargarNivelDesdeTiled(progressManager.getLevelToPlay());
+        let nivelYColisionables = this.cargarNivelDesdeTiled(progressManager.getLevelToPlay());
+
+        let nivel = nivelYColisionables.nivel;
+        let colisionables = nivelYColisionables.col;
+
+        colisionables.forEach((colisionable) => {
+            let c = this.physics.add.sprite(colisionable.x, colisionable.y, colisionable.textureKey).setOrigin(0);
+            c.setScale(0.265, 0.265);
+            c.body.setImmovable(true);
+            c.body.moves = false;
+            c.depth = 2;
+        });
 
         data.deck = Matriz.deckFromMatriz(nivel, data);
 

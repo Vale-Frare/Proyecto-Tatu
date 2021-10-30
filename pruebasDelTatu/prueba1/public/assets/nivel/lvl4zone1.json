@@ -481,7 +481,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {
@@ -500,7 +500,7 @@
         {
          "columns":1,
          "firstgid":6,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/tatu\/fondo.png",
+         "image":"..\/img\/tiled\/fondo.png",
          "imageheight":1920,
          "imagewidth":1080,
          "margin":0,
@@ -513,7 +513,7 @@
         {
          "columns":1,
          "firstgid":7,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/tatu\/borde_horizontal.png",
+         "image":"..\/img\/tiled\/borde_horizontal.png",
          "imageheight":17,
          "imagewidth":1000,
          "margin":0,
@@ -526,7 +526,7 @@
         {
          "columns":1,
          "firstgid":8,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/tatu\/borde_vertical.png",
+         "image":"..\/img\/tiled\/borde_vertical.png",
          "imageheight":1300,
          "imagewidth":17,
          "margin":0,
@@ -539,7 +539,7 @@
         {
          "columns":1,
          "firstgid":9,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/tatu\/fondo_2.png",
+         "image":"..\/img\/tiled\/fondo_2.png",
          "imageheight":1920,
          "imagewidth":1080,
          "margin":0,
@@ -552,7 +552,7 @@
         {
          "columns":1,
          "firstgid":10,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tilemaps\/tatu\/fondo_mas_fondo.png",
+         "image":"..\/img\/tiled\/fondo_mas_fondo.png",
          "imageheight":1920,
          "imagewidth":1080,
          "margin":0,
