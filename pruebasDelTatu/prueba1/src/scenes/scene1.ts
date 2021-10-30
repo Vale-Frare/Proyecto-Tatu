@@ -29,8 +29,6 @@ export default class Scene1 extends Phaser.Scene {
         let hud: any = this.scene.get("hud");
         hud.pasarData(data);
         
-        let sm: any = this.scene.get("soundManager");
-        sm.playMusic("lvl_1", 0.1, true);
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -103,7 +101,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
-        let progressManager: ProgressManager = this.scene.get("ProgressManager");
+        let progressManager: any = this.scene.get("ProgressManager");
 
         let nivel = this.cargarNivelDesdeTiled(progressManager.getLevelToPlay());
 

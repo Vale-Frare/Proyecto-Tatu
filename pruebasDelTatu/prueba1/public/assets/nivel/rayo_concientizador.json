@@ -85,6 +85,11 @@
                  "name":"arriba_izquierda",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"pausaYMapa"
+                        }, 
+                        {
                          "name":"frame",
                          "type":"int",
                          "value":1

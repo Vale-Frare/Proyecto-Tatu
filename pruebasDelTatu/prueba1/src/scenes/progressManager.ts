@@ -14,7 +14,7 @@ export default class ProgressManager extends Phaser.Scene {
                 lvl5: false
             },
             zone2: {
-                current: 'none',
+                current: 'lvl1',
                 lvl1: false,
                 lvl2: false,
                 lvl3: false,
@@ -22,7 +22,7 @@ export default class ProgressManager extends Phaser.Scene {
                 lvl5: false
             },
             zone3: {
-                current: 'none',
+                current: 'lvl1',
                 lvl1: false,
                 lvl2: false,
                 lvl3: false,
@@ -46,10 +46,11 @@ export default class ProgressManager extends Phaser.Scene {
     }
 
     update() {
-        //console.log(this.level_to_play);
+        
     }
 
     getLevelToPlay() {
+        console.log(this.level_to_play, "level a jugar");
         return this.level_to_play;
     }
 
@@ -79,6 +80,14 @@ export default class ProgressManager extends Phaser.Scene {
         return `zone${this.progress.current}`;
     }
 
+    getNextLevel() {
+        if (this.level_to_play.replace('lvl', '').split('zone')[0] === '5') {
+            return `lvl1zone${parseInt(this.level_to_play.replace('lvl', '').split('zone')[1]) + 1}`;
+        }else {
+            return `lvl${parseInt(this.level_to_play.replace('lvl', '').split('zone')[0]) + 1}zone${this.level_to_play.replace('lvl', '').split('zone')[1]}`;
+        }
+    }
+
     winLevel(zone: string, level: number) {
         if (this.progress.zones[zone].current === `lvl5`) {
             if (this.progress.current < 4) {
@@ -95,7 +104,16 @@ export default class ProgressManager extends Phaser.Scene {
         }
     }
 
+    playLevelString(level: string) {
+        this.level_to_play = level;	
+    }
+
     playLevel(level: number) {
         this.level_to_play = `lvl${level}`;	
+    }
+
+    playLevelOfZone(level: number, zone: number) {
+        this.progress.current = zone;
+        this.level_to_play = `lvl${level}zone${zone}`;	
     }
 }

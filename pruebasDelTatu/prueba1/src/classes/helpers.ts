@@ -401,7 +401,7 @@ export class AccionesBolitas {
     static tiro(scene: Phaser.Scene, data, rotacion, acciones) {
         let nivel_finalizado = true;
         let color_correcto = false;
-        let sm: SoundManager = scene.scene.get("soundManager");
+        let sm: any = scene.scene.get("soundManager");
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
@@ -473,7 +473,7 @@ export class AccionesBolitas {
             })
             data.deckController.reemplazarColor(colores);
             if(nivel_finalizado){
-                let hud: Hud = this.scene.get("hud");
+                let hud: any = this.scene.get("hud");
                 hud.play_animacion("nodos_1");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
@@ -493,7 +493,7 @@ export class AccionesBolitas {
 
             data.bolas_destruidas++;
             if(!nivel_finalizado && (data.deck.length-data.bolas_destruidas) == 0){
-                let hud: Hud = this.scene.get("hud");
+                let hud: any = this.scene.get("hud");
                 hud.play_animacion("nodos_2");
                 hud.desactivar_todo_menos("boton_reiniciar");
                 hud.cambiar_boton_niveles();

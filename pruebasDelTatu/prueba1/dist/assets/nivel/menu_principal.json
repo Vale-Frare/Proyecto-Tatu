@@ -154,7 +154,7 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"siguiente_nivel"
+                         "value":"jugar_nivel_rapido"
                         }, 
                         {
                          "name":"scene",

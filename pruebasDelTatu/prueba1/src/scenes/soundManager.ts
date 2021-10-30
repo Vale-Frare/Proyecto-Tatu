@@ -25,16 +25,29 @@ export default class SoundManager extends Phaser.Scene{
     muteMusic(bool){
         if(bool){
             this.mute_music = true;
-            this.musica.pause();
+            if(this.musica){
+                this.musica.pause();
+            }
             if(this.musica_poco_tiempo){
                 this.musica_poco_tiempo.pause();
             }
         }
         else{
             this.mute_music = false;
-            this.musica.resume();
+            if(this.musica){
+                if(this.musica.isPaused){
+                    this.musica.resume();
+                }
+                else{
+                    this.musica.play();
+                }
+            }
             if(this.musica_poco_tiempo){
-                this.musica_poco_tiempo.resume();
+                if(this.musica_poco_tiempo.isPaused){
+                    this.musica_poco_tiempo.resume();
+                }else{
+                    this.musica_poco_tiempo.play();
+                }
             }
         }
     }
@@ -45,7 +58,6 @@ export default class SoundManager extends Phaser.Scene{
         }
         this.musica = this.sound.add(nombre, {volume: volumen, loop: lup});
         if(this.mute_music){
-            this.musica.play();
             this.musica.pause();
         }
         else{

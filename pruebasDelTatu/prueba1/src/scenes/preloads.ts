@@ -75,11 +75,11 @@ export default class Preloads extends Phaser.Scene {
              
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl1.json"),
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl2.json"),
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl3.json"),
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl4.json"),
-            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl5.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl1zone1.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl2zone1.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl3zone1.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl4zone1.json"),
+            tiledHelper.cargarMapaDesdeJson("assets/nivel/lvl5zone1.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/hud.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/menu_principal.json"),

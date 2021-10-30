@@ -325,7 +325,7 @@
                         {
                          "name":"action",
                          "type":"string",
-                         "value":"siguiente_nivel"
+                         "value":"nivel_mas_uno"
                         }, 
                         {
                          "name":"depth_offset",

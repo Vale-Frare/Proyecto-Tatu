@@ -170,6 +170,7 @@ export default class Hud extends Phaser.Scene {
                         let follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
                         let path;
                         let graphics = this.add.graphics();
+                        graphics.fillStyle(0x555555, 1);
                         let animation_id;
                         let animation_type;
                         let nodos;
@@ -200,6 +201,9 @@ export default class Hud extends Phaser.Scene {
                                     if (Config.config.physics.arcade.debug) {
                                         graphics.clear();
                                         graphics.lineStyle(10, this.HEXToVBColor(hudAMostrar.nodos_colores[prop.value]), 1);
+                                        
+                                        let circle = new Phaser.Geom.Circle(50, 50, 255)
+                                        graphics.fillCircleShape(circle);
 
                                         path.draw(graphics); 
                                     }
@@ -213,16 +217,23 @@ export default class Hud extends Phaser.Scene {
                                     obj.setFrame(prop.value);
                                 }
                                 if (prop.name == "level") {
+                                    let zone = element.properties.find(propiedad => propiedad.name === "zone").value;
                                     let progressManager: any = this.scene.get('ProgressManager');
                                     let progress = progressManager.getProgressOfLevel(
-                                        progressManager.getCurrentZone(),
+                                        `zone${zone}`,
                                         prop.value
                                     );
                                     if (progress == true) {
-                                        if (progressManager.getCurrentOfZone(progressManager.getCurrentZone()) == `lvl${prop.value}`) {
+                                        if (progressManager.getCurrentOfZone(`zone${zone}`) == `lvl${prop.value}`) {
                                             obj.setFrame(1);
+                                            objetos.push(
+                                                this.add.text(obj.x, obj.y, `${prop.value}`, { fontFamily: 'Arial', fontSize: '84px', color: 'Black', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5)
+                                            );
                                         }else {
                                             obj.setFrame(0);
+                                            objetos.push(
+                                                this.add.text(obj.x, obj.y, `${prop.value}`, { fontFamily: 'Arial', fontSize: '84px', color: 'Black', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5)
+                                            );
                                         }
                                     }else {
                                         obj.setFrame(2);
@@ -230,7 +241,7 @@ export default class Hud extends Phaser.Scene {
                                 }
                             });
                         }
-                        obj.setInteractive();
+                        obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.width/2, obj.height/2, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains});
                         let tweenDelObj;
                         obj
                         .on("pointerover", () => {
@@ -252,7 +263,7 @@ export default class Hud extends Phaser.Scene {
                                 ease: "Power1",
                                 loop: 0
                             });
-                        }).on("pointerdown", () => {
+                        }).on("pointerup", () => {
                             if (tweens[animation_id]) {
                                 if (tweens[animation_id].isPlaying()) {
                                     return;
@@ -296,21 +307,22 @@ export default class Hud extends Phaser.Scene {
                             element.properties.forEach(prop => {
                                 if (prop.name == "action") {
                                     let callback: string = prop.value;
-                                    if (prop.value == "pausa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
-                                    else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
-                                    else if (prop.value == "play_level") {obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}");`)}, this);}
+                                    if (prop.value == "pausa") {obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains}).on("pointerup", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
+                                    else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
+                                    else if (prop.value == "play_level") {obj.setInteractive({hitArea: new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2), hitAreaCallback: Phaser.Geom.Circle.Contains}).on("pointerup", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}", ${element.properties.find(propiedad => propiedad.name === "zone").value});`)}, this);}
                                     else {
                                         let sehace = true;
                                         element.properties.forEach(prop => {
                                             if (prop.name == "scene") {
-                                                obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}("${prop.value}");`)}, this)
+                                                obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${prop.value}");`)}, this)
                                                 sehace = false;
                                             }
                                         });
                                         if (sehace) {
-                                            obj.setInteractive().on("pointerdown", () => {eval(`this.${callback}(obj);`)}, this);
+                                            obj.setInteractive().on("pointerup", () => {eval(`this.${callback}(obj);`)}, this);
                                         }
                                     };
+                                    graphics.fillCircleShape(new Phaser.Geom.Circle(obj.x, obj.y, obj.width/2));
                                 }
 
                             });
@@ -338,14 +350,15 @@ export default class Hud extends Phaser.Scene {
         return ":D";
     }
 
-    play_level(level: number) {
+    play_level(level: number, zone: number) {
         let progressManager: any = this.scene.get('ProgressManager');
-        let progress = progressManager.getProgressOfLevel(progressManager.getCurrentZone(), level);
+        let progress = progressManager.getProgressOfLevel(`zone${zone}`, level);
         if (progress){
-            progressManager.playLevel(level);
+            progressManager.playLevelOfZone(level, zone);
             let scene = this.scene.get('SceneLvlSelect');
             scene.scene.switch('SceneRayo');
             scene.scene.resume();
+            this.sm.playMusic("lvl_1", 0.1, true);
         }else {
             console.log("No te dejo jugar");
         }
@@ -442,13 +455,11 @@ export default class Hud extends Phaser.Scene {
         }else {
             let scene = this.scene.get("Scene1");
 
-            let sm: any = this.scene.get("soundManager");
-            sm.playMusic("main_menu", 0.1, true);
+            this.sm.playMusic("main_menu", 0.1, true);
 
             this.mostrarHud("seleccion_niveles");
             scene.scene.switch("SceneLvlSelect");
             scene.scene.resume();
-            console.log("Se va pal mapa");
         }
     }
 
@@ -591,7 +602,7 @@ export default class Hud extends Phaser.Scene {
 
     desactivar_todo_menos(name: string) {
         this.botones.forEach(element => {
-            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2") {
+            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2" && element.name != "arriba_izquierda") {
                 element.disableInteractive();
             }
         });
@@ -612,7 +623,28 @@ export default class Hud extends Phaser.Scene {
         if (typeof nivel !== "string") return;
         let scene_rayo = this.scene.get('SceneRayo');
         scene_rayo.scene.switch(nivel);
+        scene_rayo.scene.resume();
         this.mostrarHud("hud");        
+    }
+
+    nivel_mas_uno() {
+        let pm: any = this.scene.get('ProgressManager');
+        let nivel = pm.getNextLevel();
+        pm.playLevelString(nivel);
+        let scene_main = this.scene.get('Scene1');
+        scene_main.scene.switch('SceneRayo');
+        scene_main.scene.resume();
+        this.sm.playMusic("lvl_1", 0.1, true);
+    }
+
+    jugar_nivel_rapido(obj) {
+        let scene_main = this.scene.get('SceneMainmenu');
+        let pm: any = this.scene.get('ProgressManager');
+        console.log(pm.getCurrentOfZone(pm.getCurrentZone()), pm.getCurrentZone());
+        pm.playLevelOfZone(pm.getCurrentOfZone(pm.getCurrentZone()).replace('lvl', ''), pm.getCurrentZone().replace('zone', ''));
+        scene_main.scene.switch('SceneRayo');
+        scene_main.scene.resume();
+        this.sm.playMusic("lvl_1", 0.1, true);
     }
 
     limpiarAtributos(){
@@ -666,7 +698,8 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
-        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
+        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪");
+        this.sm.playMusic("lvl_1", 0.1, true);
     } 
 
     reiniciar_pausa() {
@@ -680,7 +713,7 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
-        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪")
+        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪");
     }
 
     seleccion_niveles() {
