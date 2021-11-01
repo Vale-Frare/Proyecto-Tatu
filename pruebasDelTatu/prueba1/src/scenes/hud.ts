@@ -22,7 +22,7 @@ export default class Hud extends Phaser.Scene {
     private playable: boolean = false;
     private objetos;
 
-    constructor(tiempo_inicial: number = 120) {
+    constructor(tiempo_inicial: number = 60) {
         super({ key: "hud" , active: true});
         this.tiempo_inicial = tiempo_inicial;
         this.dato = {pausa: false};
@@ -50,7 +50,7 @@ export default class Hud extends Phaser.Scene {
     }
 
     initTiempo() {
-        this.texto_tiempo.setText("TIEMPO 02:00");
+        this.texto_tiempo.setText("TIEMPO  60");
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
     }
@@ -63,19 +63,21 @@ export default class Hud extends Phaser.Scene {
             this.tiempo_inicial--
             this.un_segundo += 1000;
 
-            let segundos = 0;
-            let minutos = 0;
+            // let segundos = 0;
+            // let minutos = 0;
 
-            if(this.tiempo_inicial>59){
-                minutos = Math.floor(this.tiempo_inicial/60)
-            }
-            segundos = this.tiempo_inicial - (minutos*60);
+            // if(this.tiempo_inicial>59){
+            //     minutos = Math.floor(this.tiempo_inicial/60)
+            // }
+            // segundos = this.tiempo_inicial - (minutos*60);
 
-            this.textoTiempo('TIEMPO ' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
+            // this.textoTiempo('TIEMPO ' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
+
+            this.textoTiempo('TIEMPO  ' + this.tiempo_inicial);
         }
         else{
             if(this.tiempo_inicial <= 0){
-                this.textoTiempo('TIEMPO 00:00');
+                this.textoTiempo('TIEMPO  0');
                 this.play_animacion("nodos_2");
                 this.desactivar_todo_menos("boton_reiniciar");
                 this.cambiar_boton_niveles();
@@ -661,7 +663,7 @@ export default class Hud extends Phaser.Scene {
                 element.destroy();
             });
         }
-        this.tiempo_inicial = 120;
+        this.tiempo_inicial = 60;
         this.un_segundo = 1000;
         this.texto_acciones ? this.texto_acciones.destroy(): null;
         this.texto_tiempo ? this.texto_tiempo.destroy(): null;
@@ -691,9 +693,9 @@ export default class Hud extends Phaser.Scene {
  
     reiniciar_derrota() {
         let scene = this.scene.get("Scene1");
-        this.tiempo_inicial = 120;
+        this.tiempo_inicial = 60;
         this.un_segundo = 1000;
-        this.texto_tiempo.setText("TIEMPO 02:00");
+        this.texto_tiempo.setText("TIEMPO  60");
         scene.scene.restart();
         this.play_animacion_invertida("nodos_2", true);
         this.reactivar_todo();
@@ -706,9 +708,9 @@ export default class Hud extends Phaser.Scene {
 
     reiniciar_pausa() {
         let scene = this.scene.get("Scene1");
-        this.tiempo_inicial = 120;
+        this.tiempo_inicial = 60;
         this.un_segundo = 1000;
-        this.texto_tiempo.setText("TIEMPO 02:00");
+        this.texto_tiempo.setText("TIEMPO  60");
         scene.scene.restart();
         this.play_animacion_invertida("nodos_0", true);
         this.reactivar_todo();

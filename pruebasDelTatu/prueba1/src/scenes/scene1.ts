@@ -32,6 +32,8 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelDesdeTiled(key: string) {
+        let pm: any = this.scene.get('ProgressManager');
+
         data.mapaCargado = JSON.parse(localStorage.getItem(key));
         let objetos = data.mapaCargado.objects;
         let alto = data.mapaCargado.tileHeight;
@@ -58,9 +60,13 @@ export default class Scene1 extends Phaser.Scene {
 
         let matrizNivel = Matriz.objetosAMatriz(objetos, alto, ancho);
 
-        let matrizNivelEmbolsada = Aleatorizadores.aleatorizarConLaBolsa(matrizNivel, 3);
-
-        return {nivel: Matriz.convertirAGrupos(matrizNivelEmbolsada), col: colisionables};
+        if(pm.level_to_play == "lvl1zone1" || pm.level_to_play == "lvl2zone1"){
+            return {nivel: Matriz.convertirAGrupos(matrizNivel), col: colisionables};
+        }
+        else{
+            let matrizNivelEmbolsada = Aleatorizadores.aleatorizarConLaBolsa(matrizNivel, 3);
+            return {nivel: Matriz.convertirAGrupos(matrizNivelEmbolsada), col: colisionables};
+        }        
     }    
 
     update(time, delta) {
@@ -121,13 +127,13 @@ export default class Scene1 extends Phaser.Scene {
 
         data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1700);
 
-        this.input.keyboard.on('keydown-' + 'T', function (event) { 
-            data.deckController.removerBolita(data.bolitaALanzar + 1);
-        });
+        // this.input.keyboard.on('keydown-' + 'T', function (event) { 
+        //     data.deckController.removerBolita(data.bolitaALanzar + 1);
+        // });
 
-        this.input.keyboard.on('keydown-' + 'R', function (event) { 
-            data.deckController.agregarBolitaAlDeck(Phaser.Math.Between(2, 4));
-        });
+        // this.input.keyboard.on('keydown-' + 'R', function (event) { 
+        //     data.deckController.agregarBolitaAlDeck(Phaser.Math.Between(2, 4));
+        // });
 
         const bolitasTexturas = [
             'basurita_0', //  VERDE
