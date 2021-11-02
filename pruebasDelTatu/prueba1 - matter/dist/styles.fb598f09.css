@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    background-color: gray;
+}
+
+/* .cosita {
+    position: fixed;
+    left: -746px;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);  
+    transition: all 0.5s ease;  
+}
+.cosita img {
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cosita:hover {
+    left: 0px;
+} */
+
+/*# sourceMappingURL=/styles.fb598f09.css.map */
