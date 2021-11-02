@@ -49,13 +49,12 @@ export default class Scene1 extends Phaser.Scene {
             f.depth = fondo.depth + 1;
             if (contador == 0) {
                 bordes.forEach((borde) => {
-                    let b = this.matter.add.sprite(borde.x, borde.y, borde.key).setOrigin(0,1);
+                    let b = this.matter.add.sprite(borde.x + (borde.width/2), borde.y - (borde.height/2), borde.key).setOrigin(.5,.5);
                     b.setStatic(true);
                     b.depth = data.mapaCargado.bordesDepth;
                     b.angle = borde.rotation;
-                    b.setScale(borde.width/borde.tileWidth, borde.height/borde.tileHeight);
-                    b.width = borde.width;
-                    b.height = borde.height;
+                    b.setDisplaySize(borde.width, borde.height);
+                    //b.setSize(borde.width, borde.height);
                     data.bordes.push(b);
                 });
                 contador++;

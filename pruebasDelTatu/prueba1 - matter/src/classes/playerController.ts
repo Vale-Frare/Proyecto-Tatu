@@ -55,20 +55,22 @@ export class Slider {
                 if (index != 1) {
                     scene.matter.world.on('collisionactive', function (event) {
                         event.pairs.forEach(e => {
-                            if(!e.bodyB.isSensor){
+                            if(!e.bodyA.isSensor && e.bodyA.gameObject != data.bordes[1]){
                                 let bola = e.bodyB;
+                                //pause all loops
+
                                 if (context.bola_cercana) {
                                     if (
-                                        Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, bola.x, bola.y) 
+                                        Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, bola.position.x, bola.position.y) 
                                         < 
                                         Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, context.bola_cercana.x, context.bola_cercana.y)) {
-                                            context.bola_cercana = bola;
+                                            context.bola_cercana = bola.position;
                                             context.bola_fantasma_tocando_borde = true;
                                     }else {
                                         context.bola_fantasma_tocando_borde = false;
                                     }
                                 }else {
-                                    context.bola_cercana = bola;
+                                    context.bola_cercana = bola.position;
                                 }
                             }
                         });
@@ -78,20 +80,21 @@ export class Slider {
             data.nivelCargado.forEach(bola => {
                 scene.matter.world.on('collisionactive', function (event) {
                     event.pairs.forEach(e => {
-                        if(!e.bodyB.isSensor){
-                            let bola = e.bodyB;
+                        if(!e.bodyA.isSensor && e.bodyA.gameObject != data.bordes[1]){
+                            let bola = e.bodyA;
+
                             if (context.bola_cercana) {
                                 if (
-                                    Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, bola.x, bola.y) 
+                                    Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, bola.position.x, bola.position.y) 
                                     < 
                                     Phaser.Math.Distance.Between(data.lanzador.x, data.lanzador.y, context.bola_cercana.x, context.bola_cercana.y)) {
-                                        context.bola_cercana = bola;
+                                        context.bola_cercana = bola.position;
                                         context.bola_fantasma_tocando_borde = true;
                                 }else {
                                     context.bola_fantasma_tocando_borde = false;
                                 }
                             }else {
-                                context.bola_cercana = bola;
+                                context.bola_cercana = bola.position;
                             }
                         }
                     });

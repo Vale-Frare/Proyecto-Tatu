@@ -21,7 +21,7 @@ export class Bolita {
         this.object.depth = -1;
         this.object.grupo = nivel[y][x].grupo;
         this.object.setStatic(true);
-        this.object.setCircle((this.object.width/100) - 10);
+        this.object.setCircle((this.object.width/7.5));
         this.object.xOffset = 10;
         this.object.yOffset = 10;
         //this.object.body.moves = false;
