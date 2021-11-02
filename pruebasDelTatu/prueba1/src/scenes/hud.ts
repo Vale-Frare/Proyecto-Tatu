@@ -158,6 +158,8 @@ export default class Hud extends Phaser.Scene {
                     obj.y -= obj.height/2;
                     obj.setDepth(layer.depth);
 
+                    let texto;
+
                     if (element.properties) {
                         element.properties.forEach(prop => {
                             if (prop.name == "depth_offset") {
@@ -166,7 +168,7 @@ export default class Hud extends Phaser.Scene {
                             if (prop.name == "text") {
                                 let tm: any = this.scene.get("TranslateManager");
                                 
-                                objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6));
+                                texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
                             }
                         });
                     }
@@ -253,9 +255,22 @@ export default class Hud extends Phaser.Scene {
 
                         obj.setInteractive(element.name == "tatusitos_niveles" ? configTatu: configTodo);
                         let tweenDelObj;
+                        let tweenDelTextoDelObj;
                         obj
                         .on("pointerover", () => {
                             obj.setScale(1);
+                            if (element.properties) {
+                                if (element.properties.find(propiedad => propiedad.name === "text")) {
+                                    tweenDelTextoDelObj = scene.tweens.add({
+                                        targets: texto,
+                                        scale: 1.1,
+                                        duration: 200,
+                                        ease: "Power1",
+                                        yoyo: true,
+                                        loop: -1
+                                    });
+                                }
+                            }
                             tweenDelObj = scene.tweens.add({
                                 targets: obj,
                                 scale: 1.1,
@@ -266,6 +281,18 @@ export default class Hud extends Phaser.Scene {
                             });
                         }).on("pointerout", () => {
                             tweenDelObj.stop();
+                            if (element.properties) {
+                                if (element.properties.find(propiedad => propiedad.name === "text")) {
+                                    tweenDelTextoDelObj.stop();
+                                    tweenDelTextoDelObj = scene.tweens.add({
+                                        targets: texto,
+                                        scale: 1,
+                                        duration: 400,
+                                        ease: "Power1",
+                                        loop: 0
+                                    });
+                                }
+                            }
                             tweenDelObj = scene.tweens.add({
                                 targets: obj,
                                 scale: 1,
