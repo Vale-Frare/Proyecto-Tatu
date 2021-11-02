@@ -105,7 +105,7 @@ export default class Preloads extends Phaser.Scene {
             repeat: -1
         });
 
-        translateHelper.cargarTraducciones("https://voluminouslegalmeasurements.frasesegundo.repl.co/tatu/?key=mainmenu.jugar.var1&lang=pt_BR");
+        //translateHelper.cargarTraducciones("https://voluminouslegalmeasurements.frasesegundo.repl.co/tatu/?key=mainmenu.jugar.var1&lang=pt_BR");
 
         let sm: any = this.scene.get("soundManager");
         sm.playMusic("main_menu", 0.1, true);

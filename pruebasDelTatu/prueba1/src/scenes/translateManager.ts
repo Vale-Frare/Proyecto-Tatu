@@ -5,21 +5,21 @@ export default class TranslateManager extends Phaser.Scene {
     public contenido = {
         'es_AR': {
             'key': 'texto',
-            'mainmenu.jugar.var0': null,
-            'mainmenu.jugar.var1': null,
-            'mainmenu.niveles': null
+            'menuinicio.jugar.var0': null,
+            'menuinicio.jugar.var1': null,
+            'menuinicio.niveles': null
         },
         'en_US': {
             'key': 'text',
-            'mainmenu.jugar.var0': null,
-            'mainmenu.jugar.var1': null,
-            'mainmenu.niveles': null
+            'menuinicio.jugar.var0': null,
+            'menuinicio.jugar.var1': null,
+            'menuinicio.niveles': null
         },
         'pt_BR': {
             'key': 'textinho',
-            'mainmenu.jugar.var0': null,
-            'mainmenu.jugar.var1': null,
-            'mainmenu.niveles': null
+            'menuinicio.jugar.var0': null,
+            'menuinicio.jugar.var1': null,
+            'menuinicio.niveles': null
         }
     };
 
