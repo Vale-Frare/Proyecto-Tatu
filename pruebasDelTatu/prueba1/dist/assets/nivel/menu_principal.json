@@ -160,6 +160,11 @@
                          "name":"scene",
                          "type":"string",
                          "value":"Scene1"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"mainmenu.jugar.var0"
                         }],
                  "rotation":0,
                  "type":"",
@@ -178,6 +183,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"seleccion_niveles"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"mainmenu.niveles"
                         }],
                  "rotation":0,
                  "type":"",
@@ -209,7 +219,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {

@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {hudHelper} from '../classes/hudHelper';
 import {tiledHelper} from '../classes/tiledHelper';
+import { translateHelper } from '../classes/translateHelper';
 
 export default class Preloads extends Phaser.Scene {
     constructor() {
@@ -102,6 +103,8 @@ export default class Preloads extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+
+        translateHelper.cargarTraducciones("https://voluminouslegalmeasurements.frasesegundo.repl.co/tatu/?key=mainmenu.jugar.var1&lang=pt_BR");
 
         let sm: any = this.scene.get("soundManager");
         sm.playMusic("main_menu", 0.1, true);

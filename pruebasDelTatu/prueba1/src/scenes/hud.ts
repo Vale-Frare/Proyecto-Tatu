@@ -163,6 +163,11 @@ export default class Hud extends Phaser.Scene {
                             if (prop.name == "depth_offset") {
                                 obj.setDepth(obj.depth + parseInt(prop.value));
                             }
+                            if (prop.name == "text") {
+                                let tm: any = this.scene.get("TranslateManager");
+                                
+                                objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6));
+                            }
                         });
                     }
 

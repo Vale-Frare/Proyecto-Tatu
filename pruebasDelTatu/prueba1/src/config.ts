@@ -7,6 +7,7 @@ import SceneMainmenu from './scenes/scene_mainmenu';
 import ProgressManager from './scenes/progressManager';
 import Hud from './scenes/hud';
 import SoundManager from './scenes/soundManager';
+import TranslateManager from './scenes/translateManager';
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -30,7 +31,7 @@ const config: Phaser.Types.Core.GameConfig = {
         disableWebAudio: true
     },
     pixelArt: false,
-    scene: [Preloads, Scene1, SceneLvlSelect, SceneRayo, SceneMainmenu, Hud, ProgressManager, SoundManager]
+    scene: [TranslateManager, Preloads, Scene1, SceneLvlSelect, SceneRayo, SceneMainmenu, Hud, ProgressManager, SoundManager ]
 }
 
 export default new Phaser.Game(config);
