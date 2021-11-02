@@ -10,12 +10,15 @@ let data: Data = null;
 
 export default class Scene1 extends Phaser.Scene {
 
+    private pm;
+
     constructor() {
         super("Scene1");
     }
     
     create() {
         data = new Data();
+        this.pm = this.scene.get('ProgressManager');
 
         let y = 1700;
 
@@ -32,8 +35,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelDesdeTiled(key: string) {
-        let pm: any = this.scene.get('ProgressManager');
-
         data.mapaCargado = JSON.parse(localStorage.getItem(key));
         let objetos = data.mapaCargado.objects;
         let alto = data.mapaCargado.tileHeight;
@@ -52,6 +53,13 @@ export default class Scene1 extends Phaser.Scene {
                     b.body.setImmovable(true);
                     b.body.moves = false;
                     b.depth = data.mapaCargado.bordesDepth;
+                    //b.setSize(borde.width, borde.height);
+                    b.angle = borde.rotation;
+                    b.setScale(borde.width/borde.tileWidth, borde.height/borde.tileHeight);
+                    //b.refreshBody();
+                    //console.log(borde);
+                    b.width = borde.width;
+                    b.height = borde.height;
                     data.bordes.push(b);
                 });
                 contador++;
@@ -60,7 +68,7 @@ export default class Scene1 extends Phaser.Scene {
 
         let matrizNivel = Matriz.objetosAMatriz(objetos, alto, ancho);
 
-        if(pm.level_to_play == "lvl1zone1" || pm.level_to_play == "lvl2zone1"){
+        if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1"){
             return {nivel: Matriz.convertirAGrupos(matrizNivel), col: colisionables};
         }
         else{
@@ -121,9 +129,8 @@ export default class Scene1 extends Phaser.Scene {
             c.body.setImmovable(true);
             c.body.moves = false;
             c.depth = 2;
-        });
-
-        data.deck = Matriz.deckFromMatriz(nivel, data);
+            data.bordes.push(c);
+        });        
 
         data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1700);
 

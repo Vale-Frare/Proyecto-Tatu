@@ -49,6 +49,10 @@ export class tiledHelper {
                         newData.colisionables = objetos;
                     }
                 });
+                newData.bordes.forEach((object: any, index: number) => {
+                    newData.bordes[index].tileHeight = data.tilesets.find(_ => _.firstgid == object.gid).tileheight;
+                    newData.bordes[index].tileWidth = data.tilesets.find(_ => _.firstgid == object.gid).tilewidth;
+                });
                 data.tilesets.forEach((tileset: any, index: number) => {
                     if (tileset.name == "basuritas") {
                         newData.basuraHeight = tileset.tileheight;

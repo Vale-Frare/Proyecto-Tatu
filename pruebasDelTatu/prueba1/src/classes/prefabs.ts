@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Config from '../config';
 import { Matriz } from '../classes/helpers';
+import ProgressManager from '../scenes/progressManager';
 
 export class Bolita {
     object: any;
@@ -141,6 +142,7 @@ export class BolitaDeck2 {
     data: any;
     scene: any;
     scale: any;
+    pm: any;
 
     constructor(scene, scale, data, matriz, x, y) {
         this.x = x;
@@ -151,10 +153,19 @@ export class BolitaDeck2 {
         this.scene = scene;
         this.scale = scale;
 
-        let deck = Matriz.deckFromMatriz(matriz, data);
-        data.deck = deck;
+        this.pm = this.scene.scene.get('ProgressManager');
 
-        deck.forEach((element, index) => {
+        if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1"){
+            data.deck = Matriz.deckFromMatriz(matriz, data, true);
+        }
+        else{
+            data.deck = Matriz.deckFromMatriz(matriz, data, false);
+        }
+
+        // let deck = Matriz.deckFromMatriz(matriz, data);
+        // data.deck = deck;
+
+        data.deck.forEach((element, index) => {
             element.obj = this.agregarBolita(scene, data, scale, data.burbujas[element.color].color);
         });
     }

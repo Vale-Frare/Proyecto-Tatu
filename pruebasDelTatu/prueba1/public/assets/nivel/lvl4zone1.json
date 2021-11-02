@@ -58,15 +58,15 @@
                 }, 
                 {
                  "gid":8,
-                 "height":1300,
+                 "height":498.667561608123,
                  "id":156,
                  "name":"",
-                 "rotation":0,
+                 "rotation":6.77248065219301,
                  "type":"",
                  "visible":true,
                  "width":17,
-                 "x":46,
-                 "y":1582
+                 "x":57.9054957830773,
+                 "y":1590.72113974945
                 }, 
                 {
                  "gid":8,
@@ -79,6 +79,42 @@
                  "width":17,
                  "x":1030,
                  "y":1588
+                }, 
+                {
+                 "gid":8,
+                 "height":1308.26147731272,
+                 "id":241,
+                 "name":"",
+                 "rotation":347.138562856858,
+                 "type":"",
+                 "visible":true,
+                 "width":283.449395728549,
+                 "x":1035.55631926503,
+                 "y":1555.57931485767
+                }, 
+                {
+                 "gid":8,
+                 "height":498.668,
+                 "id":242,
+                 "name":"",
+                 "rotation":347.72426915063,
+                 "type":"",
+                 "visible":true,
+                 "width":17,
+                 "x":118.050776718756,
+                 "y":1105.51456464953
+                }, 
+                {
+                 "gid":8,
+                 "height":438.944200950943,
+                 "id":243,
+                 "name":"",
+                 "rotation":1.25061985637842,
+                 "type":"",
+                 "visible":true,
+                 "width":17,
+                 "x":32.8521103165115,
+                 "y":720.314899617589
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -470,7 +506,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":241,
+ "nextobjectid":244,
  "orientation":"hexagonal",
  "properties":[
         {

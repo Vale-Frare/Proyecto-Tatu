@@ -23,8 +23,8 @@ const config: Phaser.Types.Core.GameConfig = {
         default: "arcade",
         arcade: {
             gravity: { y: 1 },
-            debug: false
-        }
+            debug: true
+        },
     },
     audio: {
         disableWebAudio: true

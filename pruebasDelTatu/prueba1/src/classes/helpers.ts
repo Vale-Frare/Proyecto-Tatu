@@ -5,10 +5,11 @@ import Hud from '../scenes/hud';
 import SoundManager from '../scenes/soundManager';
 
 export class Matriz {
-    static deckFromMatriz(matriz, data) {
+    static deckFromMatriz(matriz, data, pocos_grupos) {
         let deck = [];
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
+        let indice = 0;
         matrizInvertida.forEach(fila => {
             fila.forEach((bolita, index) => {
                 if (bolita != null) {
@@ -17,6 +18,14 @@ export class Matriz {
                             deck.push(
                                 {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
                             );
+                            if(pocos_grupos){
+                                if(indice != 0){
+                                    deck.push(
+                                        {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
+                                    );
+                                }
+                                indice++;
+                            }
                             if (fila.length - 1 != index) {
                                 if (fila[index].color != fila[index+1].color) {
                                     deck.push(

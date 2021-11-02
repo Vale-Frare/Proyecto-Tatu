@@ -702,7 +702,6 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
-        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪");
         this.sm.playMusic("lvl_1", 0.1, true);
     } 
 
@@ -717,7 +716,6 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
-        console.log("Reiniciar niveEEEEEEEEEEEEEEEEEEEEEEEELLL 😒😢😒😥😓😪");
     }
 
     seleccion_niveles() {

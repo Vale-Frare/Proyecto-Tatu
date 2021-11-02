@@ -21,7 +21,7 @@
          "name":"hud_paneles",
          "objects":[
                 {
-                 "gid":5,
+                 "gid":3,
                  "height":171,
                  "id":381,
                  "name":"cosa_verde",
@@ -33,7 +33,7 @@
                  "y":180
                 }, 
                 {
-                 "gid":5,
+                 "gid":3,
                  "height":171,
                  "id":382,
                  "name":"cosa_verde",
@@ -56,7 +56,7 @@
          "name":"hud_botones",
          "objects":[
                 {
-                 "gid":6,
+                 "gid":4,
                  "height":129,
                  "id":383,
                  "name":"sonido_1",
@@ -74,7 +74,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":7,
+                 "gid":5,
                  "height":129,
                  "id":384,
                  "name":"sonido_1",
@@ -92,7 +92,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":8,
+                 "gid":6,
                  "height":129,
                  "id":385,
                  "name":"sonido_2",
@@ -110,7 +110,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":9,
+                 "gid":7,
                  "height":129,
                  "id":386,
                  "name":"sonido_2",
@@ -146,10 +146,10 @@
                  "y":150
                 }, 
                 {
-                 "gid":3,
+                 "gid":8,
                  "height":228,
-                 "id":388,
-                 "name":"boton_jugar",
+                 "id":390,
+                 "name":"boton",
                  "properties":[
                         {
                          "name":"action",
@@ -169,10 +169,10 @@
                  "y":1400
                 }, 
                 {
-                 "gid":4,
+                 "gid":8,
                  "height":228,
-                 "id":389,
-                 "name":"boton_niveles",
+                 "id":393,
+                 "name":"boton",
                  "properties":[
                         {
                          "name":"action",
@@ -193,7 +193,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":390,
+ "nextobjectid":394,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -241,32 +241,6 @@
         {
          "columns":1,
          "firstgid":3,
-         "image":"..\/hud\/boton_jugar.png",
-         "imageheight":228,
-         "imagewidth":869,
-         "margin":0,
-         "name":"boton_jugar",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":228,
-         "tilewidth":869
-        }, 
-        {
-         "columns":1,
-         "firstgid":4,
-         "image":"..\/hud\/boton_niveles.png",
-         "imageheight":228,
-         "imagewidth":869,
-         "margin":0,
-         "name":"boton_niveles",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":228,
-         "tilewidth":869
-        }, 
-        {
-         "columns":1,
-         "firstgid":5,
          "image":"..\/hud\/cosa_verde.png",
          "imageheight":171,
          "imagewidth":329,
@@ -279,7 +253,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":6,
+         "firstgid":4,
          "image":"..\/hud\/sonido_1.png",
          "imageheight":129,
          "imagewidth":264,
@@ -292,7 +266,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":8,
+         "firstgid":6,
          "image":"..\/hud\/sonido_2.png",
          "imageheight":129,
          "imagewidth":264,
@@ -302,6 +276,19 @@
          "tilecount":2,
          "tileheight":129,
          "tilewidth":132
+        }, 
+        {
+         "columns":1,
+         "firstgid":8,
+         "image":"..\/hud\/boton.png",
+         "imageheight":228,
+         "imagewidth":869,
+         "margin":0,
+         "name":"boton",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":228,
+         "tilewidth":869
         }],
  "tilewidth":114,
  "type":"map",

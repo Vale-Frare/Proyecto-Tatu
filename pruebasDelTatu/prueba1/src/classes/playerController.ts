@@ -29,14 +29,14 @@ export class Slider {
 
         let barrita = scene.add.sprite(x,y,texSlider).setOrigin(0);
         barrita.setScale(1.25, 2);
-        this.mini_bolita = scene.add.sprite(x+(barrita.width/1.6),y+(barrita.height),texMinibola);
+        this.mini_bolita = scene.add.sprite(x+(barrita.width/1.625),y+(barrita.height),texMinibola);
         let mini_bolita = this.mini_bolita;
         mini_bolita.setScale(1.5);
         barrita.depth = 5;
         mini_bolita.depth = 5;
         
-        this.minimo = mini_bolita.x - (barrita.width/1.6);
-        this.maximo = mini_bolita.x + (barrita.width/1.6);
+        this.minimo = mini_bolita.x - (barrita.width/1.625);
+        this.maximo = mini_bolita.x + (barrita.width/1.625);
         this.diferencia = Math.floor(this.maximo - this.minimo);
         data.lanzador.rotation = -0.25;
         deck[data.bolitaALanzar].obj.rotation = data.lanzador.rotation - (Math.PI/2);
