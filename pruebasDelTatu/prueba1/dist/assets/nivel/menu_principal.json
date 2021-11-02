@@ -146,7 +146,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"mainmenu.jugar.var0"
+                         "value":"menuinicio.jugar.var0"
                         }],
                  "rotation":0,
                  "type":"",
@@ -169,7 +169,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"mainmenu.niveles"
+                         "value":"menuinicio.niveles"
                         }],
                  "rotation":0,
                  "type":"",
