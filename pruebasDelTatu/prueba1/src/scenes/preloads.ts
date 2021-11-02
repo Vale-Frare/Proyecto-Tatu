@@ -60,6 +60,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("menu_principal", "assets/hud/menu_principal.png");
         this.load.image("ayuda", "assets/hud/ayuda.png");
         this.load.image("boton", "assets/hud/boton.png");
+        this.load.image("configuracion", "assets/hud/configuracion.png");
 
         this.load.image("niveles", "assets/hud/niveles.png");
         this.load.spritesheet("tatusitos_niveles", "assets/hud/tatusitos_niveles.png", {frameHeight: 296, frameWidth: 161});

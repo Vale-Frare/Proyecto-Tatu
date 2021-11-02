@@ -31,7 +31,7 @@ export default class TranslateManager extends Phaser.Scene {
         console.log('%c TranslateManager iniciado correctamente! ', 'background: #a4a4a4; color: #fada55');
 
         for (let keyLang in this.contenido) {
-            let langData: any = await translateHelper.cargarTraducciones(`https://voluminouslegalmeasurements.frasesegundo.repl.co/tatu/?lang=${keyLang}`);
+            let langData: any = await translateHelper.cargarTraducciones(keyLang);
             langData.words.forEach(word => {
                 if (this.contenido[keyLang][word.key] === null) {
                     this.contenido[keyLang][word.key] = word.translate;

@@ -21,7 +21,7 @@
          "name":"hud_paneles",
          "objects":[
                 {
-                 "gid":3,
+                 "gid":2,
                  "height":171,
                  "id":381,
                  "name":"cosa_verde",
@@ -33,7 +33,7 @@
                  "y":180
                 }, 
                 {
-                 "gid":3,
+                 "gid":2,
                  "height":171,
                  "id":382,
                  "name":"cosa_verde",
@@ -56,7 +56,7 @@
          "name":"hud_botones",
          "objects":[
                 {
-                 "gid":4,
+                 "gid":3,
                  "height":129,
                  "id":383,
                  "name":"sonido_1",
@@ -74,7 +74,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":5,
+                 "gid":4,
                  "height":129,
                  "id":384,
                  "name":"sonido_1",
@@ -92,7 +92,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":6,
+                 "gid":5,
                  "height":129,
                  "id":385,
                  "name":"sonido_2",
@@ -110,7 +110,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":7,
+                 "gid":6,
                  "height":129,
                  "id":386,
                  "name":"sonido_2",
@@ -128,25 +128,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":2,
-                 "height":122,
-                 "id":387,
-                 "name":"ayuda",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"ayuda"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":201,
-                 "x":60,
-                 "y":150
-                }, 
-                {
-                 "gid":8,
+                 "gid":7,
                  "height":228,
                  "id":390,
                  "name":"boton",
@@ -174,7 +156,7 @@
                  "y":1400
                 }, 
                 {
-                 "gid":8,
+                 "gid":7,
                  "height":228,
                  "id":393,
                  "name":"boton",
@@ -195,6 +177,24 @@
                  "width":869,
                  "x":106,
                  "y":1700
+                }, 
+                {
+                 "gid":8,
+                 "height":122,
+                 "id":394,
+                 "name":"configuracion",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"configuracion"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":201,
+                 "x":60,
+                 "y":150
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -203,7 +203,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":394,
+ "nextobjectid":395,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -219,7 +219,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {
@@ -238,19 +238,6 @@
         {
          "columns":1,
          "firstgid":2,
-         "image":"..\/hud\/ayuda.png",
-         "imageheight":122,
-         "imagewidth":201,
-         "margin":0,
-         "name":"ayuda",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":122,
-         "tilewidth":201
-        }, 
-        {
-         "columns":1,
-         "firstgid":3,
          "image":"..\/hud\/cosa_verde.png",
          "imageheight":171,
          "imagewidth":329,
@@ -263,7 +250,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":4,
+         "firstgid":3,
          "image":"..\/hud\/sonido_1.png",
          "imageheight":129,
          "imagewidth":264,
@@ -276,7 +263,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":6,
+         "firstgid":5,
          "image":"..\/hud\/sonido_2.png",
          "imageheight":129,
          "imagewidth":264,
@@ -289,7 +276,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":8,
+         "firstgid":7,
          "image":"..\/hud\/boton.png",
          "imageheight":228,
          "imagewidth":869,
@@ -299,6 +286,19 @@
          "tilecount":1,
          "tileheight":228,
          "tilewidth":869
+        }, 
+        {
+         "columns":1,
+         "firstgid":8,
+         "image":"..\/hud\/configuracion.png",
+         "imageheight":122,
+         "imagewidth":201,
+         "margin":0,
+         "name":"configuracion",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":122,
+         "tilewidth":201
         }],
  "tilewidth":114,
  "type":"map",
