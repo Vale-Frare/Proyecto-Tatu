@@ -21,7 +21,7 @@
          "name":"hud_paneles",
          "objects":[
                 {
-                 "gid":5,
+                 "gid":4,
                  "height":171,
                  "id":358,
                  "name":"cosa_verde",
@@ -33,7 +33,7 @@
                  "y":180
                 }, 
                 {
-                 "gid":5,
+                 "gid":4,
                  "height":171,
                  "id":359,
                  "name":"cosa_verde",
@@ -56,30 +56,7 @@
          "name":"hud_botones",
          "objects":[
                 {
-                 "gid":2,
-                 "height":161,
-                 "id":341,
-                 "name":"boton_continuar",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"siguiente_nivel"
-                        }, 
-                        {
-                         "name":"scene",
-                         "type":"string",
-                         "value":"Scene1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":420,
-                 "x":641.793199813694,
-                 "y":1898.60596180717
-                }, 
-                {
-                 "gid":7,
+                 "gid":6,
                  "height":122,
                  "id":360,
                  "name":"arriba_izquierda",
@@ -102,7 +79,7 @@
                  "y":150
                 }, 
                 {
-                 "gid":8,
+                 "gid":7,
                  "height":129,
                  "id":365,
                  "name":"sonido_1",
@@ -120,7 +97,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":9,
+                 "gid":8,
                  "height":129,
                  "id":366,
                  "name":"sonido_1",
@@ -138,7 +115,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":3,
+                 "gid":2,
                  "height":129,
                  "id":367,
                  "name":"sonido_2",
@@ -156,7 +133,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":4,
+                 "gid":3,
                  "height":129,
                  "id":368,
                  "name":"sonido_2",
@@ -172,6 +149,79 @@
                  "width":132,
                  "x":920,
                  "y":155
+                }, 
+                {
+                 "gid":9,
+                 "height":161,
+                 "id":376,
+                 "name":"boton_chico",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"siguiente_nivel"
+                        }, 
+                        {
+                         "name":"scene",
+                         "type":"string",
+                         "value":"Scene1"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"rayo.continuar.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":420,
+                 "x":620.30303030303,
+                 "y":1884.0303030303
+                }, 
+                {
+                 "height":296.969696969697,
+                 "id":377,
+                 "name":"titulo_rayo",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"rayo.titulo.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":987.878787878788,
+                 "x":36.3636363636364,
+                 "y":369.69696969697
+                }, 
+                {
+                 "height":893.939393939394,
+                 "id":378,
+                 "name":"texto_rayo",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"rayo.texto.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":436.363636363636,
+                 "x":90.9090909090909,
+                 "y":727.272727272727
+                }, 
+                {
+                 "height":3.03030303030312,
+                 "id":379,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-354.545454545455,
+                 "y":581.818181818182
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -180,7 +230,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":375,
+ "nextobjectid":382,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -213,21 +263,8 @@
          "tilewidth":1080
         }, 
         {
-         "columns":1,
-         "firstgid":2,
-         "image":"..\/hud\/boton_continuar.png",
-         "imageheight":161,
-         "imagewidth":420,
-         "margin":0,
-         "name":"boton_continuar",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":161,
-         "tilewidth":420
-        }, 
-        {
          "columns":2,
-         "firstgid":3,
+         "firstgid":2,
          "image":"..\/hud\/sonido_2.png",
          "imageheight":129,
          "imagewidth":264,
@@ -240,7 +277,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":5,
+         "firstgid":4,
          "image":"..\/hud\/cosa_verde.png",
          "imageheight":171,
          "imagewidth":329,
@@ -253,7 +290,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":6,
+         "firstgid":5,
          "image":"..\/hud\/arriba_izquierda.png",
          "imageheight":122,
          "imagewidth":402,
@@ -266,7 +303,7 @@
         }, 
         {
          "columns":2,
-         "firstgid":8,
+         "firstgid":7,
          "image":"..\/hud\/sonido_1.png",
          "imageheight":129,
          "imagewidth":264,
@@ -276,6 +313,19 @@
          "tilecount":2,
          "tileheight":129,
          "tilewidth":132
+        }, 
+        {
+         "columns":1,
+         "firstgid":9,
+         "image":"..\/hud\/boton_chico.png",
+         "imageheight":161,
+         "imagewidth":420,
+         "margin":0,
+         "name":"boton_chico",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":161,
+         "tilewidth":420
         }],
  "tilewidth":114,
  "type":"map",

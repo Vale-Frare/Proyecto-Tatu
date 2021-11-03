@@ -91,7 +91,7 @@
                  "y":1440
                 }, 
                 {
-                 "gid":12,
+                 "gid":9,
                  "height":1046,
                  "id":299,
                  "name":"panel_victoria",
@@ -114,7 +114,7 @@
                  "y":1627
                 }, 
                 {
-                 "gid":16,
+                 "gid":10,
                  "height":825,
                  "id":338,
                  "name":"panel_derrota",
@@ -221,85 +221,6 @@
                 }, 
                 {
                  "gid":7,
-                 "height":152,
-                 "id":255,
-                 "name":"boton_reanudar",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"reanudar"
-                        }, 
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":588,
-                 "x":-977,
-                 "y":1195
-                }, 
-                {
-                 "gid":8,
-                 "height":152,
-                 "id":256,
-                 "name":"boton_reiniciar",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"reiniciar_pausa"
-                        }, 
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":592,
-                 "x":-967,
-                 "y":1377
-                }, 
-                {
-                 "gid":9,
-                 "height":64,
-                 "id":289,
-                 "name":"titulo_pausa",
-                 "properties":[
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":276,
-                 "x":-812,
-                 "y":969
-                }, 
-                {
-                 "gid":10,
                  "height":122,
                  "id":291,
                  "name":"arriba_izquierda",
@@ -315,108 +236,6 @@
                  "width":201,
                  "x":60,
                  "y":150
-                }, 
-                {
-                 "gid":13,
-                 "height":152,
-                 "id":300,
-                 "name":"boton_siguiente_nivel",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"nivel_mas_uno"
-                        }, 
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":579,
-                 "x":1231,
-                 "y":1456
-                }, 
-                {
-                 "gid":14,
-                 "height":65,
-                 "id":301,
-                 "name":"titulo_victoria",
-                 "properties":[
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":384,
-                 "x":1328,
-                 "y":1193
-                }, 
-                {
-                 "gid":8,
-                 "height":152,
-                 "id":312,
-                 "name":"boton_reiniciar",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"reiniciar_derrota"
-                        }, 
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_2"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":592,
-                 "x":1234,
-                 "y":2338
-                }, 
-                {
-                 "gid":15,
-                 "height":66,
-                 "id":313,
-                 "name":"titulo_derrota",
-                 "properties":[
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"path",
-                         "type":"string",
-                         "value":"nodos_2"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":389,
-                 "x":1340,
-                 "y":2105
                 }, 
                 {
                  "height":530,
@@ -468,6 +287,219 @@
                  "width":530,
                  "x":-304.393939393939,
                  "y":-619.545454545455
+                }, 
+                {
+                 "gid":11,
+                 "height":152,
+                 "id":341,
+                 "name":"boton_alargado",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"reanudar"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.reanudar.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":-970,
+                 "y":1195
+                }, 
+                {
+                 "gid":11,
+                 "height":152,
+                 "id":342,
+                 "name":"boton_alargado",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"reiniciar_pausa"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.reiniciar.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":-970,
+                 "y":1377
+                }, 
+                {
+                 "gid":11,
+                 "height":152,
+                 "id":343,
+                 "name":"boton_alargado",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"nivel_mas_uno"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_1"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.siguientenivel.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":1231,
+                 "y":1456
+                }, 
+                {
+                 "gid":11,
+                 "height":152,
+                 "id":344,
+                 "name":"boton_alargado",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"reiniciar_derrota"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_2"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.reiniciar.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":579,
+                 "x":1235,
+                 "y":2338
+                }, 
+                {
+                 "height":154.545454545455,
+                 "id":345,
+                 "name":"titulo_pausa",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.titulopausa.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":375.757575757576,
+                 "x":-860.484848484848,
+                 "y":856.878787878788
+                }, 
+                {
+                 "height":154.545,
+                 "id":347,
+                 "name":"titulo_victoria",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_1"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.titulovictoria.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":430.303454545455,
+                 "x":1303.03009090909,
+                 "y":1059.09113636364
+                }, 
+                {
+                 "height":154.545,
+                 "id":348,
+                 "name":"titulo_derrota",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_2"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"hud.tituloderrota.var0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":466.666636363636,
+                 "x":1290.90910606061,
+                 "y":1983.33356060606
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -764,7 +796,7 @@
          "y":0
         }],
  "nextlayerid":14,
- "nextobjectid":341,
+ "nextobjectid":349,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -842,59 +874,8 @@
          "tilewidth":654
         }, 
         {
-         "columns":1,
-         "firstgid":7,
-         "grid":
-            {
-             "height":152,
-             "orientation":"orthogonal",
-             "width":579
-            },
-         "image":"..\/hud\/boton_reanudar.png",
-         "imageheight":152,
-         "imagewidth":588,
-         "margin":0,
-         "name":"boton_reanudar",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":152,
-         "tilewidth":588
-        }, 
-        {
-         "columns":1,
-         "firstgid":8,
-         "grid":
-            {
-             "height":152,
-             "orientation":"orthogonal",
-             "width":579
-            },
-         "image":"..\/hud\/boton_reiniciar.png",
-         "imageheight":152,
-         "imagewidth":592,
-         "margin":0,
-         "name":"boton_reiniciar",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":152,
-         "tilewidth":592
-        }, 
-        {
-         "columns":1,
-         "firstgid":9,
-         "image":"..\/hud\/titulo_pausa.png",
-         "imageheight":64,
-         "imagewidth":276,
-         "margin":0,
-         "name":"titulo_pausa",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":64,
-         "tilewidth":276
-        }, 
-        {
          "columns":2,
-         "firstgid":10,
+         "firstgid":7,
          "image":"..\/hud\/arriba_izquierda.png",
          "imageheight":122,
          "imagewidth":402,
@@ -907,7 +888,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":12,
+         "firstgid":9,
          "grid":
             {
              "height":997,
@@ -926,46 +907,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":13,
-         "image":"..\/hud\/boton_siguiente_nivel.png",
-         "imageheight":152,
-         "imagewidth":579,
-         "margin":0,
-         "name":"boton_siguiente_nivel",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":152,
-         "tilewidth":579
-        }, 
-        {
-         "columns":1,
-         "firstgid":14,
-         "image":"..\/hud\/titulo_victoria.png",
-         "imageheight":65,
-         "imagewidth":384,
-         "margin":0,
-         "name":"titulo_victoria",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":65,
-         "tilewidth":384
-        }, 
-        {
-         "columns":1,
-         "firstgid":15,
-         "image":"..\/hud\/titulo_derrota.png",
-         "imageheight":66,
-         "imagewidth":389,
-         "margin":0,
-         "name":"titulo_derrota",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":66,
-         "tilewidth":389
-        }, 
-        {
-         "columns":1,
-         "firstgid":16,
+         "firstgid":10,
          "image":"..\/hud\/panel_derrota.png",
          "imageheight":825,
          "imagewidth":650,
@@ -975,6 +917,19 @@
          "tilecount":1,
          "tileheight":825,
          "tilewidth":650
+        }, 
+        {
+         "columns":1,
+         "firstgid":11,
+         "image":"..\/hud\/boton_alargado.png",
+         "imageheight":152,
+         "imagewidth":579,
+         "margin":0,
+         "name":"boton_alargado",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":152,
+         "tilewidth":579
         }],
  "tilewidth":114,
  "type":"map",

@@ -43,23 +43,21 @@ export default class Preloads extends Phaser.Scene {
         this.load.spritesheet("sonido_1", "assets/hud/sonido_1.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("sonido_2", "assets/hud/sonido_2.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("arriba_izquierda", "assets/hud/arriba_izquierda.png", {frameHeight: 122, frameWidth: 201});
-        this.load.image("boton_reanudar", "assets/hud/boton_reanudar.png");
         this.load.image("titulo_pausa", "assets/hud/titulo_pausa.png");
-        this.load.image("boton_reiniciar", "assets/hud/boton_reiniciar.png");
         this.load.image("boton_volver_a_niveles", "assets/hud/boton_volver_a_niveles.png");
         this.load.image("panel_pausa", "assets/hud/panel_pausa.png");
-        this.load.image("boton_siguiente_nivel", "assets/hud/boton_siguiente_nivel.png");
         this.load.image("titulo_victoria", "assets/hud/titulo_victoria.png");
         this.load.image("panel_victoria", "assets/hud/panel_victoria.png");
         this.load.image("panel_derrota", "assets/hud/panel_derrota.png");
         this.load.image("titulo_derrota", "assets/hud/titulo_derrota.png");
 
-        this.load.image("boton_continuar", "assets/hud/boton_continuar.png");
         this.load.image("rayo_concientizador", "assets/hud/rayo_concientizador.png");
 
         this.load.image("menu_principal", "assets/hud/menu_principal.png");
         this.load.image("ayuda", "assets/hud/ayuda.png");
         this.load.image("boton", "assets/hud/boton.png");
+        this.load.image("boton_chico", "assets/hud/boton_chico.png");
+        this.load.image("boton_alargado", "assets/hud/boton_alargado.png");
         this.load.image("configuracion", "assets/hud/configuracion.png");
 
         this.load.image("niveles", "assets/hud/niveles.png");
