@@ -298,7 +298,22 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":250
+                         "value":150
+                        }, 
+                        {
+                         "name":"text_font_color",
+                         "type":"string",
+                         "value":"#B9B441"
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"just_kids"
+                        }, 
+                        {
+                         "name":"text_font_stroke",
+                         "type":"string",
+                         "value":"#000 10"
                         }],
                  "rotation":0,
                  "type":"",

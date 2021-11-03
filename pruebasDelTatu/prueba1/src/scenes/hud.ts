@@ -34,7 +34,7 @@ export default class Hud extends Phaser.Scene {
 
     create(){
         this.sm = this.scene.get("soundManager");
-        this.texto_tiempo = this.add.text(532, 50, '', {fontFamily: 'franklin_gothic_heavy', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
+        this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'franklin_gothic_heavy', fontSize: '50px', color: '#D4D75B'}).setOrigin(0.5).setDepth(5);
     }
 
     update(time, delta){
@@ -172,30 +172,49 @@ export default class Hud extends Phaser.Scene {
                             }
                             if (prop.name == "text") {
                                 let tm: any = this.scene.get("TranslateManager");
+
+                                let px = element.properties.find(p => p.name === "text_font" );
+                                let text_px = `${px ? px.value : 60}px`;
+
+                                let family = element.properties.find(p => p.name === "text_font_family" );
+                                let text_family = `${family ? family.value : 'Arial'}`;
+
+                                let color = element.properties.find(p => p.name === "text_font_color" );
+                                let text_color = `${color ? color.value : '#000'}`;
+
+                                let style = element.properties.find(p => p.name === "text_font_style" );
+                                let text_style = `${style ? style.value : 'normal'}`;
+
+                                let stroke = element.properties.find(p => p.name === "text_font_stroke" );
+                                let text_stroke = `${stroke ? stroke.value : '#fff 0'}`;
+
                                 if (pretexto){
-                                    try {
-                                        console.log(`${element.properties.find(p => p.name === "text_font" ).value}px`);
-                                        texto = objetos[objetos.push(this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
-                                        fontSize: `${element.properties.find(p => p.name === "text_font" ).value}px`, color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
-                                    } catch (error) {
-                                        texto = objetos[objetos.push(this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
-                                        fontSize: "82px", color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], 
+                                    { 
+                                        fontFamily: text_family,
+                                        fontSize: text_px, 
+                                        color: text_color, 
+                                        align:'center', 
+                                        fontStyle: style,
+                                        stroke: text_stroke.split(' ')[0],
+                                        strokeThickness: parseInt(text_stroke.split(' ')[1])
                                     }
+                                    ).setOrigin(0.5).setDepth(11);
+                                    objetos.push(texto);
                                 }else {
-                                    try {
-                                        console.log(`${element.properties.find(p => p.name === "text_font" ).value}px`);
-                                        texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
-                                        fontSize: `${element.properties.find(p => p.name === "text_font" ).value}px`, color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
-                                    } catch (error) {
-                                        texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
-                                        fontSize: "82px", color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    texto = this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], 
+                                    { 
+                                        fontFamily: text_family, 
+                                        fontSize: text_px, 
+                                        color: text_color, 
+                                        align:'center', 
+                                        fontStyle: style,
+                                        stroke: text_stroke.split(' ')[0],
+                                        strokeThickness: parseInt(text_stroke.split(' ')[1])
                                     }
+                                    ).setOrigin(0.5).setDepth(11);
+                                    objetos.push(texto);
                                 }
-                                // try {
-                                //     texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
-                                // } catch (error) {
-                                //     texto = objetos[objetos.push(this.add.text(obj.x, obj.y, error, { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
-                                // }
                             }
                         });
                     }
@@ -508,7 +527,7 @@ export default class Hud extends Phaser.Scene {
         if (this.texto_acciones) {
             this.texto_acciones.text = `ACCIONES  ${deck_lenght}`;
         }else {
-            this.texto_acciones = this.add.text(532, 125, `ACCIONES  ${deck_lenght}`, { fontFamily: 'Arial', fontSize: '40px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(4);
+            this.texto_acciones = this.add.text(532, 125, `ACCIONES  ${deck_lenght}`, { fontFamily: 'franklin_gothic_heavy', fontSize: '42px', color: '#D4D75B'}).setOrigin(0.5).setDepth(4);
         }
     }
 
@@ -746,7 +765,8 @@ export default class Hud extends Phaser.Scene {
         this.texto_acciones ? this.texto_acciones.destroy(): null;
         this.texto_tiempo ? this.texto_tiempo.destroy(): null;
         this.texto_acciones = null;
-        this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
+        // ACA SE CAMBIA EL TESTO
+        this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'franklin_gothic_heavy', fontSize: '50px', color: '#D4D75B'}).setOrigin(0.5).setDepth(5);
         this.blur ? this.blur.destroy(): null;
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);

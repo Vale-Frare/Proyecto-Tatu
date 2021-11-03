@@ -8,7 +8,7 @@ export default class SceneMainmenu extends Phaser.Scene {
 
     create() {
         let hud: any = this.scene.get("hud");
-        hud.mostrarHud('menu_principal');        
+        hud.mostrarHud('menu_principal');
     }
 
     update() {

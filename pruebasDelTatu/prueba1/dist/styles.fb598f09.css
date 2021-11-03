@@ -3,19 +3,4 @@ body {
     background-color: gray;
 }
 
-@font-face {
-    font-family: franklin_gothic_heavy;
-    src: url('/franklin_gothic_heavy.64436779.ttf');
-}
-
-/* @font-face {
-    font-family: just_kids;
-    src: url('../assets/fonts/just_kids.ttf');
-}
-
-@font-face {
-    font-family: lapsus_pro;
-    src: url('../assets/fonts/lapsus_pro.otf');
-} */
-
 /*# sourceMappingURL=/styles.fb598f09.css.map */

@@ -57,8 +57,27 @@ export default class TranslateManager extends Phaser.Scene {
         super({key:'TranslateManager', active: true});
     }
 
+    async preload(){
+        this.add.text(0, 0, '', {fontFamily: 'lapsus_pro', fontSize: '50px', color: '#D4D75B'});
+    }
+
+    async loadFont(name, url) {
+        var newFont = new FontFace(name, `url("${url}")`);
+        newFont.load().then(function (loaded) {
+            document.fonts.add(loaded);
+        }).catch(function (error) {
+            return error;
+        });
+    }
+
     async create() {
         console.log('%c TranslateManager iniciado correctamente! ', 'background: #a4a4a4; color: #fada55');
+
+        await Promise.all([
+            this.loadFont('just_kids', 'assets/fonts/just_kids.ttf'),
+            this.loadFont('franklin_gothic_heavy', 'assets/fonts/franklin_gothic_heavy.ttf'),
+            this.loadFont('lapsus_pro', 'assets/fonts/lapsus_pro.otf')
+        ]);
 
         for (let keyLang in this.contenido) {
             let langData: any = await translateHelper.cargarTraducciones(keyLang);

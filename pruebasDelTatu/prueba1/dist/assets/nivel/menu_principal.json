@@ -151,7 +151,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",
@@ -179,7 +184,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",

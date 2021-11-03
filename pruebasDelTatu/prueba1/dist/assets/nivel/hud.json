@@ -317,7 +317,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",
@@ -355,7 +360,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":25
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",
@@ -393,7 +403,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",
@@ -431,7 +446,12 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":75
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"lapsus_pro"
                         }],
                  "rotation":0,
                  "type":"",
@@ -463,14 +483,29 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":80
+                        }, 
+                        {
+                         "name":"text_font_color",
+                         "type":"string",
+                         "value":"#B9B441"
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"just_kids"
+                        }, 
+                        {
+                         "name":"text_font_stroke",
+                         "type":"string",
+                         "value":"#000 10"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":375.757575757576,
                  "x":-860.484848484848,
-                 "y":856.878787878788
+                 "y":867.878787878788
                 }, 
                 {
                  "height":154.545,
@@ -495,14 +530,29 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":80
+                        }, 
+                        {
+                         "name":"text_font_color",
+                         "type":"string",
+                         "value":"#B9B441"
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"just_kids"
+                        }, 
+                        {
+                         "name":"text_font_stroke",
+                         "type":"string",
+                         "value":"#000 10"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":430.303454545455,
                  "x":1309.0906969697,
-                 "y":1107.57598484849
+                 "y":1142.57598484849
                 }, 
                 {
                  "height":154.545,
@@ -527,14 +577,29 @@
                         {
                          "name":"text_font",
                          "type":"int",
-                         "value":50
+                         "value":80
+                        }, 
+                        {
+                         "name":"text_font_color",
+                         "type":"string",
+                         "value":"#B9B441"
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"just_kids"
+                        }, 
+                        {
+                         "name":"text_font_stroke",
+                         "type":"string",
+                         "value":"#000 10"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":466.666636363636,
                  "x":1292.96971212122,
-                 "y":2056.54568181818
+                 "y":2076.54568181818
                 }],
          "opacity":1,
          "type":"objectgroup",

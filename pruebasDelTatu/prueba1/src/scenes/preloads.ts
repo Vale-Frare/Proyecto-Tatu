@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import {hudHelper} from '../classes/hudHelper';
 import {tiledHelper} from '../classes/tiledHelper';
-import { translateHelper } from '../classes/translateHelper';
 
 export default class Preloads extends Phaser.Scene {
     constructor() {
@@ -9,7 +8,6 @@ export default class Preloads extends Phaser.Scene {
     }
     
     async preload() {
-        //localStorage.clear();
 
         this.load.image("rayita", "assets/rayita.png");
 
@@ -85,7 +83,7 @@ export default class Preloads extends Phaser.Scene {
         ]);
     }
 
-    create() {
+    async create() {
 
         this.anims.create({
             key: "tatu_bebe",
@@ -101,19 +99,8 @@ export default class Preloads extends Phaser.Scene {
             repeat: -1
         });
 
-        //translateHelper.cargarTraducciones("https://voluminouslegalmeasurements.frasesegundo.repl.co/tatu/?key=mainmenu.jugar.var1&lang=pt_BR");
-
         let sm: any = this.scene.get("soundManager");
         sm.playMusic("main_menu", 0.1, true);
         this.scene.start("SceneMainmenu");
-    }
-
-    loadFont(name, url) {
-        var newFont = new FontFace(name, `url(${url})`);
-        newFont.load().then(function (loaded) {
-            document.fonts.add(loaded);
-        }).catch(function (error) {
-            return error;
-        });
     }
 }
