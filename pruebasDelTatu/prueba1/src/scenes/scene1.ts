@@ -53,11 +53,8 @@ export default class Scene1 extends Phaser.Scene {
                     b.body.setImmovable(true);
                     b.body.moves = false;
                     b.depth = data.mapaCargado.bordesDepth;
-                    //b.setSize(borde.width, borde.height);
                     b.angle = borde.rotation;
                     b.setScale(borde.width/borde.tileWidth, borde.height/borde.tileHeight);
-                    //b.refreshBody();
-                    //console.log(borde);
                     b.width = borde.width;
                     b.height = borde.height;
                     data.bordes.push(b);
@@ -124,7 +121,8 @@ export default class Scene1 extends Phaser.Scene {
         let colisionables = nivelYColisionables.col;
 
         colisionables.forEach((colisionable) => {
-            let c = this.physics.add.sprite(colisionable.x, colisionable.y, colisionable.textureKey).setOrigin(0);
+            let c = this.physics.add.sprite(colisionable.x, colisionable.y, colisionable.textureKey).setOrigin(0, 1);
+            c.body.setCircle(c.width/2);
             c.setScale(0.265, 0.265);
             c.body.setImmovable(true);
             c.body.moves = false;

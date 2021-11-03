@@ -133,8 +133,8 @@
                  "type":"",
                  "visible":true,
                  "width":650,
-                 "x":1209,
-                 "y":2385
+                 "x":1211.06060606061,
+                 "y":2458.21212121212
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -313,6 +313,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.reanudar.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
@@ -346,6 +351,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.reiniciar.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":25
                         }],
                  "rotation":0,
                  "type":"",
@@ -379,13 +389,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.siguientenivel.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":579,
-                 "x":1231,
-                 "y":1456
+                 "x":1240.09090909091,
+                 "y":1543.87878787879
                 }, 
                 {
                  "gid":11,
@@ -412,13 +427,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.reiniciar.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":579,
-                 "x":1235,
-                 "y":2338
+                 "x":1237.06060606061,
+                 "y":2411.21212121212
                 }, 
                 {
                  "height":154.545454545455,
@@ -439,6 +459,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.titulopausa.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
@@ -466,13 +491,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.titulovictoria.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":430.303454545455,
-                 "x":1303.03009090909,
-                 "y":1059.09113636364
+                 "x":1309.0906969697,
+                 "y":1107.57598484849
                 }, 
                 {
                  "height":154.545,
@@ -493,13 +523,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"hud.tituloderrota.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":466.666636363636,
-                 "x":1290.90910606061,
-                 "y":1983.33356060606
+                 "x":1292.96971212122,
+                 "y":2056.54568181818
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -714,8 +749,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1641.63636363636,
-                 "y":2460.18181818182
+                 "x":1637.63636363636,
+                 "y":2512.18181818182
                 }, 
                 {
                  "height":0,
@@ -796,7 +831,7 @@
          "y":0
         }],
  "nextlayerid":14,
- "nextobjectid":349,
+ "nextobjectid":353,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -896,7 +931,7 @@
              "width":809
             },
          "image":"..\/hud\/panel_victoria.png",
-         "imageheight":1046,
+         "imageheight":1047,
          "imagewidth":675,
          "margin":0,
          "name":"panel_victoria",

@@ -147,6 +147,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"menuinicio.jugar.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
@@ -170,6 +175,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"menuinicio.niveles"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",

@@ -42,7 +42,6 @@ export class tiledHelper {
                     }
                     if (layer.name == "colisionables") {
                         let objetos = layer.objects;
-                        console.log(data);
                         layer.objects.forEach((object: any, index: number) => {
                             objetos[index].textureKey = data.tilesets.find(_ => _.firstgid == object.gid).name.replace('Tiled', '');
                         });

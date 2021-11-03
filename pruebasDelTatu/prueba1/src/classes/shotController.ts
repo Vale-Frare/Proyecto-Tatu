@@ -55,6 +55,7 @@ export class shotController {
     }
 
     private onBounce(a) {
+
         let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
         a.rotation = ang_rebote;
         a.emitter.followOffset.x += 2000;

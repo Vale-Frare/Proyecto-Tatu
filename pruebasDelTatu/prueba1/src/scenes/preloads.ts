@@ -43,13 +43,10 @@ export default class Preloads extends Phaser.Scene {
         this.load.spritesheet("sonido_1", "assets/hud/sonido_1.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("sonido_2", "assets/hud/sonido_2.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("arriba_izquierda", "assets/hud/arriba_izquierda.png", {frameHeight: 122, frameWidth: 201});
-        this.load.image("titulo_pausa", "assets/hud/titulo_pausa.png");
         this.load.image("boton_volver_a_niveles", "assets/hud/boton_volver_a_niveles.png");
         this.load.image("panel_pausa", "assets/hud/panel_pausa.png");
-        this.load.image("titulo_victoria", "assets/hud/titulo_victoria.png");
         this.load.image("panel_victoria", "assets/hud/panel_victoria.png");
         this.load.image("panel_derrota", "assets/hud/panel_derrota.png");
-        this.load.image("titulo_derrota", "assets/hud/titulo_derrota.png");
 
         this.load.image("rayo_concientizador", "assets/hud/rayo_concientizador.png");
 
@@ -89,6 +86,7 @@ export default class Preloads extends Phaser.Scene {
     }
 
     create() {
+
         this.anims.create({
             key: "tatu_bebe",
             frames: this.anims.generateFrameNumbers("tatu_bebe", {start: 0, end: 6}),
@@ -108,5 +106,14 @@ export default class Preloads extends Phaser.Scene {
         let sm: any = this.scene.get("soundManager");
         sm.playMusic("main_menu", 0.1, true);
         this.scene.start("SceneMainmenu");
+    }
+
+    loadFont(name, url) {
+        var newFont = new FontFace(name, `url(${url})`);
+        newFont.load().then(function (loaded) {
+            document.fonts.add(loaded);
+        }).catch(function (error) {
+            return error;
+        });
     }
 }

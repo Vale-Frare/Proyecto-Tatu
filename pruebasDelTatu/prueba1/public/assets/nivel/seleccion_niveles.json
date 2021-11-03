@@ -294,6 +294,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"niveles.titulo.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":250
                         }],
                  "rotation":0,
                  "type":"",

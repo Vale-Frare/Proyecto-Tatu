@@ -3,18 +3,17 @@ body {
     background-color: gray;
 }
 
-/* .cosita {
-    position: fixed;
-    left: -746px;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);  
-    transition: all 0.5s ease;  
-}
-.cosita img {
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
+@font-face {
+    font-family: franklin_gothic_heavy;
+    src: url('../assets/fonts/franklin_gothic_heavy.ttf');
 }
 
-.cosita:hover {
-    left: 0px;
+/* @font-face {
+    font-family: just_kids;
+    src: url('../assets/fonts/just_kids.ttf');
+}
+
+@font-face {
+    font-family: lapsus_pro;
+    src: url('../assets/fonts/lapsus_pro.otf');
 } */

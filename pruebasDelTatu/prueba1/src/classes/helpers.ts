@@ -408,10 +408,13 @@ export class Aleatorizadores {
 
 export class AccionesBolitas {
     static tiro(scene: Phaser.Scene, data, rotacion, acciones) {
+        
         let nivel_finalizado = true;
         let color_correcto = false;
         let sm: any = scene.scene.get("soundManager");
+
         function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
+            
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
             new Promise((resolve, reject) => {

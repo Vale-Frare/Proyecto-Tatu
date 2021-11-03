@@ -7,19 +7,49 @@ export default class TranslateManager extends Phaser.Scene {
             'key': 'texto',
             'menuinicio.jugar.var0': null,
             'menuinicio.jugar.var1': null,
-            'menuinicio.niveles': null
+            'menuinicio.niveles': null,
+            'hud.reiniciar.var0': null,
+            'rayo.titulo.var0': null,
+            'rayo.continuar.var0': null,
+            'niveles.titulo.var0': null,
+            'hud.titulopausa.var0': null,
+            'hud.reanudar.var0': null,
+            'hud.titulovictoria.var0': null,
+            'hud.siguientenivel.var0': null,
+            'rayo.texto.var0': null,
+            'hud.tituloderrota.var0': null
         },
         'en_US': {
             'key': 'text',
             'menuinicio.jugar.var0': null,
             'menuinicio.jugar.var1': null,
-            'menuinicio.niveles': null
+            'menuinicio.niveles': null,
+            'hud.reiniciar.var0': null,
+            'rayo.titulo.var0': null,
+            'rayo.continuar.var0': null,
+            'niveles.titulo.var0': null,
+            'hud.titulopausa.var0': null,
+            'hud.reanudar.var0': null,
+            'hud.titulovictoria.var0': null,
+            'hud.siguientenivel.var0': null,
+            'rayo.texto.var0': null,
+            'hud.tituloderrota.var0': null
         },
         'pt_BR': {
             'key': 'textinho',
             'menuinicio.jugar.var0': null,
             'menuinicio.jugar.var1': null,
-            'menuinicio.niveles': null
+            'menuinicio.niveles': null,
+            'hud.reiniciar.var0': null,
+            'rayo.titulo.var0': null,
+            'rayo.continuar.var0': null,
+            'niveles.titulo.var0': null,
+            'hud.titulopausa.var0': null,
+            'hud.reanudar.var0': null,
+            'hud.titulovictoria.var0': null,
+            'hud.siguientenivel.var0': null,
+            'rayo.texto.var0': null,
+            'hud.tituloderrota.var0': null
         }
     };
 

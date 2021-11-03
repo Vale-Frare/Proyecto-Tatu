@@ -34,7 +34,7 @@ export default class Hud extends Phaser.Scene {
 
     create(){
         this.sm = this.scene.get("soundManager");
-        this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'Arial', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
+        this.texto_tiempo = this.add.text(532, 50, '', {fontFamily: 'franklin_gothic_heavy', fontSize: '42px', color: '#D4D75B', fontStyle: 'bold'}).setOrigin(0.5).setDepth(5);
     }
 
     update(time, delta){
@@ -134,11 +134,70 @@ export default class Hud extends Phaser.Scene {
                 let layer = hudAMostrarLayers[key];
                 layer.content.forEach(element => {
                     let obj;
-                    obj = scene.add.image(element.x, element.y, element.name).setAlpha(0);
+                    if (element.name.slice(0,6) == "titulo") {
+                        obj = scene.add.image(element.x, element.y, element.name).setAlpha(0).setVisible(false);
+                    }
+                    else if (element.name.slice(0,5) == "texto") {
+                        obj = scene.add.image(element.x, element.y, element.name).setAlpha(0).setVisible(false);
+                    }else {
+                        obj = scene.add.image(element.x, element.y, element.name).setAlpha(0);
+                    }
 
                     this.playable = hudAMostrar.playable;
                     if (hudAMostrar.playable) {
                         this.initTiempo();
+                    }
+
+                    obj.x += obj.width/2;
+                    obj.y -= obj.height/2;
+                    obj.setDepth(layer.depth);
+
+                    let pretexto;
+
+                    if (element.name) {
+                        if (element.name.slice(0,6) == "titulo") {
+                            pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
+                        }
+                        if (element.name.slice(0,5) == "texto") {
+                            pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
+                        }
+                    }
+
+                    let texto;
+
+                    if (element.properties) {
+                        element.properties.forEach(prop => {
+                            if (prop.name == "depth_offset") {
+                                obj.setDepth(obj.depth + parseInt(prop.value));
+                            }
+                            if (prop.name == "text") {
+                                let tm: any = this.scene.get("TranslateManager");
+                                if (pretexto){
+                                    try {
+                                        console.log(`${element.properties.find(p => p.name === "text_font" ).value}px`);
+                                        texto = objetos[objetos.push(this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
+                                        fontSize: `${element.properties.find(p => p.name === "text_font" ).value}px`, color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    } catch (error) {
+                                        texto = objetos[objetos.push(this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
+                                        fontSize: "82px", color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    }
+                                }else {
+                                    try {
+                                        console.log(`${element.properties.find(p => p.name === "text_font" ).value}px`);
+                                        texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
+                                        fontSize: `${element.properties.find(p => p.name === "text_font" ).value}px`, color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    } catch (error) {
+                                        texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', 
+                                        fontSize: "82px", color: '#000', align:'center', fontStyle: 'bold'}).setOrigin(0.5).setDepth(9)) - 1];
+                                    }
+                                }
+                                // try {
+                                //     texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
+                                // } catch (error) {
+                                //     texto = objetos[objetos.push(this.add.text(obj.x, obj.y, error, { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
+                                // }
+                            }
+                        });
                     }
 
                     if (element.properties) {
@@ -150,25 +209,12 @@ export default class Hud extends Phaser.Scene {
                                     grupos[prop.value] = [];
                                     grupos[prop.value].push(obj);
                                 }
-                            }
-                        });
-                    }
-                    
-                    obj.x += obj.width/2;
-                    obj.y -= obj.height/2;
-                    obj.setDepth(layer.depth);
-
-                    let texto;
-
-                    if (element.properties) {
-                        element.properties.forEach(prop => {
-                            if (prop.name == "depth_offset") {
-                                obj.setDepth(obj.depth + parseInt(prop.value));
-                            }
-                            if (prop.name == "text") {
-                                let tm: any = this.scene.get("TranslateManager");
-                                
-                                texto = objetos[objetos.push(this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], { fontFamily: 'Arial', fontSize: '82px', color: '#000', fontStyle: 'bold'}).setOrigin(0.5).setDepth(6)) - 1];
+                                if (texto) {
+                                    grupos[prop.value].push(texto);
+                                    if (pretexto){
+                                        grupos[prop.value].push(pretexto);
+                                    }
+                                }
                             }
                         });
                     }
@@ -194,6 +240,7 @@ export default class Hud extends Phaser.Scene {
                         if (element.properties) {
                             element.properties.forEach(prop => {
                                 if (prop.name == "animation_id") {
+                                    
                                     animado = true;
                                     let value = hudAMostrar.animations[prop.value];
                                     path = new Phaser.Curves.Path(value[0].x, value[0].y);
@@ -396,7 +443,7 @@ export default class Hud extends Phaser.Scene {
             scene.scene.resume();
             this.sm.playMusic("lvl_1", 0.1, true);
         }else {
-            console.log("No te dejo jugar");
+
         }
     }
 
@@ -638,7 +685,7 @@ export default class Hud extends Phaser.Scene {
 
     desactivar_todo_menos(name: string) {
         this.botones.forEach(element => {
-            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2" && element.name != "arriba_izquierda") {
+            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2" && element.name != "boton_alargado" && element.name != "arriba_izquierda") {
                 element.disableInteractive();
             }
         });
@@ -676,7 +723,6 @@ export default class Hud extends Phaser.Scene {
     jugar_nivel_rapido(obj) {
         let scene_main = this.scene.get('SceneMainmenu');
         let pm: any = this.scene.get('ProgressManager');
-        console.log(pm.getCurrentOfZone(pm.getCurrentZone()), pm.getCurrentZone());
         pm.playLevelOfZone(pm.getCurrentOfZone(pm.getCurrentZone()).replace('lvl', ''), pm.getCurrentZone().replace('zone', ''));
         scene_main.scene.switch('SceneRayo');
         scene_main.scene.resume();

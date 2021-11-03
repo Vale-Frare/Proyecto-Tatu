@@ -170,6 +170,11 @@
                          "name":"text",
                          "type":"string",
                          "value":"rayo.continuar.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
@@ -187,13 +192,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"rayo.titulo.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":50
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":987.878787878788,
-                 "x":36.3636363636364,
-                 "y":369.69696969697
+                 "x":63.6363636363637,
+                 "y":318.181818181818
                 }, 
                 {
                  "height":893.939393939394,
@@ -204,13 +214,18 @@
                          "name":"text",
                          "type":"string",
                          "value":"rayo.texto.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":20
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":436.363636363636,
-                 "x":90.9090909090909,
-                 "y":727.272727272727
+                 "x":87.8787878787879,
+                 "y":657.575757575757
                 }, 
                 {
                  "height":3.03030303030312,
