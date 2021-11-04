@@ -223,7 +223,7 @@
                  "visible":true,
                  "width":987.878787878788,
                  "x":63.6363636363637,
-                 "y":355.181818181818
+                 "y":326.181818181818
                 }, 
                 {
                  "height":893.939393939394,
@@ -251,17 +251,6 @@
                  "width":436.363636363636,
                  "x":87.8787878787879,
                  "y":657.575757575757
-                }, 
-                {
-                 "height":3.03030303030312,
-                 "id":379,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":-354.545454545455,
-                 "y":581.818181818182
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -292,7 +281,7 @@
         {
          "columns":1,
          "firstgid":1,
-         "image":"..\/hud\/rayo_concientizador.png",
+         "image":"..\/hud\/lvl1zone1.png",
          "imageheight":1920,
          "imagewidth":1080,
          "margin":0,
