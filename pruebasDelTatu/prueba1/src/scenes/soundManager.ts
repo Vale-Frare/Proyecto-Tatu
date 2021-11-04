@@ -71,7 +71,9 @@ export default class SoundManager extends Phaser.Scene{
     }
 
     stopMusicPocoTiempo(){
-        this.musica_poco_tiempo.stop();
+        if (this.musica_poco_tiempo){
+            this.musica_poco_tiempo.stop();
+        }
     }
 
     playSoundTatuRodando(){

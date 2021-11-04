@@ -489,6 +489,7 @@ export class AccionesBolitas {
                 hud.play_animacion("nodos_1");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
+                sm.stopMusicPocoTiempo();
                 sm.playMusic("victoria", 0.1, false);
                 let progressManager : any = this.scene.get("ProgressManager");
                 progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());

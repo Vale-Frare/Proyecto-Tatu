@@ -21,6 +21,7 @@ export default class Hud extends Phaser.Scene {
     private sm: any;
     private playable: boolean = false;
     private objetos;
+    private idioma = 'pt_BR';
 
     constructor(tiempo_inicial: number = 60) {
         super({ key: "hud" , active: true});
@@ -125,7 +126,13 @@ export default class Hud extends Phaser.Scene {
         let tweens = {};
 
         if (!hudAMostrar.playable) {
-            objetos.push(this.add.image(0, 0, hudAMostrar.fondo).setOrigin(0).setDepth(3).setVisible(true));
+            if (key === "rayo_concientizador") {
+                let pm:any = this.scene.get('ProgressManager');
+                
+                objetos.push(this.add.image(0, 0, pm.getLevelToPlay()).setOrigin(0).setDepth(3).setVisible(true));
+            }else {
+                objetos.push(this.add.image(0, 0, hudAMostrar.fondo).setOrigin(0).setDepth(3).setVisible(true));
+            }
             this.dato.pausa = true;
         }
 
@@ -159,7 +166,11 @@ export default class Hud extends Phaser.Scene {
                             pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
                         }
                         if (element.name.slice(0,5) == "texto") {
-                            pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
+                            if (element.name.slice(0,10) == "texto_rayo") {
+                                pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
+                            }else {
+                                pretexto = objetos[objetos.push(this.add.rectangle(element.x, element.y, element.width, element.height, 0x000000).setOrigin(0,0).setDepth(5).setVisible(false)) - 1];
+                            }
                         }
                     }
 
@@ -189,20 +200,36 @@ export default class Hud extends Phaser.Scene {
                                 let text_stroke = `${stroke ? stroke.value : '#fff 0'}`;
 
                                 if (pretexto){
-                                    texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido['pt_BR'][prop.value], 
-                                    { 
-                                        fontFamily: text_family,
-                                        fontSize: text_px, 
-                                        color: text_color, 
-                                        align:'center', 
-                                        fontStyle: style,
-                                        stroke: text_stroke.split(' ')[0],
-                                        strokeThickness: parseInt(text_stroke.split(' ')[1])
+                                    if (element.name.slice(0,10) == "texto_rayo") {
+                                        let pm:any = this.scene.get('ProgressManager');
+                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido[this.idioma][`rayo.texto.var${pm.getLevelToPlayInt() - 1}`], 
+                                        { 
+                                            fontFamily: text_family,
+                                            fontSize: text_px, 
+                                            color: text_color, 
+                                            align:'center', 
+                                            fontStyle: style,
+                                            stroke: text_stroke.split(' ')[0],
+                                            strokeThickness: parseInt(text_stroke.split(' ')[1])
+                                        }
+                                        ).setOrigin(0.5).setDepth(11);
+                                        objetos.push(texto);
+                                    }else {
+                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido[this.idioma][prop.value], 
+                                        { 
+                                            fontFamily: text_family,
+                                            fontSize: text_px, 
+                                            color: text_color, 
+                                            align:'center', 
+                                            fontStyle: style,
+                                            stroke: text_stroke.split(' ')[0],
+                                            strokeThickness: parseInt(text_stroke.split(' ')[1])
+                                        }
+                                        ).setOrigin(0.5).setDepth(11);
+                                        objetos.push(texto);
                                     }
-                                    ).setOrigin(0.5).setDepth(11);
-                                    objetos.push(texto);
                                 }else {
-                                    texto = this.add.text(obj.x, obj.y, tm.contenido['pt_BR'][prop.value], 
+                                    texto = this.add.text(obj.x, obj.y, tm.contenido[this.idioma][prop.value], 
                                     { 
                                         fontFamily: text_family, 
                                         fontSize: text_px, 
@@ -409,9 +436,11 @@ export default class Hud extends Phaser.Scene {
                         if (element.properties) {
                             element.properties.forEach(prop => {
                                 if (prop.name == "action") {
+                                    
                                     let callback: string = prop.value;
                                     if (prop.value == "pausa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
                                     else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
+                                    else if (prop.value == "jugar_nivel_rapido") {(texto.text = this.evaluar_continuar_o_play()); obj.setInteractive().on("pointerup", () => {eval(`this.${callback}(obj);`)}, this)}
                                     else if (prop.value == "play_level") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}", ${element.properties.find(propiedad => propiedad.name === "zone").value});`)}, this);}
                                     else {
                                         let sehace = true;
@@ -450,6 +479,18 @@ export default class Hud extends Phaser.Scene {
 
         this.tweensActivos = tweens;
         return ":D";
+    }
+
+    evaluar_continuar_o_play() {
+        let pm:any = this.scene.get('ProgressManager');
+        let tm:any = this.scene.get('TranslateManager');
+
+        if (pm.getProgressOfLevel('zone1', 2) == true) {
+            return tm.contenido[this.idioma][`menuinicio.jugar.var1`] 
+        }
+        else {
+            return tm.contenido[this.idioma][`menuinicio.jugar.var0`]
+        }
     }
 
     play_level(level: number, zone: number) {
@@ -800,6 +841,7 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
+        this.hacer_una_vez = true;
         this.sm.playMusic("lvl_1", 0.1, true);
     } 
 
@@ -814,6 +856,7 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(0);
         this.blur_off();
         this.dato.pausa = false;
+        this.hacer_una_vez = true;
     }
 
     seleccion_niveles() {

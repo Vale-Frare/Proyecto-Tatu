@@ -54,7 +54,11 @@ export default class ProgressManager extends Phaser.Scene {
     }
 
     getLevelToPlayInt() {
-        return parseInt(this.level_to_play.replace('lvl', ''));
+        return parseInt(this.level_to_play.replace('lvl', '').replace('zone', ' ').split(' ')[0]);
+    }
+
+    getLevelToPlayZoneInt() {
+        return parseInt(this.level_to_play.replace('lvl', '').replace('zone', ' ').split(' ')[1]);
     }
 
     getProgressOfLevel(zone: string, level: number) {

@@ -28,7 +28,7 @@ const config: Phaser.Types.Core.GameConfig = {
         },
     },
     audio: {
-        disableWebAudio: true
+        disableWebAudio: false
     },
     pixelArt: false,
     scene: [TranslateManager, Preloads, Scene1, SceneLvlSelect, SceneRayo, SceneMainmenu, Hud, ProgressManager, SoundManager ]
