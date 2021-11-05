@@ -55,7 +55,6 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("menu_principal", "assets/hud/menu_principal.png");
         this.load.image("ayuda", "assets/hud/ayuda.png");
         this.load.image("boton", "assets/hud/boton.png");
-        this.load.image("boton_chico", "assets/hud/boton_chico.png");
         this.load.image("boton_alargado", "assets/hud/boton_alargado.png");
         this.load.image("configuracion", "assets/hud/configuracion.png");
 
@@ -93,7 +92,6 @@ export default class Preloads extends Phaser.Scene {
     }
 
     async create() {
-
         this.anims.create({
             key: "tatu_bebe",
             frames: this.anims.generateFrameNumbers("tatu_bebe", {start: 0, end: 6}),

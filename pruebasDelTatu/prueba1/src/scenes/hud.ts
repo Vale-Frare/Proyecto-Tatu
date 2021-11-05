@@ -68,7 +68,7 @@ export default class Hud extends Phaser.Scene {
 
     initTiempo() {
         let tm: any = this.scene.get('TranslateManager');
-        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  60`);
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  60`).setVisible(false);
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
     }
@@ -172,6 +172,7 @@ export default class Hud extends Phaser.Scene {
                     this.playable = hudAMostrar.playable;
                     if (hudAMostrar.playable) {
                         this.initTiempo();
+                        this.texto_tiempo.setVisible(true);
                     }
 
                     obj.x += obj.width/2;
@@ -197,6 +198,18 @@ export default class Hud extends Phaser.Scene {
 
                     if (element.properties) {
                         element.properties.forEach(prop => {
+                            if (prop.name == "anim") {
+                                if (prop.value == "girar") {
+                                    this.tweens.add({
+                                        targets: obj,
+                                        angle: 360,
+                                        duration: 1000,
+                                        ease: 'Power1',
+                                        yoyo: true,
+                                        repeat: -1
+                                    });
+                                }
+                            }
                             if (prop.name == "depth_offset") {
                                 obj.setDepth(obj.depth + parseInt(prop.value));
                             }

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import {translateHelper} from '../classes/translateHelper';
+import {hudHelper} from '../classes/hudHelper';
 
 export default class TranslateManager extends Phaser.Scene {
     public lang = 'es_AR'
@@ -81,7 +82,18 @@ export default class TranslateManager extends Phaser.Scene {
     }
 
     async preload(){
-        this.add.text(0, 0, '', {fontFamily: 'lapsus_pro', fontSize: '50px', color: '#D4D75B'});
+        this.load.image("logo_carga", "assets/hud/logo_carga.png");
+        this.load.image("carga", "assets/hud/carga.png");
+        this.load.image("boton_chico", "assets/hud/boton_chico.png");
+
+        this.load.on('complete', async i => {
+            await hudHelper.cargarHudDesdeJson("assets/nivel/carga.json");
+
+            let hud: any = this.scene.get("hud");
+            hud.mostrarHud('carga');
+
+            this.add.text(0, 0, '', {fontFamily: 'lapsus_pro', fontSize: '50px', color: '#D4D75B'});
+        })
     }
 
     async loadFont(name, url) {
