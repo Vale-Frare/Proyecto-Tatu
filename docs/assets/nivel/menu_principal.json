@@ -25,6 +25,12 @@
                  "height":171,
                  "id":381,
                  "name":"cosa_verde",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -37,12 +43,41 @@
                  "height":171,
                  "id":382,
                  "name":"cosa_verde",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":329,
                  "x":754,
                  "y":180
+                }, 
+                {
+                 "gid":9,
+                 "height":1186,
+                 "id":395,
+                 "name":"panel_idioma",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":975,
+                 "x":-1235.93848324884,
+                 "y":1985.18000313594
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -65,6 +100,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"mute_sonido_1"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"",
@@ -83,6 +123,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"mute_sonido_1"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"",
@@ -101,6 +146,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"mute_sonido_2"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"",
@@ -119,6 +169,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"mute_sonido_2"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"",
@@ -205,9 +260,19 @@
                  "name":"configuracion",
                  "properties":[
                         {
-                         "name":"action",
+                         "name":"animation_id",
                          "type":"string",
-                         "value":"configuracion"
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"animation_type",
+                         "type":"string",
+                         "value":"pingpong"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"",
@@ -215,6 +280,232 @@
                  "width":201,
                  "x":60,
                  "y":150
+                }, 
+                {
+                 "gid":10,
+                 "height":228,
+                 "id":403,
+                 "name":"boton_espaniol",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"espaniol_on"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":869,
+                 "x":-1195,
+                 "y":1365
+                }, 
+                {
+                 "gid":11,
+                 "height":228,
+                 "id":404,
+                 "name":"boton_ingles",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"ingles_on"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":869,
+                 "x":-1195,
+                 "y":1626.97653269221
+                }, 
+                {
+                 "gid":12,
+                 "height":228,
+                 "id":405,
+                 "name":"boton_portugues",
+                 "properties":[
+                        {
+                         "name":"action",
+                         "type":"string",
+                         "value":"portugues_on"
+                        }, 
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":869,
+                 "x":-1195,
+                 "y":1883.66915799927
+                }, 
+                {
+                 "height":202.334187006742,
+                 "id":406,
+                 "name":"titulo_idiomas",
+                 "properties":[
+                        {
+                         "name":"depth_offset",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"path",
+                         "type":"string",
+                         "value":"nodos_0"
+                        }, 
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"menu.tituloidioma.var0"
+                        }, 
+                        {
+                         "name":"text_font",
+                         "type":"int",
+                         "value":150
+                        }, 
+                        {
+                         "name":"text_font_color",
+                         "type":"string",
+                         "value":"#B9B441"
+                        }, 
+                        {
+                         "name":"text_font_family",
+                         "type":"string",
+                         "value":"just_kids"
+                        }, 
+                        {
+                         "name":"text_font_stroke",
+                         "type":"string",
+                         "value":"#000 10"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":706.659697904145,
+                 "x":-1117.36789839544,
+                 "y":833.496053938222
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":16,
+         "name":"nodos_0",
+         "objects":[
+                {
+                 "height":0,
+                 "id":396,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-761.018136204464,
+                 "y":776.117702398997
+                }, 
+                {
+                 "height":0,
+                 "id":397,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-546.604296242095,
+                 "y":631.16186693148
+                }, 
+                {
+                 "height":0,
+                 "id":398,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-320.1108033241,
+                 "y":543.584383003188
+                }, 
+                {
+                 "height":0,
+                 "id":399,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-33.2190456279726,
+                 "y":462.04672555271
+                }, 
+                {
+                 "height":0,
+                 "id":400,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":268.772278262688,
+                 "y":471.10646526943
+                }, 
+                {
+                 "height":0,
+                 "id":401,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":456.006899074897,
+                 "y":579.823341870067
+                }, 
+                {
+                 "height":0,
+                 "id":402,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":531.504730047562,
+                 "y":920.049286572937
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -222,8 +513,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":15,
- "nextobjectid":395,
+ "nextlayerid":17,
+ "nextobjectid":408,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -319,6 +610,58 @@
          "tilecount":1,
          "tileheight":122,
          "tilewidth":201
+        }, 
+        {
+         "columns":1,
+         "firstgid":9,
+         "image":"..\/hud\/panel_idioma.png",
+         "imageheight":1186,
+         "imagewidth":975,
+         "margin":0,
+         "name":"panel_idioma",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":1186,
+         "tilewidth":975
+        }, 
+        {
+         "columns":1,
+         "firstgid":10,
+         "image":"..\/hud\/boton_espaniol.png",
+         "imageheight":228,
+         "imagewidth":869,
+         "margin":0,
+         "name":"boton_espaniol",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":228,
+         "tilewidth":869
+        }, 
+        {
+         "columns":1,
+         "firstgid":11,
+         "image":"..\/hud\/boton_ingles.png",
+         "imageheight":228,
+         "imagewidth":869,
+         "margin":0,
+         "name":"boton_ingles",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":228,
+         "tilewidth":869
+        }, 
+        {
+         "columns":1,
+         "firstgid":12,
+         "image":"..\/hud\/boton_portugues.png",
+         "imageheight":228,
+         "imagewidth":869,
+         "margin":0,
+         "name":"boton_portugues",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":228,
+         "tilewidth":869
         }],
  "tilewidth":114,
  "type":"map",

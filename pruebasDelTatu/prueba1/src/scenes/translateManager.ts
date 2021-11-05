@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {translateHelper} from '../classes/translateHelper';
 
 export default class TranslateManager extends Phaser.Scene {
+    public lang = 'es_AR'
     public contenido = {
         'es_AR': {
             'key': 'texto',
@@ -17,7 +18,14 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.titulovictoria.var0': null,
             'hud.siguientenivel.var0': null,
             'rayo.texto.var0': null,
-            'hud.tituloderrota.var0': null
+            'rayo.texto.var1': null,
+            'rayo.texto.var2': null,
+            'rayo.texto.var3': null,
+            'rayo.texto.var4': null,
+            'hud.tituloderrota.var0': null,
+            'hud.acciones': null,
+            'menu.tituloidioma.var0': null,
+            'hud.tiempo': null
         },
         'en_US': {
             'key': 'text',
@@ -33,7 +41,14 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.titulovictoria.var0': null,
             'hud.siguientenivel.var0': null,
             'rayo.texto.var0': null,
-            'hud.tituloderrota.var0': null
+            'rayo.texto.var1': null,
+            'rayo.texto.var2': null,
+            'rayo.texto.var3': null,
+            'rayo.texto.var4': null,
+            'hud.tituloderrota.var0': null,
+            'hud.acciones': null,
+            'menu.tituloidioma.var0': null,
+            'hud.tiempo': null
         },
         'pt_BR': {
             'key': 'textinho',
@@ -49,12 +64,20 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.titulovictoria.var0': null,
             'hud.siguientenivel.var0': null,
             'rayo.texto.var0': null,
-            'hud.tituloderrota.var0': null
+            'rayo.texto.var1': null,
+            'rayo.texto.var2': null,
+            'rayo.texto.var3': null,
+            'rayo.texto.var4': null,
+            'hud.tituloderrota.var0': null,
+            'hud.acciones': null,
+            'menu.tituloidioma.var0': null,
+            'hud.tiempo': null
         }
     };
 
     constructor() {
         super({key:'TranslateManager', active: true});
+        this.lang = localStorage.getItem('lang') || 'es_AR';
     }
 
     async preload(){
@@ -68,6 +91,15 @@ export default class TranslateManager extends Phaser.Scene {
         }).catch(function (error) {
             return error;
         });
+    }
+
+    setLang(lang) {
+        this.lang = lang;
+        localStorage.setItem('lang', lang);
+    }
+
+    getTextoEnLenguajeActual(key: string) {
+        return this.contenido[this.lang][key];
     }
 
     async create() {

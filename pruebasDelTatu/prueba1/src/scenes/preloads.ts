@@ -72,6 +72,11 @@ export default class Preloads extends Phaser.Scene {
         this.load.audio("tatu_rodando", "assets/audio/tatu_rodando.mp3");
         this.load.audio("victoria", "assets/audio/victoria.mp3");
         this.load.audio("main_menu", "assets/audio/main_menu.mp3");
+
+        this.load.image("panel_idioma", "assets/hud/panel_idioma.png");
+        this.load.image("boton_espaniol", "assets/hud/boton_espaniol.png");
+        this.load.image("boton_ingles", "assets/hud/boton_ingles.png");
+        this.load.image("boton_portugues", "assets/hud/boton_portugues.png");
              
         //  vale: Asi se carga un mapa de tiled.
         await Promise.all([

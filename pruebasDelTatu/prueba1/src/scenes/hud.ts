@@ -21,7 +21,8 @@ export default class Hud extends Phaser.Scene {
     private sm: any;
     private playable: boolean = false;
     private objetos;
-    private idioma = 'pt_BR';
+    private refreshIdiomas = [];
+    private botones_idiomas = {ingles: null, portugues: null, espaniol: null};
 
     constructor(tiempo_inicial: number = 60) {
         super({ key: "hud" , active: true});
@@ -43,6 +44,21 @@ export default class Hud extends Phaser.Scene {
         if(!this.dato.pausa){
             this.updateTiempo(delta);
         }
+
+        let tm: any = this.scene.get('TranslateManager');
+        Object.keys(this.botones_idiomas).forEach(key => {
+            if (this.botones_idiomas[key]) {
+                if(key == 'ingles' && tm.lang == 'en_US') {
+                    this.botones_idiomas[key].alpha = 1;
+                }else if(key == 'portugues' && tm.lang == 'pt_BR') {
+                    this.botones_idiomas[key].alpha = 1;
+                }else if(key == 'espaniol' && tm.lang == 'es_AR') {
+                    this.botones_idiomas[key].alpha = 1;
+                }else {
+                    this.botones_idiomas[key].alpha = 0.5;
+                }
+            }
+        });
         
     }
 
@@ -51,7 +67,8 @@ export default class Hud extends Phaser.Scene {
     }
 
     initTiempo() {
-        this.texto_tiempo.setText("TIEMPO  60");
+        let tm: any = this.scene.get('TranslateManager');
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  60`);
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
         this.blur.setTint(0x000000);
     }
@@ -64,21 +81,13 @@ export default class Hud extends Phaser.Scene {
             this.tiempo_inicial--
             this.un_segundo += 1000;
 
-            // let segundos = 0;
-            // let minutos = 0;
-
-            // if(this.tiempo_inicial>59){
-            //     minutos = Math.floor(this.tiempo_inicial/60)
-            // }
-            // segundos = this.tiempo_inicial - (minutos*60);
-
-            // this.textoTiempo('TIEMPO ' + this.agregarCero(minutos) + ':' + this.agregarCero(segundos));
-
-            this.textoTiempo('TIEMPO  ' + this.tiempo_inicial);
+            let tm: any = this.scene.get('TranslateManager');
+            this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} ${this.tiempo_inicial}`);
         }
         else{
             if(this.tiempo_inicial <= 0){
-                this.textoTiempo('TIEMPO  0');
+                let tm: any = this.scene.get('TranslateManager');
+                this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  0`);
                 this.play_animacion("nodos_2");
                 this.desactivar_todo_menos("boton_reiniciar");
                 this.cambiar_boton_niveles();
@@ -150,6 +159,16 @@ export default class Hud extends Phaser.Scene {
                         obj = scene.add.image(element.x, element.y, element.name).setAlpha(0);
                     }
 
+                    if (element.name == "boton_espaniol") {
+                        this.botones_idiomas.espaniol = obj;
+                    }
+                    if (element.name == "boton_ingles") {
+                        this.botones_idiomas.ingles = obj;
+                    }
+                    if (element.name == "boton_portugues") {
+                        this.botones_idiomas.portugues = obj;
+                    }
+
                     this.playable = hudAMostrar.playable;
                     if (hudAMostrar.playable) {
                         this.initTiempo();
@@ -202,7 +221,7 @@ export default class Hud extends Phaser.Scene {
                                 if (pretexto){
                                     if (element.name.slice(0,10) == "texto_rayo") {
                                         let pm:any = this.scene.get('ProgressManager');
-                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido[this.idioma][`rayo.texto.var${pm.getLevelToPlayInt() - 1}`], 
+                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.getTextoEnLenguajeActual(`rayo.texto.var${pm.getLevelToPlayInt() - 1}`), 
                                         { 
                                             fontFamily: text_family,
                                             fontSize: text_px, 
@@ -212,10 +231,13 @@ export default class Hud extends Phaser.Scene {
                                             stroke: text_stroke.split(' ')[0],
                                             strokeThickness: parseInt(text_stroke.split(' ')[1])
                                         }
-                                        ).setOrigin(0.5).setDepth(11);
+                                        ).setOrigin(0.5).setDepth(obj.depth + 1);
                                         objetos.push(texto);
+                                        texto.name = prop.value;
+                                        element.name == "boton" ? this.refreshIdiomas.push(texto): null;
+                                        element.name == "titulo_idiomas" ? this.refreshIdiomas.push(texto): null;
                                     }else {
-                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.contenido[this.idioma][prop.value], 
+                                        texto = this.add.text(pretexto.x + (pretexto.width/2), pretexto.y + (pretexto.height/2), tm.getTextoEnLenguajeActual(prop.value), 
                                         { 
                                             fontFamily: text_family,
                                             fontSize: text_px, 
@@ -225,11 +247,14 @@ export default class Hud extends Phaser.Scene {
                                             stroke: text_stroke.split(' ')[0],
                                             strokeThickness: parseInt(text_stroke.split(' ')[1])
                                         }
-                                        ).setOrigin(0.5).setDepth(11);
+                                        ).setOrigin(0.5).setDepth(obj.depth + 1);
                                         objetos.push(texto);
+                                        texto.name = prop.value;
+                                        element.name == "boton" ? this.refreshIdiomas.push(texto): null;
+                                        element.name == "titulo_idiomas" ? this.refreshIdiomas.push(texto): null;
                                     }
                                 }else {
-                                    texto = this.add.text(obj.x, obj.y, tm.contenido[this.idioma][prop.value], 
+                                    texto = this.add.text(obj.x, obj.y, tm.getTextoEnLenguajeActual(prop.value), 
                                     { 
                                         fontFamily: text_family, 
                                         fontSize: text_px, 
@@ -239,8 +264,11 @@ export default class Hud extends Phaser.Scene {
                                         stroke: text_stroke.split(' ')[0],
                                         strokeThickness: parseInt(text_stroke.split(' ')[1])
                                     }
-                                    ).setOrigin(0.5).setDepth(11);
+                                    ).setOrigin(0.5).setDepth(obj.depth + 1);
                                     objetos.push(texto);
+                                    texto.name = prop.value;
+                                    element.name == "boton" ? this.refreshIdiomas.push(texto): null;
+                                    element.name == "titulo_idiomas" ? this.refreshIdiomas.push(texto): null;
                                 }
                             }
                         });
@@ -416,6 +444,9 @@ export default class Hud extends Phaser.Scene {
                                                     initial_pos.push({x: element.x, y: element.y});
                                                 });
                                             }
+                                            if(animation_type == "pingpong") {
+                                                this.idioma();
+                                            }
                                         },
                                         onUpdate: () => {
                                             paths[animation_id].getPoint(follower.tiempo, follower.pos);
@@ -425,7 +456,12 @@ export default class Hud extends Phaser.Scene {
                                             });
                                         },  
                                         onComplete: () => {
-                                            paths[animation_id] = this.revertirPath(nodos);
+                                            if(animation_type == "pingpong") {
+                                                paths[animation_id] = this.revertirPathPerma(nodos);
+                                                
+                                            }else {
+                                                paths[animation_id] = this.revertirPath(nodos);
+                                            }
                                             follower = {tiempo: 0, pos: new Phaser.Math.Vector2()};
                                             initial_pos = [];
                                         }
@@ -486,10 +522,10 @@ export default class Hud extends Phaser.Scene {
         let tm:any = this.scene.get('TranslateManager');
 
         if (pm.getProgressOfLevel('zone1', 2) == true) {
-            return tm.contenido[this.idioma][`menuinicio.jugar.var1`] 
+            return tm.getTextoEnLenguajeActual(`menuinicio.jugar.var1`)
         }
         else {
-            return tm.contenido[this.idioma][`menuinicio.jugar.var0`]
+            return tm.getTextoEnLenguajeActual(`menuinicio.jugar.var0`)
         }
     }
 
@@ -565,16 +601,18 @@ export default class Hud extends Phaser.Scene {
 
     mostrarAcciones(deck_lenght: number){
         if (!this.playable) return;
+        let tm: any = this.scene.get('TranslateManager');
         if (this.texto_acciones) {
-            this.texto_acciones.text = `ACCIONES  ${deck_lenght}`;
+            this.texto_acciones.text = `${tm.getTextoEnLenguajeActual('hud.acciones')}  ${deck_lenght}`;
         }else {
-            this.texto_acciones = this.add.text(532, 125, `ACCIONES  ${deck_lenght}`, { fontFamily: 'franklin_gothic_heavy', fontSize: '42px', color: '#D4D75B'}).setOrigin(0.5).setDepth(4);
+            this.texto_acciones = this.add.text(532, 125, `${tm.getTextoEnLenguajeActual('hud.acciones')}  ${deck_lenght}`, { fontFamily: 'franklin_gothic_heavy', fontSize: '42px', color: '#D4D75B'}).setOrigin(0.5).setDepth(4);
         }
     }
 
     updateAcciones(deck_lenght: number){
         if (!this.playable) return;
-        return this.texto_acciones.setText('ACCIONES  ' + deck_lenght);
+        let tm: any = this.scene.get('TranslateManager');
+        return this.texto_acciones.setText(`${tm.getTextoEnLenguajeActual('hud.acciones')}  ${deck_lenght}`);
     }
 
     pausaYMapa(animation_id: string, obj: any) {
@@ -732,7 +770,8 @@ export default class Hud extends Phaser.Scene {
         });
     }
 
-    blur_on() {
+    blur_on(deptho: number = 3) {
+        this.blur.depth = deptho;
         this.tweens.add({
             targets: this.blur,
             alpha: .9,
@@ -745,10 +784,20 @@ export default class Hud extends Phaser.Scene {
 
     desactivar_todo_menos(name: string) {
         this.botones.forEach(element => {
-            if (element.name != name && element.name != "sonido_1" && element.name != "sonido_2" && element.name != "boton_alargado" && element.name != "arriba_izquierda") {
+            if (!this.si_no_es(element.name, [name, "sonido_1", "sonido_2", "boton_alargado", "arriba_izquierda", "boton_espaniol", "boton_ingles", "boton_portugues"])) {
                 element.disableInteractive();
             }
         });
+    }
+
+    si_no_es(input: string, cosas: string[]) {
+        let ret = false
+        cosas.forEach(cosa => {
+            if (input === cosa) {
+                ret = true;
+            }
+        });
+        return ret;
     }
 
     reactivar_todo() {
@@ -801,6 +850,7 @@ export default class Hud extends Phaser.Scene {
                 element.destroy();
             });
         }
+        this.refreshIdiomas = [];
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
         this.texto_acciones ? this.texto_acciones.destroy(): null;
@@ -834,7 +884,8 @@ export default class Hud extends Phaser.Scene {
         let scene = this.scene.get("Scene1");
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
-        this.texto_tiempo.setText("TIEMPO  60");
+        let tm: any = this.scene.get('TranslateManager');
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} 60`);
         scene.scene.restart();
         this.play_animacion_invertida("nodos_2", true);
         this.reactivar_todo();
@@ -849,7 +900,8 @@ export default class Hud extends Phaser.Scene {
         let scene = this.scene.get("Scene1");
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
-        this.texto_tiempo.setText("TIEMPO  60");
+        let tm: any = this.scene.get('TranslateManager');
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} 60`);
         scene.scene.restart();
         this.play_animacion_invertida("nodos_0", true);
         this.reactivar_todo();
@@ -869,5 +921,54 @@ export default class Hud extends Phaser.Scene {
         let scene = this.scene.get("SceneLvlSelect");
         scene.scene.switch("SceneMainmenu");
         scene.scene.resume();
+    }
+
+    idioma() {
+        if (this.blur.alpha == 0.9) {
+            this.blur_off();
+            this.reactivar_todo();
+        } else {
+            this.blur_on(7);
+            this.desactivar_todo_menos('configuracion');
+        }
+    }
+
+    portugues_on() {
+        let tm: any = this.scene.get('TranslateManager');
+        tm.setLang('pt_BR');
+
+        this.refreshIdiomas.forEach(element => {
+            if (element.name == "menuinicio.jugar.var0") {
+                element.setText(this.evaluar_continuar_o_play());
+            }else {
+                element.setText(tm.getTextoEnLenguajeActual(element.name));
+            }
+        });
+    }
+
+    espaniol_on() {
+        let tm: any = this.scene.get('TranslateManager');
+        tm.setLang('es_AR');
+
+        this.refreshIdiomas.forEach(element => {
+            if (element.name == "menuinicio.jugar.var0") {
+                element.setText(this.evaluar_continuar_o_play());
+            }else {
+                element.setText(tm.getTextoEnLenguajeActual(element.name));
+            }
+        });
+    }
+
+    ingles_on() {
+        let tm: any = this.scene.get('TranslateManager');
+        tm.setLang('en_US');
+
+        this.refreshIdiomas.forEach(element => {
+            if (element.name == "menuinicio.jugar.var0") {
+                element.setText(this.evaluar_continuar_o_play());
+            }else {
+                element.setText(tm.getTextoEnLenguajeActual(element.name));
+            }
+        });
     }
 }
