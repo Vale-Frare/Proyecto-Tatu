@@ -56,9 +56,14 @@
                  "name":"boton_chico",
                  "properties":[
                         {
+                         "name":"action",
+                         "type":"string",
+                         "value":"continuar"
+                        }, 
+                        {
                          "name":"scene",
                          "type":"string",
-                         "value":"Preloads"
+                         "value":"SceneMainmenu"
                         }, 
                         {
                          "name":"text",

@@ -3,6 +3,8 @@ import {translateHelper} from '../classes/translateHelper';
 import {hudHelper} from '../classes/hudHelper';
 
 let tatu_girando;
+let boton_continuar;
+let texto_continuar;
 
 export default class TranslateManager extends Phaser.Scene {
     public lang = 'es_AR'
@@ -94,7 +96,11 @@ export default class TranslateManager extends Phaser.Scene {
             let hud: any = this.scene.get("hud");
             hud.mostrarHud('carga');
             tatu_girando = hud.posible_tatu_girando;
-            tatu_girando.alpha = 0;
+            tatu_girando.alpha = 1;
+            boton_continuar = hud.posible_boton_continuar;
+            boton_continuar.alpha = 0;
+            texto_continuar = hud.texto_boton_continuar;
+            texto_continuar.alpha = 0;
 
             this.add.text(0, 0, '', {fontFamily: 'lapsus_pro', fontSize: '50px', color: '#D4D75B'});
 
@@ -140,7 +146,9 @@ export default class TranslateManager extends Phaser.Scene {
             });
         }
 
-        this.scene.start('Preloads', {tatuCarga: tatu_girando});
+        texto_continuar.setText(this.getTextoEnLenguajeActual('rayo.continuar.var0'));
+
+        this.scene.start('Preloads', {tatuCarga: tatu_girando, botonContinuar: boton_continuar, textoContinuar: texto_continuar});
         console.log(this.contenido);
     }
 

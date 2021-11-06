@@ -27,6 +27,11 @@
                  "name":"cosa_verde",
                  "properties":[
                         {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_up"
+                        }, 
+                        {
                          "name":"depth_offset",
                          "type":"int",
                          "value":3
@@ -44,6 +49,11 @@
                  "id":382,
                  "name":"cosa_verde",
                  "properties":[
+                        {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_up"
+                        }, 
                         {
                          "name":"depth_offset",
                          "type":"int",
@@ -78,6 +88,24 @@
                  "width":975,
                  "x":-1235.93848324884,
                  "y":1985.18000313594
+                }, 
+                {
+                 "gid":13,
+                 "height":784,
+                 "id":408,
+                 "name":"logo_inicio",
+                 "properties":[
+                        {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"shake"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":725,
+                 "x":171,
+                 "y":990
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -91,29 +119,6 @@
          "name":"hud_botones",
          "objects":[
                 {
-                 "gid":3,
-                 "height":129,
-                 "id":383,
-                 "name":"sonido_1",
-                 "properties":[
-                        {
-                         "name":"action",
-                         "type":"string",
-                         "value":"mute_sonido_1"
-                        }, 
-                        {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":132,
-                 "x":776,
-                 "y":155
-                }, 
-                {
                  "gid":4,
                  "height":129,
                  "id":384,
@@ -125,27 +130,9 @@
                          "value":"mute_sonido_1"
                         }, 
                         {
-                         "name":"depth_offset",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":132,
-                 "x":776,
-                 "y":155
-                }, 
-                {
-                 "gid":5,
-                 "height":129,
-                 "id":385,
-                 "name":"sonido_2",
-                 "properties":[
-                        {
-                         "name":"action",
+                         "name":"anim",
                          "type":"string",
-                         "value":"mute_sonido_2"
+                         "value":"come_from_up"
                         }, 
                         {
                          "name":"depth_offset",
@@ -156,7 +143,7 @@
                  "type":"",
                  "visible":true,
                  "width":132,
-                 "x":920,
+                 "x":776,
                  "y":155
                 }, 
                 {
@@ -169,6 +156,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"mute_sonido_2"
+                        }, 
+                        {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_up"
                         }, 
                         {
                          "name":"depth_offset",
@@ -192,6 +184,11 @@
                          "name":"action",
                          "type":"string",
                          "value":"jugar_nivel_rapido"
+                        }, 
+                        {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_left"
                         }, 
                         {
                          "name":"scene",
@@ -232,6 +229,11 @@
                          "value":"seleccion_niveles"
                         }, 
                         {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_right"
+                        }, 
+                        {
                          "name":"text",
                          "type":"string",
                          "value":"menuinicio.niveles"
@@ -259,6 +261,11 @@
                  "id":394,
                  "name":"configuracion",
                  "properties":[
+                        {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"come_from_up"
+                        }, 
                         {
                          "name":"animation_id",
                          "type":"string",
@@ -514,7 +521,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":408,
+ "nextobjectid":409,
  "orientation":"hexagonal",
  "properties":[
         {
@@ -530,7 +537,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {
@@ -662,6 +669,19 @@
          "tilecount":1,
          "tileheight":228,
          "tilewidth":869
+        }, 
+        {
+         "columns":1,
+         "firstgid":13,
+         "image":"..\/hud\/logo_inicio.png",
+         "imageheight":784,
+         "imagewidth":725,
+         "margin":0,
+         "name":"logo_inicio",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":784,
+         "tilewidth":725
         }],
  "tilewidth":114,
  "type":"map",

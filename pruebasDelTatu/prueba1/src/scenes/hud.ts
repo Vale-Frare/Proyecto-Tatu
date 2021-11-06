@@ -25,6 +25,8 @@ export default class Hud extends Phaser.Scene {
     private botones_idiomas = {ingles: null, portugues: null, espaniol: null};
 
     private posible_tatu_girando;
+    public posible_boton_continuar;
+    public texto_boton_continuar;
 
     constructor(tiempo_inicial: number = 60) {
         super({ key: "hud" , active: true});
@@ -286,9 +288,9 @@ export default class Hud extends Phaser.Scene {
                                         this.tweens.add({
                                             targets: obj,
                                             angle: 360,
-                                            duration: 1000,
-                                            ease: 'Power1',
-                                            yoyo: true,
+                                            duration: 1500,
+                                            ease: 'Linear',
+                                            yoyo: false,
                                             repeat: -1
                                         });
                                     }else if (prop.value == "shake") {
@@ -303,7 +305,6 @@ export default class Hud extends Phaser.Scene {
                                         });
                                     }else if (prop.value == "come_from_left") {
                                         obj.x -= 1000;
-                                        console.log(texto);
                                         this.tweens.add({
                                             targets: obj,
                                             x: "+=1000",
@@ -314,7 +315,6 @@ export default class Hud extends Phaser.Scene {
                                         });
                                     }else if (prop.value == "come_from_right") {
                                         obj.x += 1000;
-                                        console.log(texto);
                                         this.tweens.add({
                                             targets: obj,
                                             x: "-=1000",
@@ -325,7 +325,6 @@ export default class Hud extends Phaser.Scene {
                                         });
                                     }else if (prop.value == "come_from_up") {
                                         obj.y -= 1000;
-                                        console.log(texto);
                                         this.tweens.add({
                                             targets: obj,
                                             y: "+=1000",
@@ -336,7 +335,6 @@ export default class Hud extends Phaser.Scene {
                                         });
                                     }else if (prop.value == "come_from_down") {
                                         obj.y += 1000;
-                                        console.log(texto);
                                         this.tweens.add({
                                             targets: obj,
                                             y: "-=1000",
@@ -699,7 +697,11 @@ export default class Hud extends Phaser.Scene {
                                         let sehace = true;
                                         element.properties.forEach(prop => {
                                             if (prop.name == "scene") {
-                                                obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${prop.value}");`)}, this)
+                                                obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${prop.value}");`)}, this);
+                                                if (prop.value == "SceneMainmenu") {
+                                                    this.posible_boton_continuar = obj;
+                                                    this.texto_boton_continuar = texto;
+                                                }
                                                 sehace = false;
                                             }
                                         });
@@ -719,16 +721,18 @@ export default class Hud extends Phaser.Scene {
             this.objetos = objetos;
         }
 
-        scene.tweens.addCounter({
-            from: 0,
-            to: 1,
-            duration: 1000,
-            onUpdate: function (tween) {
-                objetos.forEach(obj => {
-                    obj.setAlpha(tween.getValue());
-                });
-            }
-        });
+        if (!this.posible_boton_continuar) {
+            scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: 1000,
+                onUpdate: function (tween) {
+                    objetos.forEach(obj => {
+                        obj.setAlpha(tween.getValue());
+                    });
+                }
+            });
+        }
 
         this.tweensActivos = tweens;
         return ":D";
@@ -1067,6 +1071,7 @@ export default class Hud extends Phaser.Scene {
                 element.destroy();
             });
         }
+        this.posible_boton_continuar = null;
         this.refreshIdiomas = [];
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
@@ -1136,6 +1141,14 @@ export default class Hud extends Phaser.Scene {
 
     main_menu(){
         let scene = this.scene.get("SceneLvlSelect");
+        scene.scene.switch("SceneMainmenu");
+        scene.scene.resume();
+    }
+
+    continuar() {
+        let sm: any = this.scene.get("soundManager");
+        sm.playMusic("main_menu", 0.1, true);
+        let scene = this.scene.get("Preloads");
         scene.scene.switch("SceneMainmenu");
         scene.scene.resume();
     }

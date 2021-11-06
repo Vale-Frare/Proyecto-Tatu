@@ -10,8 +10,13 @@ export default class Preloads extends Phaser.Scene {
     init(data) {
         this.load.on('progress', i => {
             data.tatuCarga.alpha = i;
-        })
-    }
+        });
+        this.load.on('complete', i => {
+            data.botonContinuar.alpha = 1;
+            data.textoContinuar.alpha = 1;
+            data.tatuCarga.alpha = 0;
+        });
+    }   
     
     async preload() {
 
@@ -113,9 +118,7 @@ export default class Preloads extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-
-        let sm: any = this.scene.get("soundManager");
-        sm.playMusic("main_menu", 0.1, true);
-        this.scene.start("SceneMainmenu");
+        
+        // this.scene.start("SceneMainmenu");
     }
 }

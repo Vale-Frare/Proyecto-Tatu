@@ -194,6 +194,11 @@
                  "name":"titulo_rayo",
                  "properties":[
                         {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"hovering"
+                        }, 
+                        {
                          "name":"text",
                          "type":"string",
                          "value":"rayo.titulo.var0"
@@ -275,7 +280,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {

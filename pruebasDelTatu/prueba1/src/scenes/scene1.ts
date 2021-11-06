@@ -77,8 +77,10 @@ export default class Scene1 extends Phaser.Scene {
     update(time, delta) {
         if (data.pausa) {
             data.slider.mini_bolita.disableInteractive();
+            data.slider.barrita.disableInteractive();
         }else {
             data.slider.mini_bolita.setInteractive();
+            data.slider.barrita.setInteractive();
         }
 
         if (data.pausa) {

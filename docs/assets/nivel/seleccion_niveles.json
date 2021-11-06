@@ -291,6 +291,11 @@
                  "name":"titulo_niveles",
                  "properties":[
                         {
+                         "name":"anim",
+                         "type":"string",
+                         "value":"bouncing"
+                        }, 
+                        {
                          "name":"text",
                          "type":"string",
                          "value":"niveles.titulo.var0"
@@ -345,7 +350,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.7.0",
  "tileheight":120,
  "tilesets":[
         {
