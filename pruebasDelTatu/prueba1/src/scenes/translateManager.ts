@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import {translateHelper} from '../classes/translateHelper';
 import {hudHelper} from '../classes/hudHelper';
 
+let tatu_girando;
+
 export default class TranslateManager extends Phaser.Scene {
     public lang = 'es_AR'
     public contenido = {
@@ -85,15 +87,21 @@ export default class TranslateManager extends Phaser.Scene {
         this.load.image("logo_carga", "assets/hud/logo_carga.png");
         this.load.image("carga", "assets/hud/carga.png");
         this.load.image("boton_chico", "assets/hud/boton_chico.png");
-
+        
         this.load.on('complete', async i => {
             await hudHelper.cargarHudDesdeJson("assets/nivel/carga.json");
 
             let hud: any = this.scene.get("hud");
             hud.mostrarHud('carga');
+            tatu_girando = hud.posible_tatu_girando;
+            tatu_girando.alpha = 0;
 
             this.add.text(0, 0, '', {fontFamily: 'lapsus_pro', fontSize: '50px', color: '#D4D75B'});
-        })
+
+            this.load.on('progress', i => {
+                tatu_girando.alpha = i;
+            })
+        }, this);
     }
 
     async loadFont(name, url) {
@@ -132,7 +140,7 @@ export default class TranslateManager extends Phaser.Scene {
             });
         }
 
-        this.scene.start('Preloads');
+        this.scene.start('Preloads', {tatuCarga: tatu_girando});
         console.log(this.contenido);
     }
 

@@ -6,6 +6,12 @@ export default class Preloads extends Phaser.Scene {
     constructor() {
         super("Preloads");
     }
+
+    init(data) {
+        this.load.on('progress', i => {
+            data.tatuCarga.alpha = i;
+        })
+    }
     
     async preload() {
 
@@ -45,6 +51,8 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("panel_pausa", "assets/hud/panel_pausa.png");
         this.load.image("panel_victoria", "assets/hud/panel_victoria.png");
         this.load.image("panel_derrota", "assets/hud/panel_derrota.png");
+
+        this.load.image("logo_inicio", "assets/hud/logo_inicio.png");
 
         this.load.image("lvl1zone1", "assets/hud/lvl1zone1.png");
         this.load.image("lvl2zone1", "assets/hud/lvl2zone1.png");

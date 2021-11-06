@@ -24,6 +24,8 @@ export default class Hud extends Phaser.Scene {
     private refreshIdiomas = [];
     private botones_idiomas = {ingles: null, portugues: null, espaniol: null};
 
+    private posible_tatu_girando;
+
     constructor(tiempo_inicial: number = 60) {
         super({ key: "hud" , active: true});
         this.tiempo_inicial = tiempo_inicial;
@@ -195,21 +197,11 @@ export default class Hud extends Phaser.Scene {
                     }
 
                     let texto;
+                    let anim_con_texto = false;
+                    let anim_type = '';
 
                     if (element.properties) {
                         element.properties.forEach(prop => {
-                            if (prop.name == "anim") {
-                                if (prop.value == "girar") {
-                                    this.tweens.add({
-                                        targets: obj,
-                                        angle: 360,
-                                        duration: 1000,
-                                        ease: 'Power1',
-                                        yoyo: true,
-                                        repeat: -1
-                                    });
-                                }
-                            }
                             if (prop.name == "depth_offset") {
                                 obj.setDepth(obj.depth + parseInt(prop.value));
                             }
@@ -284,7 +276,219 @@ export default class Hud extends Phaser.Scene {
                                     element.name == "titulo_idiomas" ? this.refreshIdiomas.push(texto): null;
                                 }
                             }
+                            if (prop.name == "anim") {
+                                if (element.properties.find(p => p.name === "text")) {
+                                    anim_con_texto = true;
+                                    anim_type = prop.value;
+                                }else {
+                                    if (prop.value == "girar") {
+                                        this.posible_tatu_girando = obj;
+                                        this.tweens.add({
+                                            targets: obj,
+                                            angle: 360,
+                                            duration: 1000,
+                                            ease: 'Power1',
+                                            yoyo: true,
+                                            repeat: -1
+                                        });
+                                    }else if (prop.value == "shake") {
+                                        obj.angle -= 7;
+                                        this.tweens.add({
+                                            targets: obj,
+                                            angle: 7,
+                                            duration: 450,
+                                            ease: 'Linear',
+                                            yoyo: true,
+                                            repeat: -1
+                                        });
+                                    }else if (prop.value == "come_from_left") {
+                                        obj.x -= 1000;
+                                        console.log(texto);
+                                        this.tweens.add({
+                                            targets: obj,
+                                            x: "+=1000",
+                                            duration: 500,
+                                            ease: 'Bounce',
+                                            yoyo: false,
+                                            repeat: 0
+                                        });
+                                    }else if (prop.value == "come_from_right") {
+                                        obj.x += 1000;
+                                        console.log(texto);
+                                        this.tweens.add({
+                                            targets: obj,
+                                            x: "-=1000",
+                                            duration: 500,
+                                            ease: 'Bounce',
+                                            yoyo: false,
+                                            repeat: 0
+                                        });
+                                    }else if (prop.value == "come_from_up") {
+                                        obj.y -= 1000;
+                                        console.log(texto);
+                                        this.tweens.add({
+                                            targets: obj,
+                                            y: "+=1000",
+                                            duration: 500,
+                                            ease: 'Bounce',
+                                            yoyo: false,
+                                            repeat: 0
+                                        });
+                                    }else if (prop.value == "come_from_down") {
+                                        obj.y += 1000;
+                                        console.log(texto);
+                                        this.tweens.add({
+                                            targets: obj,
+                                            y: "-=1000",
+                                            duration: 500,
+                                            ease: 'Bounce',
+                                            yoyo: false,
+                                            repeat: 0
+                                        });
+                                    }
+                                }
+                            }
                         });
+
+                        if (anim_con_texto) {
+                            if (anim_type == "girar") {
+                                this.posible_tatu_girando = obj;
+                                this.tweens.add({
+                                    targets: obj,
+                                    angle: 360,
+                                    duration: 1000,
+                                    ease: 'Power1',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                            }else if (anim_type == "shake") {
+                                obj.angle -= 7;
+                                this.tweens.add({
+                                    targets: obj,
+                                    angle: 7,
+                                    duration: 450,
+                                    ease: 'Linear',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                            }else if (anim_type == "come_from_left") {
+                                obj.x -= 1000;
+                                texto.x -= 1000;
+                                this.tweens.add({
+                                    targets: texto,
+                                    x: "+=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    x: "+=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                            }else if (anim_type == "come_from_right") {
+                                obj.x += 1000;
+                                texto.x += 1000;
+                                this.tweens.add({
+                                    targets: texto,
+                                    x: "-=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    x: "-=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                            }
+                            else if (anim_type == "come_from_up") {
+                                obj.y -= 1000;
+                                texto.y -= 1000;
+                                this.tweens.add({
+                                    targets: texto,
+                                    y: "+=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    y: "+=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                            }
+                            else if (anim_type == "come_from_down") {
+                                obj.y += 1000;
+                                texto.y += 1000;
+                                this.tweens.add({
+                                    targets: texto,
+                                    y: "-=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    y: "-=1000",
+                                    duration: 500,
+                                    ease: 'Bounce',
+                                    yoyo: false,
+                                    repeat: 0
+                                });
+                            }else if (anim_type == "bouncing") {
+                                obj.y -=100;
+                                texto.y -=100;
+                                this.tweens.add({
+                                    targets: texto,
+                                    y: "+=100",
+                                    duration: 400,
+                                    ease: 'Bounce',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    y: "+=100",
+                                    duration: 400,
+                                    ease: 'Bounce',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                            }else if (anim_type == "hovering") {
+                                obj.y -=100;
+                                texto.y -=100;
+                                this.tweens.add({
+                                    targets: texto,
+                                    y: "+=100",
+                                    duration: 400,
+                                    ease: 'Power1',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                                this.tweens.add({
+                                    targets: obj,
+                                    y: "+=100",
+                                    duration: 400,
+                                    ease: 'Power1',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                            }
+                        }
                     }
 
                     if (element.properties) {
