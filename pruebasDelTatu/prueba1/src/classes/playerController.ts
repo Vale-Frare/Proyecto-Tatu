@@ -167,6 +167,7 @@ export class Slider {
             }
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
+            if (data.armadillon) return;
             if(mini_bolita.tintTopLeft == 0x000000 && (data.deck.length-data.tiros) > 0){
                 AccionesBolitas.tiro(context.scene, data, data.lanzador.rotation - (Math.PI/2), acciones);
                 let sm: any = scene.scene.get("soundManager");

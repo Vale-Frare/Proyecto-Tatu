@@ -7,6 +7,9 @@ import SoundManager from '../scenes/soundManager';
 export class Matriz {
     static deckFromMatriz(matriz, data, pocos_grupos) {
         let deck = [];
+        deck.push(
+            {obj: null, type: 0, color: 5}
+        );
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         let indice = 0;
@@ -411,10 +414,43 @@ export class AccionesBolitas {
         
         let nivel_finalizado = true;
         let color_correcto = false;
+        let armadillon_mode = false;
+        let durabilidad_armadillon = 10;
+        let bolitas_rotas: number[] = [];
+        let grupos_afectados: number[] = [];
         let sm: any = scene.scene.get("soundManager");
+        let armadillon = false;
 
-        function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
-            
+        function recalcularGrupo(grupo: number) {
+            let matriz = [];
+            data.nivelCargado.forEach((fila_bolitas, index_fila) => {
+                let fila = [];
+                fila_bolitas.forEach((bolita_nivel, index) => {
+                    fila.push(null);
+                    if (bolita_nivel && bolita_nivel.grupo == grupo) {
+                        fila[index] = bolita_nivel.grupo;
+                    }else
+                    {fila[index] = -1}
+                });
+                matriz.push(fila);
+            }, scene);
+            matriz = Matriz.convertirAGrupos(matriz);
+            data.nivelCargado.forEach((fila_bolitas, index_fila) => {
+                fila_bolitas.forEach((bolita_nivel, index) => {
+                    if (data.nivelCargado[index_fila][index] && matriz[index_fila][index].grupo != 0) {
+                        data.nivelCargado[index_fila][index].grupo = matriz[index_fila][index].grupo;
+                        if (data.nivelCargado[index_fila][index].texto) data.nivelCargado[index_fila][index].texto.setText(matriz[index_fila][index].grupo);
+                    }
+                });
+            }, scene);
+        }
+
+        async function romperGrupoDeBolitasHexagonales(bola_level, bola_lanzada){
+            if (bolitas_rotas.includes(bola_level.id)) return;
+            if (!grupos_afectados.includes(bola_level.grupo)) {
+                grupos_afectados.push(bola_level.grupo);
+            }
+            bolitas_rotas.push(bola_level.id);
             bola_lanzada.emitter.followOffset.x += 2000;
             let emitter = bola_lanzada.emitter;
             new Promise((resolve, reject) => {
@@ -440,22 +476,51 @@ export class AccionesBolitas {
                                         }
                                     });
                                 }, scene);
+                                let fakebolita = scene.add.sprite(bolita.x, bolita.y, bolita.texture.key).setScale(bolita.scaleX, bolita.scaleY);
+                                bolita.destroy();
                                 scene.tweens.add({
-                                    targets: bolita,
-                                    rotation: Math.PI * 6,
-                                    alpha: 0,
-                                    duration: 1350 + (count * 150),
+                                    targets: fakebolita,
+                                    x: 540,
+                                    y: 1600,
+                                    duration: 300,
+                                    delay: count * 50,
                                     yoyo: false,
                                     ease: 'Linear',
                                     loop: 0,
                                     onComplete: function () {
-                                        bolita.destroy();
+                                        fakebolita.destroy();
+                                        sm.playSoundTatuChocaColorCorrecto();
                                     }
                                 });
                                 count++;
                             }
                         }
                     });
+                });
+            }else if (bola_lanzada.tintTopLeft == 0xCDCDCD) {
+                color_correcto = true;
+                armadillon_mode = true;
+                let fakebolita = scene.add.sprite(bola_level.x, bola_level.y, bola_level.texture.key).setScale(bola_level.scaleX, bola_level.scaleY).setAlpha(0.5);
+                bola_level.destroy();
+                data.nivelCargado.forEach(fila_bolitas => {
+                    fila_bolitas.forEach((bolita_nivel, index) => {
+                        if (bolita_nivel == bola_level) {
+                            fila_bolitas[index] = null;
+                        }
+                    });
+                }, scene);
+                scene.tweens.add({
+                    targets: fakebolita,
+                    x: 540,
+                    y: 1600,
+                    duration: 300,
+                    yoyo: false,
+                    ease: 'Linear',
+                    loop: 0,
+                    onComplete: function () {
+                        fakebolita.destroy();
+                        sm.playSoundTatuChocaColorCorrecto();
+                    }
                 });
             }
             //  vale: finalmente se rompe la bolita lanzada.
@@ -494,8 +559,77 @@ export class AccionesBolitas {
                 let progressManager : any = this.scene.get("ProgressManager");
                 progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
             }
-
-            bola_lanzada.destroy();
+            
+            if (!armadillon_mode) {
+                let bola_lanzada_fake = scene.add.sprite(bola_lanzada.x, bola_lanzada.y, bola_lanzada.texture.key).setTint(bola_lanzada.tintTopLeft).setScale(bola_lanzada.scaleX, bola_lanzada.scaleY);
+                bola_lanzada.destroy();
+                let pos = {x: 540, y: 1700};
+                if (bola_lanzada_fake.x > 540) {
+                    pos.x = 1180;
+                }else if (bola_lanzada_fake.x < 540) {
+                    pos.x = -100;
+                }
+                let prevY = bola_lanzada_fake.y;
+                scene.tweens.add({
+                    targets: bola_lanzada_fake,
+                    x: pos.x,
+                    y: '+=100',
+                    duration: 800,
+                    delay: 0,
+                    yoyo: false,
+                    ease: 'Linear',
+                    loop: 0,
+                    onStart: function () {
+                        bola_lanzada_fake.setDepth(-1);
+                        bola_lanzada_fake.anims.play('tatu_bebe_camina', true);
+                    },
+                    onUpdate: function () {
+                        bola_lanzada_fake.rotation = Phaser.Math.Angle.Between(bola_lanzada_fake.x, bola_lanzada_fake.y, pos.x, prevY + 100);
+                    },
+                    onComplete: function () {
+                        bola_lanzada_fake.destroy();
+                    }
+                });
+            }else {
+                durabilidad_armadillon -= 1;
+                if (durabilidad_armadillon == 0) {
+                    let bola_lanzada_fake = scene.add.sprite(bola_lanzada.x, bola_lanzada.y, bola_lanzada.texture.key).setTint(bola_lanzada.tintTopLeft).setScale(bola_lanzada.scaleX, bola_lanzada.scaleY);
+                    bola_lanzada.destroy();
+                    let pos = {x: 540, y: 1700};
+                    if (bola_lanzada_fake.x > 540) {
+                        pos.x = 1180;
+                    }else if (bola_lanzada_fake.x < 540) {
+                        pos.x = -100;
+                    }
+                    let prevY = bola_lanzada_fake.y;
+                    armadillon_mode = false;
+                    durabilidad_armadillon = 10;
+                    scene.tweens.add({
+                        targets: bola_lanzada_fake,
+                        x: pos.x,
+                        y: '+=100',
+                        duration: 800,
+                        delay: 0,
+                        yoyo: false,
+                        ease: 'Linear',
+                        loop: 0,
+                        onStart: function () {
+                            bola_lanzada_fake.setDepth(-1);
+                            bola_lanzada_fake.anims.play('armadillon_camina', true);
+                        },
+                        onUpdate: function () {
+                            bola_lanzada_fake.rotation = Phaser.Math.Angle.Between(bola_lanzada_fake.x, bola_lanzada_fake.y, pos.x, prevY + 100);
+                        },
+                        onComplete: function () {
+                            grupos_afectados.forEach(grupo => {
+                                recalcularGrupo(grupo);
+                            }, scene);
+                            data.armadillon = false;
+                            bola_lanzada_fake.destroy();
+                        }
+                    });
+                }
+            }
 
             if(color_correcto){
                 sm.playSoundTatuChocaColorCorrecto();
@@ -504,7 +638,8 @@ export class AccionesBolitas {
                 sm.playSoundTatuChocaColorIncorrecto();
             }
 
-            data.bolas_destruidas++;
+            if (!armadillon_mode) data.bolas_destruidas++;
+
             if(!nivel_finalizado && (data.deck.length-data.bolas_destruidas) == 0){
                 let hud: any = this.scene.get("hud");
                 hud.play_animacion("nodos_2");
@@ -524,7 +659,13 @@ export class AccionesBolitas {
         data.deckController.tirar();
         
         let bolita = new BolitaLanzada(scene, data.lanzador.x, data.lanzador.y, 0.265, data, rotacion).object;
-        bolita.anims.play('tatu_bebe');
+        if (data.burbujas[data.deck[data.bolitaALanzar].color].color == 0xCDCDCD) {
+            bolita.anims.play('armadillon');
+            bolita.setBounce(1);
+            data.armadillon = true;
+        }else {
+            bolita.anims.play('tatu_bebe');
+        }
         bolita.setTint(data.burbujas[data.deck[data.bolitaALanzar].color].color);
 
         data.bolitas.push(bolita);
@@ -537,7 +678,11 @@ export class AccionesBolitas {
             fila_bolitas.forEach(bolita_nivel => {
                 //  vale: hice otra modificacion para que no intente leer las bolitas que son null.
                 if (bolita_nivel === null) {} else {
-                    bolita_nivel.collider = scene.physics.add.collider(bolita_nivel, bolita, romperGrupoDeBolitasHexagonales, null, scene);
+                    if (data.burbujas[data.deck[data.bolitaALanzar].color].color == 0xCDCDCD) {
+                        bolita_nivel.collider = scene.physics.add.overlap(bolita_nivel, bolita, romperGrupoDeBolitasHexagonales, null, scene);
+                    }else {
+                        bolita_nivel.collider = scene.physics.add.collider(bolita_nivel, bolita, romperGrupoDeBolitasHexagonales, null, scene);
+                    }
                 }
             });
         }, scene);

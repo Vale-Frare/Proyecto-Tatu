@@ -29,6 +29,8 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("basura_3", "assets/img/basura_3.png");
         this.load.spritesheet("tatu_bebe", "assets/img/tatu_bebe.png", {frameHeight: 400, frameWidth: 400});
         this.load.spritesheet("tatu_bebe_camina", "assets/img/tatu_bebe_camina.png", {frameHeight: 400, frameWidth: 591});
+        this.load.spritesheet("armadillon", "assets/img/armadillon.png", {frameHeight: 476, frameWidth: 400});
+        this.load.spritesheet("armadillon_camina", "assets/img/armadillon_camina.png", {frameHeight: 400, frameWidth: 606});
 
         this.load.image("basurita_0", "assets/img/basuritas/0.png");
         this.load.image("basurita_1", "assets/img/basuritas/1.png");
@@ -115,6 +117,20 @@ export default class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "tatu_bebe_camina",
             frames: this.anims.generateFrameNumbers("tatu_bebe_camina", {start: 0, end: 1}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "armadillon",
+            frames: this.anims.generateFrameNumbers("armadillon", {start: 0, end: 6}),
+            frameRate: 30,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "armadillon_camina",
+            frames: this.anims.generateFrameNumbers("armadillon_camina", {start: 0, end: 1}),
             frameRate: 10,
             repeat: -1
         });

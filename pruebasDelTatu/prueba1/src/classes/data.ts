@@ -1,6 +1,8 @@
 export default class Data {
     pausa: boolean = false;
 
+    armadillon: boolean = false;
+
     slider;
 
     deckController;
@@ -24,7 +26,8 @@ export default class Data {
         {color: 0xFAFF19},   //  Amarello
         {color: 0xFF1919},   //  Roujo
         {color: 0xFF8404},   //  Naranja
-        {color: 0x04FF20}    //  Verde
+        {color: 0x04FF20},   //  Verde
+        {color: 0xCDCDCD}    //  Gris 5 - Arnadillon
     ];
 
 

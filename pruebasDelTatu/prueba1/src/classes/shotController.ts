@@ -54,6 +54,44 @@ export class shotController {
         });
     }
 
+    ripArmadillo(armadillo) {
+        let bola_lanzada_fake = this.scene.add.sprite(armadillo.x, armadillo.y, armadillo.texture.key).setTint(armadillo.tintTopLeft).setScale(armadillo.scaleX, armadillo.scaleY);
+        armadillo.destroy();
+        let pos = {x: 540, y: 1700};
+        if (bola_lanzada_fake.x > 540) {
+            pos.x = 1180;
+        }else if (bola_lanzada_fake.x < 540) {
+            pos.x = -100;
+        }
+        let prevY = bola_lanzada_fake.y;
+        let contexto = this;
+        this.scene.tweens.add({
+            targets: bola_lanzada_fake,
+            x: pos.x,
+            y: '+=100',
+            duration: 800,
+            delay: 0,
+            yoyo: false,
+            ease: 'Linear',
+            loop: 0,
+            onStart: function () {
+                bola_lanzada_fake.setDepth(-1);
+                if (armadillo.tintTopLeft == 0xCDCDCD) {
+                    contexto.data.armadillon = false;
+                    bola_lanzada_fake.anims.play('armadillon_camina', true);
+                }else {
+                    bola_lanzada_fake.anims.play('tatu_bebe_camina', true);
+                }
+            },
+            onUpdate: function () {
+                bola_lanzada_fake.rotation = Phaser.Math.Angle.Between(bola_lanzada_fake.x, bola_lanzada_fake.y, pos.x, prevY + 100);
+            },
+            onComplete: function () {
+                bola_lanzada_fake.destroy();
+            }
+        });
+    }
+
     private onBounce(a) {
 
         let ang_rebote = Math.atan2(a.body.velocity.y/a.velocidad, a.body.velocity.x/a.velocidad);
@@ -85,7 +123,7 @@ export class shotController {
         a.emitter = _;
         this.bounces++;
         if (this.bounces >= 5) {
-            a.destroy();
+            this.ripArmadillo(a);
             this.data.bolas_destruidas++;
 
             this.data.nivelCargado.forEach(fila => {

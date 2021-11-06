@@ -115,6 +115,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     cargarNivelNuevo() {
+        let idGen = this.idGenerator();
         let progressManager: any = this.scene.get("ProgressManager");
 
         let nivelYColisionables = this.cargarNivelDesdeTiled(progressManager.getLevelToPlay());
@@ -162,6 +163,7 @@ export default class Scene1 extends Phaser.Scene {
                     if (Matriz.esPar(y)) {
                         let bolita = new Bolita(
                             this,
+                            idGen.next().value,
                             x,
                             y,
                             ancho,
@@ -176,6 +178,7 @@ export default class Scene1 extends Phaser.Scene {
                     }else {
                         let bolita = new Bolita(
                             this,
+                            idGen.next().value,
                             x,
                             y,
                             ancho,
@@ -200,5 +203,11 @@ export default class Scene1 extends Phaser.Scene {
         //  vale: se guardan los valores de los grupos en una matriz aparte.
         data.nivelCargadoGrupos = nivel;
     }
-    
+
+    *idGenerator() {
+        var id = 1;
+        while (true) {
+            yield id++;
+        }
+    }
 }

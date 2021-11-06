@@ -8,7 +8,7 @@ export class Bolita {
     x: number = 0;
     y: number = 0;
 
-    constructor(scene, x, y, ancho=0, alto=0, bolitasTexturas=[], nivel=[], anchoBasura=0, altoBasura=0, inpar = false) {
+    constructor(scene, id, x, y, ancho=0, alto=0, bolitasTexturas=[], nivel=[], anchoBasura=0, altoBasura=0, inpar = false) {
         if (inpar) {
             this.x = (x * ancho) + ancho;
         }else {
@@ -17,16 +17,18 @@ export class Bolita {
         this.y = (y * (alto/100*75)) + (alto/2);
         this.object = scene.physics.add.sprite(this.x, this.y, bolitasTexturas[nivel[y][x].color]);
 
+        this.object.posEnMatriz = {x: x, y: y};
         this.object.setScale(anchoBasura,altoBasura);
         this.object.depth = -1;
         this.object.grupo = nivel[y][x].grupo;
+        this.object.id = id;
         this.object.body.setImmovable(true);
         this.object.body.setCircle((this.object.width*.5) - 30);
         this.object.body.offset.y = 30;
         this.object.body.offset.x = 30;
         this.object.body.moves = false;
 
-        if (Config.config.physics.arcade.debug) scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'lighter 65px Arial', color: 'white', stroke: '#000', strokeThickness: 8}).setOrigin(0.5);
+        if (Config.config.physics.arcade.debug) this.object.texto = scene.add.text(this.object.x, this.object.y, `${nivel[y][x].grupo}`, { font: 'lighter 65px Arial', color: 'white', stroke: '#000', strokeThickness: 8}).setOrigin(0.5);
     }
 }
 
@@ -181,7 +183,11 @@ export class BolitaDeck2 {
                     ease: 'Power1',
                     loop: 0,
                     onStart: function () {
-                        if (!bolita.anims.isPlaying) bolita.anims.play('tatu_bebe_camina', true);
+                        if (bolita.tintTopLeft == 0xCDCDCD) {
+                            if (!bolita.anims.isPlaying) bolita.anims.play('armadillon_camina', true);
+                        }else {
+                            if (!bolita.anims.isPlaying) bolita.anims.play('tatu_bebe_camina', true);
+                        }
                     }
                 });
                 
@@ -197,6 +203,10 @@ export class BolitaDeck2 {
 
     agregarBolita(scene, data, scale, color, key = 'tatu_bebe') {
         let bolita = scene.add.sprite(-1800, this.y, key);
+        if (color == 0xCDCDCD) {
+            bolita.anims.play('armadillon', false);
+            bolita.anims.pause();
+        }
         bolita.setTint(color);
         bolita.setDepth(4);
         bolita.setScale(scale);

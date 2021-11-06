@@ -7,7 +7,7 @@ let boton_continuar;
 let texto_continuar;
 
 export default class TranslateManager extends Phaser.Scene {
-    public lang = 'es_AR'
+    public lang = 'en_US'
     public contenido = {
         'es_AR': {
             'key': 'texto',
@@ -82,7 +82,21 @@ export default class TranslateManager extends Phaser.Scene {
 
     constructor() {
         super({key:'TranslateManager', active: true});
-        this.lang = localStorage.getItem('lang') || 'es_AR';
+        this.lang = localStorage.getItem('lang') || this.getLangFromNavigator();
+        console.log(navigator.language.substring(0, 2));
+    }
+
+    getLangFromNavigator() {
+        const langs = {
+            'es': 'es_AR',
+            'en': 'en_US',
+            'pt': 'pt_BR'
+        }
+        if (langs[navigator.language.substring(0, 2)]){
+            return langs[navigator.language.substring(0, 2)];
+        }else {
+            return 'en_US';
+        }
     }
 
     async preload(){

@@ -765,8 +765,12 @@ export default class Hud extends Phaser.Scene {
     }
 
     HEXToVBColor(rrggbb) {
-        var bbggrr = rrggbb.substr(5, 3) + rrggbb.substr(3, 3) + rrggbb.substr(1, 3);
-        return parseInt(bbggrr, 16);
+        try{
+            var bbggrr = rrggbb.substr(5, 3) + rrggbb.substr(3, 3) + rrggbb.substr(1, 3);
+            return parseInt(bbggrr, 16);
+        }catch(e) {
+            return 0xCDCDCD;
+        }
     }
 
     mostrarHud(key: string) {
