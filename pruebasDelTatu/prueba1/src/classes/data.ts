@@ -62,7 +62,8 @@ export default class Data {
         0xFAFF19: 'basurita_4', //  AMARILLO
         0xFF1919: 'basurita_1', //  ROJA
         0xFF8404: 'basurita_2', //  NARANJA
-        0x04FF20: 'basurita_0' //   VERDE
+        0x04FF20: 'basurita_0', //   VERDE
+        0xCDCDCD: 'armadillon'
     };
 
     bolitasTextYColors = {
@@ -70,7 +71,8 @@ export default class Data {
         'basurita_4': 0xFAFF19, //  AMARILLO
         'basurita_1': 0xFF1919, //  ROJA
         'basurita_2': 0xFF8404, //  NARANJA
-        'basurita_0': 0x04FF20 //   VERDE
+        'basurita_0': 0x04FF20, //  VERDE`
+        'armadillon': 0xCDCDCD //   ARMADILLON
     };
 
     bolitasTextYColorsInt = {
@@ -78,7 +80,8 @@ export default class Data {
         'basurita_4': 1, //  AMARILLO
         'basurita_1': 2, //  ROJA
         'basurita_2': 3, //  NARANJA
-        'basurita_0': 4 //   VERDE
+        'basurita_0': 4, //   VERDE
+        'armadillon': 5 //   ARMADILLON
     };
 
     tatusTextYColors = {

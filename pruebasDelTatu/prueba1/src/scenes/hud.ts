@@ -86,7 +86,7 @@ export default class Hud extends Phaser.Scene {
             this.un_segundo += 1000;
 
             let tm: any = this.scene.get('TranslateManager');
-            this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} ${this.tiempo_inicial}`);
+            this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  ${this.tiempo_inicial}`);
         }
         else{
             if(this.tiempo_inicial <= 0){
@@ -359,10 +359,27 @@ export default class Hud extends Phaser.Scene {
                                     yoyo: true,
                                     repeat: -1
                                 });
+                                this.tweens.add({
+                                    targets: texto,
+                                    angle: 360,
+                                    duration: 1000,
+                                    ease: 'Power1',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
                             }else if (anim_type == "shake") {
                                 obj.angle -= 7;
+                                texto.angle -= 7;
                                 this.tweens.add({
                                     targets: obj,
+                                    angle: 7,
+                                    duration: 450,
+                                    ease: 'Linear',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                                this.tweens.add({
+                                    targets: texto,
                                     angle: 7,
                                     duration: 450,
                                     ease: 'Linear',
@@ -482,6 +499,26 @@ export default class Hud extends Phaser.Scene {
                                     y: "+=100",
                                     duration: 400,
                                     ease: 'Power1',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                            }
+                            else if (anim_type == "scale") {
+                                obj.setScale(1.1);
+                                texto.setScale(1.1);
+                                this.tweens.add({
+                                    targets: obj,
+                                    scale: 1,
+                                    duration: 450,
+                                    ease: 'Linear',
+                                    yoyo: true,
+                                    repeat: -1
+                                });
+                                this.tweens.add({
+                                    targets: texto,
+                                    scale: 1,
+                                    duration: 450,
+                                    ease: 'Linear',
                                     yoyo: true,
                                     repeat: -1
                                 });
@@ -1111,7 +1148,7 @@ export default class Hud extends Phaser.Scene {
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
         let tm: any = this.scene.get('TranslateManager');
-        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} 60`);
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  60`);
         scene.scene.restart();
         this.play_animacion_invertida("nodos_2", true);
         this.reactivar_todo();
@@ -1127,7 +1164,7 @@ export default class Hud extends Phaser.Scene {
         this.tiempo_inicial = 60;
         this.un_segundo = 1000;
         let tm: any = this.scene.get('TranslateManager');
-        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')} 60`);
+        this.texto_tiempo.setText(`${tm.getTextoEnLenguajeActual('hud.tiempo')}  60`);
         scene.scene.restart();
         this.play_animacion_invertida("nodos_0", true);
         this.reactivar_todo();

@@ -4,7 +4,6 @@ import Config from '../config';
 import {Bolita, BolitaDeck2} from '../classes/prefabs'
 import {Matriz, Aleatorizadores} from '../classes/helpers';
 import {Slider} from '../classes/playerController';
-import ProgressManager from './progressManager';
 
 let data: Data = null;
 

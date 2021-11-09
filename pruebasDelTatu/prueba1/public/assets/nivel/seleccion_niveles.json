@@ -293,7 +293,7 @@
                         {
                          "name":"anim",
                          "type":"string",
-                         "value":"bouncing"
+                         "value":"scale"
                         }, 
                         {
                          "name":"text",
@@ -325,7 +325,7 @@
                  "visible":true,
                  "width":580,
                  "x":254,
-                 "y":194
+                 "y":206
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -350,7 +350,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {

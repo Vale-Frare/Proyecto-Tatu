@@ -1,15 +1,11 @@
 import Phaser from 'phaser';
 import {BolitaLanzada} from '../classes/prefabs';
 import {shotController} from '../classes/shotController';
-import Hud from '../scenes/hud';
-import SoundManager from '../scenes/soundManager';
 
 export class Matriz {
-    static deckFromMatriz(matriz, data, pocos_grupos) {
+    static deckFromMatriz(matriz, data, pocos_grupos, armadillon = false) {
         let deck = [];
-        deck.push(
-            {obj: null, type: 0, color: 5}
-        );
+        let nivelArmadillom = armadillon;
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         let indice = 0;
@@ -21,6 +17,12 @@ export class Matriz {
                             deck.push(
                                 {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
                             );
+                            if (nivelArmadillom) {
+                                deck.push(
+                                    {obj: null, type: 0, color: 5}
+                                );
+                                nivelArmadillom = false;
+                            }
                             if(pocos_grupos){
                                 if(indice != 0){
                                     deck.push(
@@ -421,6 +423,20 @@ export class AccionesBolitas {
         let sm: any = scene.scene.get("soundManager");
         let armadillon = false;
 
+        function comprobar_victoria() {
+            let ganaste = false;
+            data.nivelCargado.forEach(fila => {
+                fila.forEach(elemento => {
+                    if (elemento) {
+                        ganaste = false;
+                    }else {
+                        ganaste = true;
+                    }
+                });
+            });
+            return ganaste;
+        }
+
         function recalcularGrupo(grupo: number) {
             let matriz = [];
             data.nivelCargado.forEach((fila_bolitas, index_fila) => {
@@ -547,7 +563,9 @@ export class AccionesBolitas {
                         }
                     }
                 })
-            })
+            });
+            colores.push('armadillon');
+            console.log(colores);
             data.deckController.reemplazarColor(colores);
             if(nivel_finalizado){
                 let hud: any = this.scene.get("hud");
@@ -626,6 +644,16 @@ export class AccionesBolitas {
                             }, scene);
                             data.armadillon = false;
                             bola_lanzada_fake.destroy();
+                            if (comprobar_victoria()) {
+                                let hud: any = this.scene.get("hud");
+                                hud.play_animacion("nodos_1");
+                                hud.cambiar_boton_niveles();
+                                data.pausa = true;
+                                sm.stopMusicPocoTiempo();
+                                sm.playMusic("victoria", 0.1, false);
+                                let progressManager : any = this.scene.get("ProgressManager");
+                                progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
+                            }
                         }
                     });
                 }

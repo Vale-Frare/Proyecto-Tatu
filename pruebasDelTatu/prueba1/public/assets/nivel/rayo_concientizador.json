@@ -196,7 +196,7 @@
                         {
                          "name":"anim",
                          "type":"string",
-                         "value":"hovering"
+                         "value":"scale"
                         }, 
                         {
                          "name":"text",
@@ -280,7 +280,7 @@
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":120,
  "tilesets":[
         {

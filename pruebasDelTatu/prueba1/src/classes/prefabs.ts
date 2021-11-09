@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Config from '../config';
 import { Matriz } from '../classes/helpers';
-import ProgressManager from '../scenes/progressManager';
 
 export class Bolita {
     object: any;
@@ -159,13 +158,11 @@ export class BolitaDeck2 {
 
         if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1"){
             data.deck = Matriz.deckFromMatriz(matriz, data, true);
-        }
-        else{
+        }else if (this.pm.level_to_play == "lvl5zone1") {
+            data.deck = Matriz.deckFromMatriz(matriz, data, false, true);
+        }else{
             data.deck = Matriz.deckFromMatriz(matriz, data, false);
         }
-
-        // let deck = Matriz.deckFromMatriz(matriz, data);
-        // data.deck = deck;
 
         data.deck.forEach((element, index) => {
             element.obj = this.agregarBolita(scene, data, scale, data.burbujas[element.color].color);
@@ -230,10 +227,10 @@ export class BolitaDeck2 {
                         cont++;
                     }
                 })
-                if(cont == 0){
+                if(cont == 0 && bolita.obj.tintTopLeft != 0xCDCDCD){
                     let _ = coloresNuevos[Phaser.Math.Between(0,coloresNuevos.length-1)];
                     let scene = this.scene;
-                    let colorI = this.data.bolitasTextYColors[_];
+                    let colorI = this.data.bolitasTextYColors[_ == 'armadillon' ? coloresNuevos.filter(elemento => {elemento != 'armadillon'})[0] : _];
                     this.scene.tweens.addCounter({
                         from: -bolita.obj.scale,
                         to: bolita.obj.scale,
