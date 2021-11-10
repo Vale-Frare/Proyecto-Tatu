@@ -6,6 +6,7 @@ export default class SoundManager extends Phaser.Scene{
     private musica_poco_tiempo;
     private sonido_tatu_rodando;
     private sonido_tatu_lanzado;
+    private sonido_boton;
     private sonido_tatu_choca_color_correcto;
     private sonido_tatu_choca_color_incorrecto;
     private mute_sound: boolean = false;
@@ -67,7 +68,12 @@ export default class SoundManager extends Phaser.Scene{
 
     playMusicPocoTiempo(){
         this.musica_poco_tiempo = this.sound.add("poco_tiempo", {volume: 0.2, loop: true});
-        this.musica_poco_tiempo.play();
+        if(this.mute_music){
+            this.musica_poco_tiempo.pause();
+        }
+        else{
+            this.musica_poco_tiempo.play();
+        }
     }
 
     stopMusicPocoTiempo(){
@@ -77,32 +83,53 @@ export default class SoundManager extends Phaser.Scene{
     }
 
     playSoundTatuRodando(){
-        this.sonido_tatu_rodando = this.sound.add("tatu_rodando", {volume: this.volumenFunction(), loop: true});
+        this.sonido_tatu_rodando = this.sound.add("tatu_rodando", {volume: this.volumenFunction(0.3), loop: true});
         this.sonido_tatu_rodando.play();
     }
 
     playSoundTatuLanzado(){
-        this.sonido_tatu_lanzado = this.sound.add("tatu_lanzado", {volume: this.volumenFunction(), loop: false});
+        this.sonido_tatu_lanzado = this.sound.add("tatu_lanzado", {volume: this.volumenFunction(0.3), loop: false});
         this.sonido_tatu_lanzado.play();
     }
 
+    playSoundBoton(){
+        this.sonido_boton = this.sound.add("sonido_boton", {volume: this.volumenFunction(0.05), loop: false});
+        this.sonido_boton.play();
+    }
+
+    playSoundBotonSound(){
+        this.sonido_boton = this.sound.add("sonido_boton", {volume: this.volumenFunctionBtnSound(0.05), loop: false});
+        this.sonido_boton.play();
+    }
+
     playSoundTatuChocaColorCorrecto(){
-        this.sonido_tatu_choca_color_correcto = this.sound.add("tatu_choca_color_correcto", {volume: this.volumenFunction(), loop: false});
+        this.sonido_tatu_choca_color_correcto = this.sound.add("tatu_choca_color_correcto", {volume: this.volumenFunction(0.3), loop: false});
         this.sonido_tatu_choca_color_correcto.play();
     }
 
     playSoundTatuChocaColorIncorrecto(){
-        this.sonido_tatu_choca_color_incorrecto = this.sound.add("tatu_choca_color_incorrecto", {volume: this.volumenFunction(), loop: false});
+        this.sonido_tatu_choca_color_incorrecto = this.sound.add("tatu_choca_color_incorrecto", {volume: this.volumenFunction(0.3), loop: false});
         this.sonido_tatu_choca_color_incorrecto.play();
     }
 
-    volumenFunction(){
+    volumenFunction(vol){
         let volumen;
         if(!this.mute_sound){
-            volumen = 0.3;
+            volumen = vol;
         }
         else{
             volumen = 0;
+        }
+        return volumen;
+    }
+
+    volumenFunctionBtnSound(vol){
+        let volumen;
+        if(!this.mute_sound){
+            volumen = 0;
+        }
+        else{
+            volumen = vol;
         }
         return volumen;
     }

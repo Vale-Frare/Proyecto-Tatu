@@ -3,6 +3,7 @@ export class translateHelper {
         return new Promise((resolve, reject) => {
             let apiFede = `https://traduci-la.herokuapp.com/rest/translation?project_id=ckvhrn33h12221nyg31y1zv6f&lang=${lang}`;
             let apiFrase = `https://voluminouslegalmeasurements.frasesegundo.repl.co/tatudb/?lang=${lang}`;
+            let archivoEs = `assets/lang/es_AR.json`;
 
             fetch(apiFede).then((response) => {
                 return response.json();
@@ -15,7 +16,13 @@ export class translateHelper {
                 }).then((data) => {
                     console.log(data);
                     resolve(data);
-                }); 
+                }).catch((error) => {
+                   // si no anda ninguna api
+                   fetch(archivoEs).then((response) => response.json()).then((data) => {
+                       console.log(data);
+                       resolve(data);
+                   });
+                });; 
             });
         }).catch((error) => {
             console.log(error, "auch");

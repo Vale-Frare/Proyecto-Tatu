@@ -102,39 +102,6 @@ export class BolitaLanzada {
     }
 }
 
-export class BolitaDeck {
-    object: Phaser.GameObjects.Sprite;
-    lastX: number;
-    x: number = 0;
-    y: number = 0;
-    nextBolita: number = 0;
-    data: any;
-    scene: any;
-    scale: any;
-
-    constructor(scene, scale, data) {
-        for(let i = data.deck.length - 1; i > -1; i--) {
-            this.object = scene.add.sprite(900 - (i * 300),1800,'tatu_bebe');
-            this.object.setTint(data.burbujas[data.deck[i].color].color);
-            data.setObjInDeck(this.object, i);
-            this.object.setDepth(5);
-            this.object.setScale(scale);
-            this.nextBolita = i;
-            this.data = data;
-            this.scene = scene;
-            this.scale = scale;
-        }
-    }
-
-    agregrarBolita(color, data) {
-        let object = this.scene.add.sprite(data.deck[data.deck.length - 1].obj.x - 300,1800,'tatu_bebe');
-        object.setScale(this.scale);
-        object.setTint(data.burbujas[color].color);
-
-        data.deck.push({obj: object, type: 0, color: color});
-    }
-}
-
 export class BolitaDeck2 {
     bolitas: any;
     lastX: number;
@@ -153,6 +120,8 @@ export class BolitaDeck2 {
         this.data = data;
         this.scene = scene;
         this.scale = scale;
+
+        console.log(this.scale);
 
         this.pm = this.scene.scene.get('ProgressManager');
 
@@ -237,8 +206,8 @@ export class BolitaDeck2 {
                     let scene = this.scene;
                     let colorI = this.data.bolitasTextYColors[_filtrado];
                     this.scene.tweens.addCounter({
-                        from: -bolita.obj.scale,
-                        to: bolita.obj.scale,
+                        from: -0.3,
+                        to: 0.3,
                         ease: 'Cubic',
                         duration: 500,
                         onUpdate: function (tween)

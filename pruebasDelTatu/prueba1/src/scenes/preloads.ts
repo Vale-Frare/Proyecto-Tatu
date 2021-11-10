@@ -86,6 +86,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.audio("tatu_rodando", "assets/audio/tatu_rodando.mp3");
         this.load.audio("victoria", "assets/audio/victoria.mp3");
         this.load.audio("main_menu", "assets/audio/main_menu.mp3");
+        this.load.audio("sonido_boton", "assets/audio/sonido_boton.mp3");
 
         this.load.image("panel_idioma", "assets/hud/panel_idioma.png");
         this.load.image("boton_espaniol", "assets/hud/boton_espaniol.png");

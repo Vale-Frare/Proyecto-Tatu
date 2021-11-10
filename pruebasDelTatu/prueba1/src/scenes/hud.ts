@@ -115,20 +115,6 @@ export default class Hud extends Phaser.Scene {
 
     }
 
-    agregarCero(numero){
-
-        let resultado = '';
-        if(numero > 9){
-            resultado = resultado + numero;
-        }
-        else{
-            resultado = '0' + numero;
-        }
-
-        return resultado;
-
-    }
-
     mostrarHudPosta(key: string) {
         let hudAMostrarLayers = JSON.parse(localStorage.getItem(key)).layers;
         let hudAMostrar = JSON.parse(localStorage.getItem(key));
@@ -691,6 +677,7 @@ export default class Hud extends Phaser.Scene {
                                         yoyo: false,
                                         repeat: 0,
                                         onStart: () => {
+                                            this.sm.playSoundBoton();
                                             if (initial_pos.length == 0) {
                                                 grupos[animation_id].forEach(element => {
                                                     initial_pos.push({x: element.x, y: element.y});
@@ -718,6 +705,13 @@ export default class Hud extends Phaser.Scene {
                                             initial_pos = [];
                                         }
                                     });
+                                }
+                            }else {
+                                if(element.name != 'sonido_2'){
+                                    this.sm.playSoundBoton();
+                                }
+                                else{
+                                    this.sm.playSoundBotonSound();
                                 }
                             }
                         });
@@ -899,6 +893,7 @@ export default class Hud extends Phaser.Scene {
             let scene = this.scene.get("Scene1");
 
             this.sm.playMusic("main_menu", 0.1, true);
+            this.sm.stopMusicPocoTiempo();
 
             this.mostrarHud("seleccion_niveles");
             scene.scene.switch("SceneLvlSelect");
@@ -1119,7 +1114,6 @@ export default class Hud extends Phaser.Scene {
         this.texto_acciones ? this.texto_acciones.destroy(): null;
         this.texto_tiempo ? this.texto_tiempo.destroy(): null;
         this.texto_acciones = null;
-        // ACA SE CAMBIA EL TESTO
         this.texto_tiempo = this.add.text(532, 50, '', { fontFamily: 'franklin_gothic_heavy', fontSize: '50px', color: '#D4D75B'}).setOrigin(0.5).setDepth(5);
         this.blur ? this.blur.destroy(): null;
         this.blur = this.add.sprite(0, 0,'blur').setOrigin(0).setDepth(3).setVisible(true).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY);
@@ -1172,6 +1166,7 @@ export default class Hud extends Phaser.Scene {
         this.blur_off();
         this.dato.pausa = false;
         this.hacer_una_vez = true;
+        this.sm.stopMusicPocoTiempo();
     }
 
     seleccion_niveles() {

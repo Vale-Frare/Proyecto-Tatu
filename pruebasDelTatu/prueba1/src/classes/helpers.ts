@@ -6,7 +6,7 @@ export class Matriz {
     static deckFromMatriz(matriz, data, pocos_grupos, armadillon = false) {
         let deck = [];
         let nivelArmadillom = armadillon;
-        let armadillonC = 5;
+        let armadillonC = 1;
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         let indice = 0;
@@ -427,14 +427,21 @@ export class AccionesBolitas {
         let sm: any = scene.scene.get("soundManager");
         let armadillon = false;
 
-        function comprobar_victoria() {
+        async function comprobar_victoria() {
             let ganaste = false;
+            let terminar = false;
             data.nivelCargado.forEach(fila => {
                 fila.forEach(elemento => {
-                    if (elemento) {
+                    if (terminar) {
                         ganaste = false;
-                    }else {
-                        ganaste = true;
+                    }
+                    else {
+                        if (elemento) {
+                            terminar = true;
+                            return false;
+                        }else {
+                            ganaste = true;
+                        }
                     }
                 });
             });
@@ -571,7 +578,6 @@ export class AccionesBolitas {
                 })
             });
             colores.push('armadillon');
-            console.log(colores);
             data.deckController.reemplazarColor(colores);
             if(nivel_finalizado){
                 let hud: any = this.scene.get("hud");
@@ -616,6 +622,17 @@ export class AccionesBolitas {
                 });
             }else {
                 durabilidad_armadillon -= 1;
+                let _ = await comprobar_victoria();
+                if (_) {
+                    let hud: any = scene.scene.get("hud");
+                    hud.play_animacion("nodos_1");
+                    hud.cambiar_boton_niveles();
+                    data.pausa = true;
+                    sm.stopMusicPocoTiempo();
+                    sm.playMusic("victoria", 0.1, false);
+                    let progressManager : any = this.scene.get("ProgressManager");
+                    progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
+                }
                 if (durabilidad_armadillon == 0) {
                     let bola_lanzada_fake = scene.add.sprite(bola_lanzada.x, bola_lanzada.y, bola_lanzada.texture.key).setTint(bola_lanzada.tintTopLeft).setScale(bola_lanzada.scaleX, bola_lanzada.scaleY);
                     bola_lanzada.destroy();
@@ -644,13 +661,14 @@ export class AccionesBolitas {
                         onUpdate: function () {
                             bola_lanzada_fake.rotation = Phaser.Math.Angle.Between(bola_lanzada_fake.x, bola_lanzada_fake.y, pos.x, prevY + 100);
                         },
-                        onComplete: function () {
+                        onComplete: async function () {
                             grupos_afectados.forEach(grupo => {
                                 recalcularGrupo(grupo);
                             }, scene);
                             data.armadillon = false;
                             bola_lanzada_fake.destroy();
-                            if (comprobar_victoria()) {
+                            let _ = await comprobar_victoria();
+                            if (_) {
                                 let hud: any = scene.scene.get("hud");
                                 hud.play_animacion("nodos_1");
                                 hud.cambiar_boton_niveles();
@@ -721,7 +739,8 @@ export class AccionesBolitas {
             });
         }, scene);
 
-        new shotController(data, scene, bolita, nivel_finalizado);
+        console.log(grupos_afectados);
+        new shotController(data, scene, bolita, nivel_finalizado, grupos_afectados);
 
         data.tiros++;
 

@@ -97,9 +97,7 @@ export default class ProgressManager extends Phaser.Scene {
 
     winLevel(zone: string, level: number) {
         if (this.progress.zones[zone].current === `lvl5`) {
-            // if (this.progress.current < 4) {
-            //     this.progress.current++;
-            // }
+            
         }else {
             if (this.progress.zones[zone].current === `lvl${level}`) {
                 this.progress.zones[zone].current = `lvl${level + 1}`;

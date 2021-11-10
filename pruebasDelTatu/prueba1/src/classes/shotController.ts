@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Hud from '../scenes/hud';
 import SoundManager from '../scenes/soundManager';
+import { Matriz } from './helpers';
 
 export class shotController {
 
@@ -11,8 +12,9 @@ export class shotController {
     private bolita;
     private scene;
     private nivel_finalizado;
+    private grupos_afectados;
 
-    constructor(data, scene, bolita, nivel_finalizado, overlaps = []) {
+    constructor(data, scene, bolita, nivel_finalizado, grupos_afectados, overlaps = []) {
         this.overlaps = overlaps;
         this.paDespues = this.paDespues;
         this.bounces = 0;
@@ -20,6 +22,7 @@ export class shotController {
         this.scene = scene;
         this.bolita = bolita;
         this.nivel_finalizado = nivel_finalizado;
+        this.grupos_afectados = grupos_afectados;
 
         this.colisionesBordes();
     }
@@ -54,6 +57,52 @@ export class shotController {
         });
     }
 
+    recalcularGrupo(grupo: number) {
+        console.log("se hace");
+        let matriz = [];
+        this.data.nivelCargado.forEach((fila_bolitas, index_fila) => {
+            let fila = [];
+            fila_bolitas.forEach((bolita_nivel, index) => {
+                fila.push(null);
+                if (bolita_nivel && bolita_nivel.grupo == grupo) {
+                    fila[index] = bolita_nivel.grupo;
+                }else
+                {fila[index] = -1}
+            });
+            matriz.push(fila);
+        }, this.scene);
+        matriz = Matriz.convertirAGrupos(matriz);
+        this.data.nivelCargado.forEach((fila_bolitas, index_fila) => {
+            fila_bolitas.forEach((bolita_nivel, index) => {
+                if (this.data.nivelCargado[index_fila][index] && matriz[index_fila][index].grupo != 0) {
+                    this.data.nivelCargado[index_fila][index].grupo = matriz[index_fila][index].grupo;
+                    if (this.data.nivelCargado[index_fila][index].texto) this.data.nivelCargado[index_fila][index].texto.setText(matriz[index_fila][index].grupo);
+                }
+            });
+        }, this.scene);
+    }
+
+    comprobar_victoria() {
+        let ganaste = false;
+            let terminar = false;
+            this.data.nivelCargado.forEach(fila => {
+                fila.forEach(elemento => {
+                    if (terminar) {
+                        ganaste = false;
+                    }
+                    else {
+                        if (elemento) {
+                            terminar = true;
+                            return false;
+                        }else {
+                            ganaste = true;
+                        }
+                    }
+                });
+            });
+            return ganaste;
+    }
+
     ripArmadillo(armadillo) {
         let bola_lanzada_fake = this.scene.add.sprite(armadillo.x, armadillo.y, armadillo.texture.key).setTint(armadillo.tintTopLeft).setScale(armadillo.scaleX, armadillo.scaleY);
         armadillo.destroy();
@@ -75,10 +124,28 @@ export class shotController {
             ease: 'Linear',
             loop: 0,
             onStart: function () {
+                console.log(this.grupos_afectados);
+                if (this.grupos_afectados) {
+                    console.log("se hace");
+                    this.grupos_afectados.forEach(grupo => {
+                        this.recalcularGrupo(grupo);
+                    });
+                }
                 bola_lanzada_fake.setDepth(-1);
                 if (armadillo.tintTopLeft == 0xCDCDCD) {
                     contexto.data.armadillon = false;
                     bola_lanzada_fake.anims.play('armadillon_camina', true);
+                    if (contexto.comprobar_victoria()) {
+                        let hud: any = contexto.scene.scene.get("hud");
+                        let sm: any = contexto.scene.scene.get("soundManager");
+                        hud.play_animacion("nodos_1");
+                        hud.cambiar_boton_niveles();
+                        contexto.data.pausa = true;
+                        sm.stopMusicPocoTiempo();
+                        sm.playMusic("victoria", 0.1, false);
+                        let progressManager : any = contexto.scene.scene.get("ProgressManager");
+                        progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
+                    }
                 }else {
                     bola_lanzada_fake.anims.play('tatu_bebe_camina', true);
                 }
