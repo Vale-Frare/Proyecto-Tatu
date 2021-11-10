@@ -6,6 +6,7 @@ export class Matriz {
     static deckFromMatriz(matriz, data, pocos_grupos, armadillon = false) {
         let deck = [];
         let nivelArmadillom = armadillon;
+        let armadillonC = 5;
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         let indice = 0;
@@ -18,10 +19,13 @@ export class Matriz {
                                 {obj: null, type: 0, color: data.diccionarioDeColores[bolita.color]}
                             );
                             if (nivelArmadillom) {
-                                deck.push(
-                                    {obj: null, type: 0, color: 5}
-                                );
-                                nivelArmadillom = false;
+                                armadillonC--;
+                                if (armadillonC == 0) {
+                                    deck.push(
+                                        {obj: null, type: 0, color: 5}
+                                    );
+                                    nivelArmadillom = false;
+                                }
                             }
                             if(pocos_grupos){
                                 if(indice != 0){
@@ -494,6 +498,7 @@ export class AccionesBolitas {
                                 }, scene);
                                 let fakebolita = scene.add.sprite(bolita.x, bolita.y, bolita.texture.key).setScale(bolita.scaleX, bolita.scaleY);
                                 bolita.destroy();
+                                fakebolita.setDepth(-1);
                                 scene.tweens.add({
                                     targets: fakebolita,
                                     x: 540,
@@ -525,6 +530,7 @@ export class AccionesBolitas {
                         }
                     });
                 }, scene);
+                fakebolita.setDepth(-1);
                 scene.tweens.add({
                     targets: fakebolita,
                     x: 540,
@@ -645,7 +651,7 @@ export class AccionesBolitas {
                             data.armadillon = false;
                             bola_lanzada_fake.destroy();
                             if (comprobar_victoria()) {
-                                let hud: any = this.scene.get("hud");
+                                let hud: any = scene.scene.get("hud");
                                 hud.play_animacion("nodos_1");
                                 hud.cambiar_boton_niveles();
                                 data.pausa = true;

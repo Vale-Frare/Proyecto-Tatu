@@ -219,6 +219,10 @@ export class BolitaDeck2 {
     }
 
     reemplazarColor(coloresNuevos) {
+        function filtro(element) {
+            return element != 'armadillon';
+        }
+
         if(coloresNuevos.length != 0){
             this.data.deck.forEach((bolita, index) => {
                 let cont = 0;
@@ -229,8 +233,9 @@ export class BolitaDeck2 {
                 })
                 if(cont == 0 && bolita.obj.tintTopLeft != 0xCDCDCD){
                     let _ = coloresNuevos[Phaser.Math.Between(0,coloresNuevos.length-1)];
+                    let _filtrado = (_ === 'armadillon' ? (coloresNuevos.filter(filtro)[0] ? coloresNuevos.filter(filtro)[0]: 'basurita_0') : _);
                     let scene = this.scene;
-                    let colorI = this.data.bolitasTextYColors[_ == 'armadillon' ? coloresNuevos.filter(elemento => {elemento != 'armadillon'})[0] : _];
+                    let colorI = this.data.bolitasTextYColors[_filtrado];
                     this.scene.tweens.addCounter({
                         from: -bolita.obj.scale,
                         to: bolita.obj.scale,
@@ -245,7 +250,7 @@ export class BolitaDeck2 {
                             bolita.obj.scale = Math.abs(value);
                         }
                     });
-                    bolita.color = this.data.bolitasTextYColorsInt[_];
+                    bolita.color = this.data.bolitasTextYColorsInt[_filtrado];
                 }
             });
         }
