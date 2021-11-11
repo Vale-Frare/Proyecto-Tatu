@@ -8,12 +8,10 @@ export class translateHelper {
             let apiFede = `https://traduci-la.herokuapp.com/rest/translation?project_id=ckvhrn33h12221nyg31y1zv6f&lang=${lang}`;
             let apiFrase = `https://voluminouslegalmeasurements.frasesegundo.repl.co/tatudb/?lang=${lang}`;
             let archivoEs = `assets/lang/es_AR.json`;
-//          
             if (this.usarApiFede) {
                 fetch(apiFede).then((response) => {
                     return response.json();
                 }).then((data) => {
-                    console.log(data);
                     resolve(data);
                 }).catch((error) => {
                     this.usarApiFede = false;

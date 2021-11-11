@@ -37,7 +37,8 @@ export default class ProgressManager extends Phaser.Scene {
     }
 
     create() {
-        console.log('%c ProgressManager iniciado correctamente! ', 'background: #fffdd0; color: #bada55');
+        const style = 'font-family: Helvetica, sans-serif;background-color: black;padding: 10px;color: greenyellow;text-shadow: 0px 0px 10px greenyellow;border-radius: 20px;box-shadow: 0px 0px 10px greenyellow;font-weight: bolder;text-align: center;letter-spacing: 5px;';
+        console.log('%c ProgressManager iniciado correctamente! ', style);
         if (localStorage.getItem('progress') !== null) {
             this.progress = JSON.parse(localStorage.getItem('progress'));
         }else {

@@ -54,7 +54,6 @@ export default class Preloads extends Phaser.Scene {
         this.load.spritesheet("sonido_1", "assets/hud/sonido_1.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("sonido_2", "assets/hud/sonido_2.png", {frameHeight: 129, frameWidth: 132});
         this.load.spritesheet("arriba_izquierda", "assets/hud/arriba_izquierda.png", {frameHeight: 122, frameWidth: 201});
-        this.load.image("boton_volver_a_niveles", "assets/hud/boton_volver_a_niveles.png");
         this.load.image("panel_pausa", "assets/hud/panel_pausa.png");
         this.load.image("panel_victoria", "assets/hud/panel_victoria.png");
         this.load.image("panel_derrota", "assets/hud/panel_derrota.png");
@@ -66,7 +65,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("lvl3zone1", "assets/hud/lvl3zone1.png");
         this.load.image("lvl4zone1", "assets/hud/lvl4zone1.png");
         this.load.image("lvl5zone1", "assets/hud/lvl5zone1.png");
-//
+
         this.load.image("menu_principal", "assets/hud/menu_principal.png");
         this.load.image("ayuda", "assets/hud/ayuda.png");
         this.load.image("boton", "assets/hud/boton.png");

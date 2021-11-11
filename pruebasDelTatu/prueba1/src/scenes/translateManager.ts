@@ -83,7 +83,6 @@ export default class TranslateManager extends Phaser.Scene {
     constructor() {
         super({key:'TranslateManager', active: true});
         this.lang = localStorage.getItem('lang') || this.getLangFromNavigator();
-        console.log(navigator.language.substring(0, 2));
     }
 
     getLangFromNavigator() {
@@ -142,8 +141,10 @@ export default class TranslateManager extends Phaser.Scene {
         return this.contenido[this.lang][key];
     }
 
+
     async create() {
-        console.log('%c TranslateManager iniciado correctamente! ', 'background: #a4a4a4; color: #fada55');
+        const style = 'font-family: Helvetica, sans-serif;background-color: black;padding: 10px;color: aquamarine;text-shadow: 0px 0px 10px aquamarine;border-radius: 20px;box-shadow: 0px 0px 10px aquamarine;font-weight: bolder;text-align: center;letter-spacing: 5px;';
+        console.log('%cTranslateManager iniciado correctamente! ', style);
 
         await Promise.all([
             this.loadFont('just_kids', 'assets/fonts/Just Kids.ttf'),
@@ -164,7 +165,6 @@ export default class TranslateManager extends Phaser.Scene {
         texto_continuar.setText(this.getTextoEnLenguajeActual('rayo.continuar.var0'));
 
         this.scene.start('Preloads', {tatuCarga: tatu_girando, botonContinuar: boton_continuar, textoContinuar: texto_continuar});
-        console.log(this.contenido);
     }
 
     update() {
