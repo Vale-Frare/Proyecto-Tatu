@@ -151,8 +151,9 @@ export default class TranslateManager extends Phaser.Scene {
             this.loadFont('lapsus_pro', 'assets/fonts/lapsus_pro.otf'),
         ]);
 
+        let tm: any = new translateHelper();
         for (let keyLang in this.contenido) {
-            let langData: any = await translateHelper.cargarTraducciones(keyLang);
+            let langData: any = await tm.cargarTraducciones(keyLang);
             langData.words.forEach(word => {
                 if (this.contenido[keyLang][word.key] === null) {
                     this.contenido[keyLang][word.key] = word.translate;

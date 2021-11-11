@@ -58,7 +58,6 @@ export class shotController {
     }
 
     recalcularGrupo(grupo: number) {
-        console.log("se hace");
         let matriz = [];
         this.data.nivelCargado.forEach((fila_bolitas, index_fila) => {
             let fila = [];
@@ -124,11 +123,16 @@ export class shotController {
             ease: 'Linear',
             loop: 0,
             onStart: function () {
-                console.log(this.grupos_afectados);
-                if (this.grupos_afectados) {
-                    console.log("se hace");
-                    this.grupos_afectados.forEach(grupo => {
-                        this.recalcularGrupo(grupo);
+                contexto.data.nivelCargado.forEach((fila, index_fila) => {
+                    fila.forEach((bolita, index) => {
+                        if (bolita) {
+                            contexto.grupos_afectados.push(bolita.grupo);
+                        }
+                    });
+                });
+                if (contexto.grupos_afectados) {
+                    contexto.grupos_afectados.forEach(grupo => {
+                        contexto.recalcularGrupo(grupo);
                     });
                 }
                 bola_lanzada_fake.setDepth(-1);
@@ -139,7 +143,7 @@ export class shotController {
                         let hud: any = contexto.scene.scene.get("hud");
                         let sm: any = contexto.scene.scene.get("soundManager");
                         hud.play_animacion("nodos_1");
-                        hud.cambiar_boton_niveles();
+                        hud.cambiar_boton_niveles_niveles();
                         contexto.data.pausa = true;
                         sm.stopMusicPocoTiempo();
                         sm.playMusic("victoria", 0.1, false);

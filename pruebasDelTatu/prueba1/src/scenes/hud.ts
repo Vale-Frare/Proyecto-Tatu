@@ -1067,6 +1067,10 @@ export default class Hud extends Phaser.Scene {
         this.boton_pausa.setFrame(this.boton_pausa.frame.name == 0 ? 1 : 0);
     }
 
+    cambiar_boton_niveles_niveles() {
+        this.boton_pausa.setFrame(1);
+    }
+
     siguiente_nivel(nivel) {
         if (!nivel) return;
         if (typeof nivel !== "string") return;

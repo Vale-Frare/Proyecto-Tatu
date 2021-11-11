@@ -6,7 +6,7 @@ export class Matriz {
     static deckFromMatriz(matriz, data, pocos_grupos, armadillon = false) {
         let deck = [];
         let nivelArmadillom = armadillon;
-        let armadillonC = 1;
+        let armadillonC = 5;
         let matrizInvertida = matriz.slice().reverse();
         let gruposDestruidos = [];
         let indice = 0;
@@ -582,7 +582,7 @@ export class AccionesBolitas {
             if(nivel_finalizado){
                 let hud: any = this.scene.get("hud");
                 hud.play_animacion("nodos_1");
-                hud.cambiar_boton_niveles();
+                hud.cambiar_boton_niveles_niveles();
                 data.pausa = true;
                 sm.stopMusicPocoTiempo();
                 sm.playMusic("victoria", 0.1, false);
@@ -626,7 +626,7 @@ export class AccionesBolitas {
                 if (_) {
                     let hud: any = scene.scene.get("hud");
                     hud.play_animacion("nodos_1");
-                    hud.cambiar_boton_niveles();
+                    hud.cambiar_boton_niveles_niveles();
                     data.pausa = true;
                     sm.stopMusicPocoTiempo();
                     sm.playMusic("victoria", 0.1, false);
@@ -667,17 +667,17 @@ export class AccionesBolitas {
                             }, scene);
                             data.armadillon = false;
                             bola_lanzada_fake.destroy();
-                            let _ = await comprobar_victoria();
-                            if (_) {
-                                let hud: any = scene.scene.get("hud");
-                                hud.play_animacion("nodos_1");
-                                hud.cambiar_boton_niveles();
-                                data.pausa = true;
-                                sm.stopMusicPocoTiempo();
-                                sm.playMusic("victoria", 0.1, false);
-                                let progressManager : any = this.scene.get("ProgressManager");
-                                progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
-                            }
+                            // let _ = await comprobar_victoria();
+                            // if (_) {
+                            //     let hud: any = scene.scene.get("hud");
+                            //     hud.play_animacion("nodos_1");
+                            //     hud.cambiar_boton_niveles_niveles();
+                            //     data.pausa = true;
+                            //     sm.stopMusicPocoTiempo();
+                            //     sm.playMusic("victoria", 0.1, false);
+                            //     let progressManager : any = this.scene.get("ProgressManager");
+                            //     progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
+                            // }
                         }
                     });
                 }
@@ -739,7 +739,6 @@ export class AccionesBolitas {
             });
         }, scene);
 
-        console.log(grupos_afectados);
         new shotController(data, scene, bolita, nivel_finalizado, grupos_afectados);
 
         data.tiros++;

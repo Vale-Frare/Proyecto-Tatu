@@ -66,7 +66,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.image("lvl3zone1", "assets/hud/lvl3zone1.png");
         this.load.image("lvl4zone1", "assets/hud/lvl4zone1.png");
         this.load.image("lvl5zone1", "assets/hud/lvl5zone1.png");
-
+//
         this.load.image("menu_principal", "assets/hud/menu_principal.png");
         this.load.image("ayuda", "assets/hud/ayuda.png");
         this.load.image("boton", "assets/hud/boton.png");

@@ -64,7 +64,7 @@ export default class Scene1 extends Phaser.Scene {
 
         let matrizNivel = Matriz.objetosAMatriz(objetos, alto, ancho);
 
-        if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1" || this.pm.level_to_play == "lvl5zone1"){
+        if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1"){
             return {nivel: Matriz.convertirAGrupos(matrizNivel), col: colisionables};
         }
         else{
@@ -72,7 +72,7 @@ export default class Scene1 extends Phaser.Scene {
             return {nivel: Matriz.convertirAGrupos(matrizNivelEmbolsada), col: colisionables};
         }        
     }    
-//
+
     update(time, delta) {
         if (data.pausa) {
             data.slider.mini_bolita.disableInteractive();

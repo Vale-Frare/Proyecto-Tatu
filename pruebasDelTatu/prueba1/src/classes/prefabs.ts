@@ -121,8 +121,6 @@ export class BolitaDeck2 {
         this.scene = scene;
         this.scale = scale;
 
-        console.log(this.scale);
-
         this.pm = this.scene.scene.get('ProgressManager');
 
         if(this.pm.level_to_play == "lvl1zone1" || this.pm.level_to_play == "lvl2zone1"){
@@ -202,24 +200,27 @@ export class BolitaDeck2 {
                 })
                 if(cont == 0 && bolita.obj.tintTopLeft != 0xCDCDCD){
                     let _ = coloresNuevos[Phaser.Math.Between(0,coloresNuevos.length-1)];
-                    let _filtrado = (_ === 'armadillon' ? (coloresNuevos.filter(filtro)[0] ? coloresNuevos.filter(filtro)[0]: 'basurita_0') : _);
-                    let scene = this.scene;
-                    let colorI = this.data.bolitasTextYColors[_filtrado];
-                    this.scene.tweens.addCounter({
-                        from: -0.3,
-                        to: 0.3,
-                        ease: 'Cubic',
-                        duration: 500,
-                        onUpdate: function (tween)
-                        {
-                            const value = tween.getValue();
-                            if (value > 0) {
-                                bolita.obj.setTint(colorI);
+                    let _filtrado = (_ === 'armadillon' ? (coloresNuevos.filter(filtro)[0] ? coloresNuevos.filter(filtro)[0]: 'return') : _);
+                    if (_filtrado == 'return') {}
+                    else {
+                        let scene = this.scene;
+                        let colorI = this.data.bolitasTextYColors[_filtrado];
+                        this.scene.tweens.addCounter({
+                            from: -0.3,
+                            to: 0.3,
+                            ease: 'Cubic',
+                            duration: 500,
+                            onUpdate: function (tween)
+                            {
+                                const value = tween.getValue();
+                                if (value > 0) {
+                                    bolita.obj.setTint(colorI);
+                                }
+                                bolita.obj.scale = Math.abs(value);
                             }
-                            bolita.obj.scale = Math.abs(value);
-                        }
-                    });
-                    bolita.color = this.data.bolitasTextYColorsInt[_filtrado];
+                        });
+                        bolita.color = this.data.bolitasTextYColorsInt[_filtrado];
+                    }
                 }
             });
         }
