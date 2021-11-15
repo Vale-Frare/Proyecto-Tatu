@@ -667,17 +667,6 @@ export class AccionesBolitas {
                             }, scene);
                             data.armadillon = false;
                             bola_lanzada_fake.destroy();
-                            // let _ = await comprobar_victoria();
-                            // if (_) {
-                            //     let hud: any = scene.scene.get("hud");
-                            //     hud.play_animacion("nodos_1");
-                            //     hud.cambiar_boton_niveles_niveles();
-                            //     data.pausa = true;
-                            //     sm.stopMusicPocoTiempo();
-                            //     sm.playMusic("victoria", 0.1, false);
-                            //     let progressManager : any = this.scene.get("ProgressManager");
-                            //     progressManager.winLevel(progressManager.getCurrentZone(), progressManager.getLevelToPlayInt());
-                            // }
                         }
                     });
                 }
@@ -698,6 +687,7 @@ export class AccionesBolitas {
                 hud.desactivar_todo_menos("boton_reiniciar");
                 hud.cambiar_boton_niveles();
                 data.pausa = true;
+                sm.stopMusicPocoTiempo();
                 sm.playMusic("derrota", 0.1, false);
             }
         }

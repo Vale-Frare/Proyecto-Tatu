@@ -214,6 +214,7 @@ export class shotController {
                 hud.cambiar_boton_niveles();
                 this.data.pausa = true;
                 sm.playMusic("derrota", 0.1, false);
+                sm.stopMusicPocoTiempo();
             }
 
             a.emitter.followOffset.x += 2000;
