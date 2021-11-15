@@ -145,6 +145,8 @@ export class Slider {
             if(pointer.x < (min-(mini_bolita.width*1.25)) || pointer.x > (max+(mini_bolita.width*1.25)) || pointer.y < (mini_bolita.y-(mini_bolita.height*1.25)) || pointer.y > (mini_bolita.y+(mini_bolita.height*1.25))){
                 mini_bolita.setTint(0xffffff);
                 mini_bolita.setScale(1.5);
+                bolita_fantasma.setVisible(false);
+                linea_punteada_real.setVisible(false);
             }
             else{
                 mini_bolita.x = Phaser.Math.Clamp(pointer.x, min, max);
@@ -164,6 +166,8 @@ export class Slider {
 
                 mini_bolita.setTint(0x000000);
                 mini_bolita.setScale(2.5);
+                bolita_fantasma.setVisible(true);
+                linea_punteada_real.setVisible(true);
             }
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){

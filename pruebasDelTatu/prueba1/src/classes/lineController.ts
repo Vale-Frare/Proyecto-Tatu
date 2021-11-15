@@ -63,6 +63,12 @@ export class lineController {
         })
     }
 
+    setVisible(booleanito) {
+        this.bolitas.forEach(bolita => {
+            bolita.setVisible(booleanito);
+        })
+    }
+
     fadeOut(scene) {
         this.bolitas.forEach(bolita => {
             if(bolita) {
