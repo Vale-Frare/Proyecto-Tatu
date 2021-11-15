@@ -1155,6 +1155,7 @@ export default class Hud extends Phaser.Scene {
         this.dato.pausa = false;
         this.hacer_una_vez = true;
         this.sm.playMusic("lvl_1", 0.1, true);
+        this.sm.stopMusicPocoTiempo();
     } 
 
     reiniciar_pausa() {
