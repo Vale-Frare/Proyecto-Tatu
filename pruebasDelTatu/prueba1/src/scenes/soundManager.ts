@@ -79,6 +79,7 @@ export default class SoundManager extends Phaser.Scene{
     stopMusicPocoTiempo(){
         if (this.musica_poco_tiempo){
             this.musica_poco_tiempo.stop();
+            this.musica_poco_tiempo = null;
         }
     }
 

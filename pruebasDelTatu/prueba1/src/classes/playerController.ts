@@ -138,6 +138,8 @@ export class Slider {
                 loop: 0
                 });
             }
+            bolita_fantasma.setVisible(true);
+            linea_punteada_real.setVisible(true);
 
         }, this)
         .on('drag', function(pointer, dragX, dragY){
@@ -200,6 +202,9 @@ export class Slider {
                     loop: 0,
                 });
             }
+
+            bolita_fantasma.setVisible(false);
+            linea_punteada_real.setVisible(false);
         }, this);
 
         barrita.setInteractive({draggable: true, dropZone: true })

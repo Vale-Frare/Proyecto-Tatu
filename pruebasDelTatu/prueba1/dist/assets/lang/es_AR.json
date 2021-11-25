@@ -1,0 +1,92 @@
+{
+    "words":[
+        {
+            "key":"hud.acciones",
+            "translate":"ACCIONES"
+        },
+        {
+            "key":"hud.reanudar.var0",
+            "translate":"REANUDAR"
+        },
+        {
+            "key":"hud.reiniciar.var0",
+            "translate":"REINICIAR"
+        },
+        {
+            "key":"hud.siguientenivel.var0",
+            "translate":"SIGUIENTE NIVEL"
+        },
+        {
+            "key":"hud.tiempo",
+            "translate":"TIEMPO"
+        },
+        {
+            "key":"hud.tituloderrota.var0",
+            "translate":"PERDISTE"
+        },
+        {
+            "key":"hud.titulopausa.var0",
+            "translate":"PAUSA"
+        },
+        {
+            "key":"hud.titulovictoria.var0",
+            "translate":"VICTORIA"
+        },
+        {
+            "key":"menuconfig.titulo",
+            "translate":"Configuraciones"
+        },
+        {
+            "key":"menuinicio.jugar.var0",
+            "translate":"JUGAR"
+        },
+        {
+            "key":"menuinicio.jugar.var1",
+            "translate":"CONTINUAR"
+        },
+        {
+            "key":"menuinicio.niveles",
+            "translate":"SELECCI\u00d3N DE NIVEL"
+        },
+        {
+            "key":"menutest.prueba",
+            "translate":"Prueba"
+        },
+        {
+            "key":"menu.tituloidioma.var0",
+            "translate":"IDIOMA"
+        },
+        {
+            "key":"niveles.titulo.var0",
+            "translate":"NIVELES"
+        },
+        {
+            "key":"rayo.continuar.var0",
+            "translate":"CONTINUAR"
+        },
+        {
+            "key":"rayo.texto.var0",
+            "translate":"Mant\u00e9n presionado\nsobre la mam\u00e1 Tat\u00fa,\ndesl\u00edzate hacia los\nlados para apuntar\ny suelta para lanzar\nal beb\u00e9."
+        },
+        {
+            "key":"rayo.texto.var1",
+            "translate":"La basura se debe\nseparar de manera\ncorrecta, cada color\nrepresenta cada una:\nVerde:\nVidrio\nRojo:\nElectrodom\u00e9sticos\nNaranja:\nOrg\u00e1nicos\nAzul:\nPapel / Cart\u00f3n\nAmarillo:\nPl\u00e1sticos"
+        },
+        {
+            "key":"rayo.texto.var3",
+            "translate":"Los Tat\u00faes excavan\nformando cuevas\ndonde vivir, con\nentradas cerca de\nhormigueros o\ntermiteros."
+        },
+        {
+            "key":"rayo.texto.var2",
+            "translate":"Los beb\u00e9s Tat\u00fa\npueden usar las\nrocas para desviar\nsu trayectoria para\nalcanzar residuos\nen lugares dif\u00edciles\nde alcanzar."
+        },
+        {
+            "key":"rayo.texto.var4",
+            "translate":"Ning\u00fan beb\u00e9 Tat\u00fa\nsale lastimado al\nrecoger residuos\ngracias a su fuerte\ny duro caparaz\u00f3n."
+        },
+        {
+            "key":"rayo.titulo.var0",
+            "translate":"\u00a1RAYO\nCONCIENTIZADOR!"
+        }
+    ]
+}
