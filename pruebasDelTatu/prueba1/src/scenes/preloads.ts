@@ -86,6 +86,7 @@ export default class Preloads extends Phaser.Scene {
         this.load.audio("victoria", "assets/audio/victoria.mp3");
         this.load.audio("main_menu", "assets/audio/main_menu.mp3");
         this.load.audio("sonido_boton", "assets/audio/sonido_boton.mp3");
+        this.load.audio("creditos", "assets/audio/creditos.mp3");
 
         this.load.image("panel_idioma", "assets/hud/panel_idioma.png");
         this.load.image("boton_espaniol", "assets/hud/boton_espaniol.png");
@@ -102,6 +103,7 @@ export default class Preloads extends Phaser.Scene {
             hudHelper.cargarHudDesdeJson("assets/nivel/hud.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/rayo_concientizador.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/menu_principal.json"),
+            hudHelper.cargarHudDesdeJson("assets/nivel/creditos.json"),
             hudHelper.cargarHudDesdeJson("assets/nivel/seleccion_niveles.json")
         ]);
     }
@@ -134,7 +136,5 @@ export default class Preloads extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-        
-        // this.scene.start("SceneMainmenu");
     }
 }

@@ -723,6 +723,7 @@ export default class Hud extends Phaser.Scene {
                                     if (prop.value == "pausa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}");`)}, this)}
                                     else if (prop.value == "pausaYMapa") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${animation_id}", obj);`)}, this); this.boton_pausa = obj}
                                     else if (prop.value == "jugar_nivel_rapido") {(texto.text = this.evaluar_continuar_o_play()); obj.setInteractive().on("pointerup", () => {eval(`this.${callback}(obj);`)}, this)}
+                                    else if (prop.value == "nivel_mas_uno") {(texto.text = this.siguiente_creditos_volver()); obj.setInteractive().on("pointerup", () => {eval(`this.${callback}(obj);`)}, this)}
                                     else if (prop.value == "play_level") {obj.setInteractive().on("pointerup", () => {eval(`this.${callback}("${element.properties.find(propiedad => propiedad.name === "level").value}", ${element.properties.find(propiedad => propiedad.name === "zone").value});`)}, this);}
                                     else {
                                         let sehace = true;
@@ -1080,14 +1081,46 @@ export default class Hud extends Phaser.Scene {
         this.mostrarHud("hud");        
     }
 
+    siguiente_creditos_volver(){
+        let pm: any = this.scene.get('ProgressManager');
+        let tm: any = this.scene.get('TranslateManager');
+        
+        if(pm.level_to_play == "lvl5zone1"){
+            return tm.getTextoEnLenguajeActual('nivel.creditos.var0');
+        }
+        else{
+            return tm.getTextoEnLenguajeActual('hud.siguientenivel.var0')
+        }
+    }
+
     nivel_mas_uno() {
         let pm: any = this.scene.get('ProgressManager');
-        let nivel = pm.getNextLevel();
-        pm.playLevelString(nivel);
-        let scene_main = this.scene.get('Scene1');
-        scene_main.scene.switch('SceneRayo');
-        scene_main.scene.resume();
-        this.sm.playMusic("lvl_1", 0.1, true);
+        let tm: any = this.scene.get('TranslateManager');
+
+        if(pm.level_to_play == "lvl5zone1"){
+            let scene_main = this.scene.get('Scene1');
+            scene_main.scene.switch('credits');
+            scene_main.scene.resume();
+            this.sm.playMusic("creditos", 0.1, true);
+        }
+        else{
+            let nivel = pm.getNextLevel();
+            pm.playLevelString(nivel);
+            let scene_main = this.scene.get('Scene1');
+            scene_main.scene.switch('SceneRayo');
+            scene_main.scene.resume();
+            this.sm.playMusic("lvl_1", 0.1, true);
+        }
+    }
+
+    volver_niveles(){
+        let scene = this.scene.get("credits");
+        this.sm.playMusic("main_menu", 0.1, true);
+        this.sm.stopMusicPocoTiempo();
+
+        this.mostrarHud("seleccion_niveles");
+        scene.scene.switch("SceneLvlSelect");
+        scene.scene.resume();
     }
 
     jugar_nivel_rapido(obj) {

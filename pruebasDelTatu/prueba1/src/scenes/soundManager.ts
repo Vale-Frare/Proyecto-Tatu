@@ -40,7 +40,9 @@ export default class SoundManager extends Phaser.Scene{
                     this.musica.resume();
                 }
                 else{
-                    this.musica.play();
+                    if (this.musica.duration > 5){
+                        this.musica.play();
+                    }
                 }
             }
             if(this.musica_poco_tiempo){

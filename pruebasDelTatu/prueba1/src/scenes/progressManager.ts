@@ -86,11 +86,11 @@ export default class ProgressManager extends Phaser.Scene {
 
     getNextLevel() {
         if (this.level_to_play.replace('lvl', '').split('zone')[0] === '5') {
-            if (parseInt(this.level_to_play.replace('lvl', '').split('zone')[1]) + 1 > 1) {
-                return `lvl1zone1`;
-            }else {
-                return `lvl1zone${parseInt(this.level_to_play.replace('lvl', '').split('zone')[1]) + 1}`;
-            }
+            // if (parseInt(this.level_to_play.replace('lvl', '').split('zone')[1]) + 1 > 1) {
+            //     return `lvl1zone1`;
+            // }else {
+            //     return `lvl1zone${parseInt(this.level_to_play.replace('lvl', '').split('zone')[1]) + 1}`;
+            // }
         }else {
             return `lvl${parseInt(this.level_to_play.replace('lvl', '').split('zone')[0]) + 1}zone${this.level_to_play.replace('lvl', '').split('zone')[1]}`;
         }

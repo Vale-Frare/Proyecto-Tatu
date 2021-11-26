@@ -29,8 +29,7 @@ export default class Scene1 extends Phaser.Scene {
         data.slider = new Slider(this, data, data.deck, 780, y + 75);
 
         let hud: any = this.scene.get("hud");
-        hud.pasarData(data);
-        
+        hud.pasarData(data);        
     }
 
     cargarNivelDesdeTiled(key: string) {
@@ -133,14 +132,6 @@ export default class Scene1 extends Phaser.Scene {
         });        
 
         data.deckController = new BolitaDeck2(this, 0.3, data, nivel, 900, 1700);
-
-        // this.input.keyboard.on('keydown-' + 'T', function (event) { 
-        //     data.deckController.removerBolita(data.bolitaALanzar + 1);
-        // });
-
-        // this.input.keyboard.on('keydown-' + 'R', function (event) { 
-        //     data.deckController.agregarBolitaAlDeck(Phaser.Math.Between(2, 4));
-        // });
 
         const bolitasTexturas = [
             'basurita_0', //  VERDE

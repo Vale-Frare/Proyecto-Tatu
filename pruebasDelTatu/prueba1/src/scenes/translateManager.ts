@@ -30,7 +30,9 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.tituloderrota.var0': null,
             'hud.acciones': null,
             'menu.tituloidioma.var0': null,
-            'hud.tiempo': null
+            'hud.tiempo': null,
+            'nivel.creditos.var0': null,
+            'nivel.volver.var0': null
         },
         'en_US': {
             'key': 'text',
@@ -53,7 +55,9 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.tituloderrota.var0': null,
             'hud.acciones': null,
             'menu.tituloidioma.var0': null,
-            'hud.tiempo': null
+            'hud.tiempo': null,
+            'nivel.creditos.var0': null,
+            'nivel.volver.var0': null
         },
         'pt_BR': {
             'key': 'textinho',
@@ -76,7 +80,9 @@ export default class TranslateManager extends Phaser.Scene {
             'hud.tituloderrota.var0': null,
             'hud.acciones': null,
             'menu.tituloidioma.var0': null,
-            'hud.tiempo': null
+            'hud.tiempo': null,
+            'nivel.creditos.var0': null,
+            'nivel.volver.var0': null
         }
     };
 

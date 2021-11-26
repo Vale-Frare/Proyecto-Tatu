@@ -81,6 +81,14 @@
             "translate":"Los beb\u00e9s Tat\u00fa\npueden usar las\nrocas para desviar\nsu trayectoria para\nalcanzar residuos\nen lugares dif\u00edciles\nde alcanzar."
         },
         {
+            "key":"nivel.creditos.var0",
+            "translate":"CR\u00E9DITOS"
+        },
+        {
+            "key":"nivel.volver.var0",
+            "translate":"VOLVER"
+        },
+        {
             "key":"rayo.texto.var4",
             "translate":"Ning\u00fan beb\u00e9 Tat\u00fa\nsale lastimado al\nrecoger residuos\ngracias a su fuerte\ny duro caparaz\u00f3n."
         },
