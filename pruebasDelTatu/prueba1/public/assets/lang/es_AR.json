@@ -85,6 +85,10 @@
             "translate":"CR\u00E9DITOS"
         },
         {
+            "key":"creditos.titulo.var0",
+            "translate":"\u00a1GRACIAS POR JUGAR!"
+        },
+        {
             "key":"nivel.volver.var0",
             "translate":"VOLVER"
         },

@@ -69,7 +69,7 @@ export default class Scene1 extends Phaser.Scene {
         else{
             let matrizNivelEmbolsada = Aleatorizadores.aleatorizarConLaBolsa(matrizNivel, 3);
             return {nivel: Matriz.convertirAGrupos(matrizNivelEmbolsada), col: colisionables};
-        }        
+        }
     }    
 
     update(time, delta) {

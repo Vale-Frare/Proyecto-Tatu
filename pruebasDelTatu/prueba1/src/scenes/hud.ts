@@ -1084,9 +1084,13 @@ export default class Hud extends Phaser.Scene {
     siguiente_creditos_volver(){
         let pm: any = this.scene.get('ProgressManager');
         let tm: any = this.scene.get('TranslateManager');
+        let local_credits = JSON.parse(localStorage.getItem('desactivar_creditos'));
         
-        if(pm.level_to_play == "lvl5zone1"){
+        if(pm.level_to_play == "lvl5zone1" && !local_credits){
             return tm.getTextoEnLenguajeActual('nivel.creditos.var0');
+        }
+        else if(pm.level_to_play == "lvl5zone1" && local_credits){
+            return tm.getTextoEnLenguajeActual('nivel.volver.var0');
         }
         else{
             return tm.getTextoEnLenguajeActual('hud.siguientenivel.var0')
@@ -1095,21 +1099,35 @@ export default class Hud extends Phaser.Scene {
 
     nivel_mas_uno() {
         let pm: any = this.scene.get('ProgressManager');
-        let tm: any = this.scene.get('TranslateManager');
+        let local_credits = JSON.parse(localStorage.getItem('desactivar_creditos'));
 
-        if(pm.level_to_play == "lvl5zone1"){
+        if(pm.level_to_play == "lvl5zone1" && !local_credits){
+
             let scene_main = this.scene.get('Scene1');
             scene_main.scene.switch('credits');
             scene_main.scene.resume();
             this.sm.playMusic("creditos", 0.1, true);
+            localStorage.setItem('desactivar_creditos', JSON.stringify(true));
+
+        }else if(pm.level_to_play == "lvl5zone1" && local_credits){
+
+            let scene = this.scene.get("Scene1");
+            this.sm.playMusic("main_menu", 0.1, true);
+            this.sm.stopMusicPocoTiempo();
+            this.mostrarHud("seleccion_niveles");
+            scene.scene.switch("SceneLvlSelect");
+            scene.scene.resume();
+
         }
         else{
+
             let nivel = pm.getNextLevel();
             pm.playLevelString(nivel);
             let scene_main = this.scene.get('Scene1');
             scene_main.scene.switch('SceneRayo');
             scene_main.scene.resume();
             this.sm.playMusic("lvl_1", 0.1, true);
+
         }
     }
 

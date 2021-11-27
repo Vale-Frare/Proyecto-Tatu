@@ -112,7 +112,7 @@ export class Slider {
 
         mini_bolita.setInteractive({draggable: true, dropZone: true })
         .on('dragstart', function(pointer, dragX, dragY){
-            mini_bolita.setTint(0x000000);
+            mini_bolita.setTint(0xcccccc);
             mini_bolita.setScale(2.5);
 
             linea_punteada_real.fadeIn(scene);
@@ -166,7 +166,7 @@ export class Slider {
                     });
                 }
 
-                mini_bolita.setTint(0x000000);
+                mini_bolita.setTint(0xcccccc);
                 mini_bolita.setScale(2.5);
                 bolita_fantasma.setVisible(true);
                 linea_punteada_real.setVisible(true);
@@ -174,7 +174,7 @@ export class Slider {
         }, this)
         .on('dragend', function(pointer, dragX, dragY, dropped){
             if (data.armadillon) return;
-            if(mini_bolita.tintTopLeft == 0x000000 && (data.deck.length-data.tiros) > 0){
+            if(mini_bolita.tintTopLeft == 0xcccccc && (data.deck.length-data.tiros) > 0){
                 AccionesBolitas.tiro(context.scene, data, data.lanzador.rotation - (Math.PI/2), acciones);
                 let sm: any = scene.scene.get("soundManager");
                 sm.playSoundTatuLanzado();
